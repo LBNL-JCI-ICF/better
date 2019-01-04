@@ -29,11 +29,12 @@ The Virtual Building EE Targeting Tool source code posted here can provide analy
 3. Building Primary/Secondary Space Use Type
 4. Calendar Information (required for buildings with unique occupancy patterns that vary on a monthly time scale (e.g., K-12 and higher education))
 5. Monthly Utility Bill Consumption and Cost Data (by fuel type)<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;Electricity and fossil fuel (if any) consumption and cost<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;Minimum of 1 year is required (2-5 years of data is desirable)<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;For each consumption point, start and end dates (“bill dates”) are required<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;Consumption units are required (e.g., kWh, therms, etc.)<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;Cost units are required (e.g., US Dollars)<br/>
+  1). Electricity and fossil fuel (if any) consumption and cost<br/>
+  2). Minimum of 1 year is required (2-5 years of data is desirable)<br/>
+  3). For each consumption point, start and end dates (“bill dates”) are required<br/>
+  4). Consumption units are required (e.g., kWh, therms, etc.)<br/>
+  5). Cost units are required (e.g., US Dollars)<br/>
+<br/>
 The team is working to create a database of U.S. buildings to allow the benchmarking and analysis of individual buildings.
 
 ### Installation
