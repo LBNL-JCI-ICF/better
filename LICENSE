@@ -1,25 +1,51 @@
-Energy Efficiency Targeting Tool, Copyright (c) 2018, The Regents of the University of California, through Lawrence Berkeley National Laboratory, and Johnson Controls, Inc. (collectively the “Licensors”) subject to receipt of any required approvals from the U.S. Dept. of Energy.  All rights reserved.
+﻿Energy Efficiency Targeting Tool, Copyright (c) 2018, The Regents of the
+University of California, through Lawrence Berkeley National Laboratory, and
+Johnson Controls, Inc. (collectively the “Licensors”) subject to receipt of
+any required approvals from the U.S. Dept. of Energy.  All rights reserved.
+ 
+If you have questions about your rights to use or distribute this software,
+please contact Berkeley Lab’s Intellectual Property Office at IPO@lbl.gov
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+
+(1) Redistributions of source code must retain the above copyright notice,
+this list of conditions and the following disclaimer.
+ 
+(2) Redistributions in binary form must reproduce the above copyright notice,
+this list of conditions and the following disclaimer in the documentation
+and/or other materials provided with the distribution.
+ 
+(3) Neither the name of the University of California, Lawrence Berkeley
+National Laboratory, U.S. Dept. of Energy, Johnson Controls, Inc., nor the
+names of its contributors may be used to endorse or promote products derived
+from this software without specific prior written permission.
+
+(4) Use of the software, in source or binary form is permitted for both
+commercial and non-commercial purposes, provided however that no right or
+license to any of Licensors’ related patents or other intellectual property
+rights extends to any uses or applications not in full compliance with this
+open source license.
+ 
+(5) In the event you create any bug fixes, patches, upgrades, updates,
+improvements, modifications, derivative works or enhancements to the source
+code or binary code of the software (“Enhancements”) you hereby grant the
+Licensors each, a paid-up, non-exclusive, irrevocable, worldwide license in
+the Enhancements to reproduce, prepare derivative works, distribute copies to
+the public, perform publicly and display publicly, and to permit others to do
+so.  Programming dynamically linked to the software shall not be deemed
+derivative works or Enhancements of the software, nor subject to the foregoing 
+license.   
 
  
-If you have questions about your rights to use or distribute this software, please contact Berkeley Lab’s Intellectual Property Office at IPO@lbl.gov
-
-
-Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-
-
-(1) Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-
- 
-(2) Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-
- 
-(3) Neither the name of the University of California, Lawrence Berkeley National Laboratory, U.S. Dept. of Energy, Johnson Controls, Inc., nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
-
-
-(4) Use of the software, in source or binary form is permitted for both commercial and non-commercial purposes, provided however that no right or license to any of Licensors’ related patents or other intellectual property rights extends to any uses or applications not in full compliance with this open source license.
-
- 
-(5) In the event you create any bug fixes, patches, upgrades, updates, improvements, modifications, derivative works or enhancements to the source code or binary code of the software (“Enhancements”) you hereby grant the Licensors each, a paid-up, non-exclusive, irrevocable, worldwide license in the Enhancements to reproduce, prepare derivative works, distribute copies to the public, perform publicly and display publicly, and to permit others to do so.  Programming dynamically linked to the software shall not be deemed derivative works or Enhancements of the software, nor subject to the foregoing license.   
-
- 
-THIS SOFTWARE IS PROVIDED BY THE LICENSOR AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT ARE DISCLAIMED. IN NO EVENT SHALL THE LICENSORS OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+THIS SOFTWARE IS PROVIDED BY THE LICENSOR AND CONTRIBUTORS “AS IS” AND ANY
+EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-
+INFRINGEMENT ARE DISCLAIMED. IN NO EVENT SHALL THE LICENSORS OR CONTRIBUTORS
+BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
