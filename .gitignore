@@ -2,8 +2,12 @@
 *.pptx
 *.zip
 *.pdf
+*.jpg
 
 __pycache__/
+releases/
+comparison/
+LEAN Code/
 
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
@@ -83,11 +87,3 @@ CERC_BEE_Tool.egg-info/not-zip-safe
 CERC_BEE_Tool.egg-info/dependency_links.txt
 *.egg
 
-*.jpg
-outputs/utils.js
-outputs/CERC China LEAN Report_20 pages copy for Changning.pdf
-outputs/CERC China LEAN Report.pdf
-outputs/comparison/get_FIM.r
-
-comparison/
-LEAN Code/
