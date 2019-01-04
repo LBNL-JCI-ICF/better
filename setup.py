@@ -9,13 +9,12 @@ setup(name='CERC_BEE_Tool',
       license='MIT',
       packages=[],
       install_requires=[
-          'geocoder',
-          'ish_parser',
-          'matplotlib',
-          'numpy',
-          'pandas',
-          'scipy',
-          'xlrd >= 0.9.0'
+          'geocoder>=1.38.1',
+          'ish_parser>=0.0.22',
+          'numpy>=1.14.2',
+          'pandas>=0.22.0',
+          'scipy>=1.0.0',
+          'xlrd>= 0.9.0'
       ],
       zip_safe=False)
 
