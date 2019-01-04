@@ -18,7 +18,7 @@ The tool is being developed under the U.S. Department of Energy (DOE) U.S.-China
 The EE Targeting Tool is developed using Python 3.6
 
 ### Software Prerequisites
-Python 3.6.x - We recommend using Anaconda distribution which bundles most of the required packages. If you'd rather not install Anaconda, you can download Python 3.6 from [here](https://www.python.org/downloads/release/python-360/).
+Python 3.6.x - We recommend using Anaconda to manage Python envrionments. If you'd rather not install Anaconda, you can download Python 3.6 from [here](https://www.python.org/downloads/).
 
 ### Data Prerequisites
 The EE Targeting Tool source code posted here can provide analysis on a building-by-building basis for any building type in any geographic location as long as the data prerequisites are met for either Option A: Portfolio User or Option B: Single Chinese Hotel User.
@@ -51,23 +51,18 @@ The following data must be input into the Chinese Hotel Data Input Template for 
 
 
 ### Installation
-1. Download and install [Python >=3.5](https://www.python.org/downloads/) 
-2. Download the source code:
-   * Clone using git
-      ```
-      git clone https://github.com/LBNL-CERC-BEE/CERC-BEE-Virtual-Energy-Efficiency-Targeting-Tool.git
-      ```
-   * Clone or download using the browser
-     
-     <img src="https://developer.servicenow.com/app_store_learnv2_automatingapps_jakarta_app-store_AutomatingAppLogic_AppProperties_Images_Props_CopyForkRepoURL.png" alt text="Clone or Download" width ="250" height ="100" style = "clip: rect(0px,50px,100px,50px)">
+1. Download and install [Python >=3.6](https://www.python.org/downloads/).
+2. Download the source code from the [latest release](https://github.com/LBNL-CERC-BEE/CERC-BEE-Virtual-Energy-Efficiency-Targeting-Tool/releases).
+3. Install dependencies with by exectuting the install_dependencies.py script in the source code folder. We recommend using pip 9.0.1 when installing the dependencies.
 
-3. Install dependencies
+Note: The current release is an alpha version. The tool will be packaged and setup files will be provided in future releases. 
 
 ## How to Use
-1. After downloading/cloning the package, enter building information and utility data in the data/portfolio.xlsx and save the file
-2. Set the analysis mode in the ee_targeting/demo.py file, and save it.
-  1). Single building: set the target building id.
-  2). Portfolio: set the start and end building id.
+The focus of the development is the building energy benchmarking and energy efficiency targeting analytical core but not the user interface. To demondatrate the data input/output and the use of the tool, a demo.py script is provided. Below is a brief guidance of the demo: 
+1. After downloading the source file, enter building information and utility data in the data/portfolio.xlsx and save the file
+2. Set the analysis mode in the ee_targeting/demo.py file, and save it.<br/>
+  1). Single building: set the target building id.<br/>
+  2). Portfolio: set the start and end building id.<br/>
   3). Set the saving target level.
 3. Run the analysis by running the demo.py script. Example:
 ```
