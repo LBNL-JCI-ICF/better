@@ -7,14 +7,14 @@ The tool is being developed under Cooperative Research and Development Agreement
 
 
 ## Getting Started
-The Virtual Building EE Targeting Tool is developed using Python 3.6
+BETTER is developed using Python 3.6
 
 ### Software Prerequisites
 Python 3.6.x - We recommend using Anaconda to manage Python environments. If you'd rather not install Anaconda, you can download Python 3.6 from [here](https://www.python.org/downloads/).
 
 ### Data Prerequisites
 
-The Virtual Building EE Targeting Tool source code posted here can provide analysis on a building-by-building and portfolio basis for any building type in any geographic location as long as the following data points for at least 30 buildings of an identical type are provided:
+The BETTER source code posted here can provide analysis on a building-by-building and portfolio basis for any building type in any geographic location as long as the following data points for at least 30 buildings of an identical type are provided:
 1. Building Location (zip code)
 2. Gross Floor Area (exclude parking)
 3. Building Primary/Secondary Space Use Type
