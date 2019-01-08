@@ -1,8 +1,11 @@
-copyright
+BUILDING EFFICIENCY TARGETING TOOL FOR ENERGY RETROFITS (BETTER) COPYRIGHT (c) 2018, THE REGENTS OF THE UNIVERSITY OF CALIFORNIA, 
+THROUGH LAWRENCE BERKELEY NATIONAL LABORATORY (SUBJECT TO RECEIPT OF ANY REQUIRED APPROVALS FROM THE U.S. DEPT. OF ENERGY). 
+ALL RIGHTS RESERVED.
 
-Energy Efficiency Targeting Tool Copyright (c) 2018, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy). All rights reserved.
+IF YOU HAVE QUESTIONS ABOUT YOUR RIGHTS TO USE OR DISTRIBUTE THIS SOFTWARE, PLEASE CONTACT BERKELEY LAB'S INTELLECTUAL PROPERTY OFFICE 
+AT  IPO@LBL.GOV.
 
-If you have questions about your rights to use or distribute this software, please contact Berkeley Lab's Intellectual Property Office at  IPO@lbl.gov.
-
-NOTICE.  This Software was developed under funding from the U.S. Department of Energy and the U.S. Government consequently retains certain rights. As such, the U.S. Government has been granted for itself and others acting on its behalf a paid-up, nonexclusive, irrevocable, worldwide license in the Software to reproduce, distribute copies to the public, prepare derivative works, and perform publicly and display publicly, and to permit other to do so. 
-
+NOTICE.  THIS SOFTWARE WAS DEVELOPED UNDER FUNDING FROM THE U.S. DEPARTMENT OF ENERGY AND THE U.S. GOVERNMENT CONSEQUENTLY RETAINS 
+CERTAIN RIGHTS. AS SUCH, THE U.S. GOVERNMENT HAS BEEN GRANTED FOR ITSELF AND OTHERS ACTING ON ITS BEHALF A PAID-UP, NONEXCLUSIVE, 
+IRREVOCABLE, WORLDWIDE LICENSE IN THE SOFTWARE TO REPRODUCE, DISTRIBUTE COPIES TO THE PUBLIC, PREPARE DERIVATIVE WORKS, AND PERFORM 
+PUBLICLY AND DISPLAY PUBLICLY, AND TO PERMIT OTHER TO DO SO. 
