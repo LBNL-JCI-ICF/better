@@ -1,13 +1,4 @@
-﻿# Copyright
-
-Energy Efficiency Targeting Tool Copyright (c) 2018, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy). All rights reserved.
-
-If you have questions about your rights to use or distribute this software, please contact Berkeley Lab's Intellectual Property Office at  IPO@lbl.gov.
-
-NOTICE.  This Software was developed under funding from the U.S. Department of Energy and the U.S. Government consequently retains certain rights. As such, the U.S. Government has been granted for itself and others acting on its behalf a paid-up, nonexclusive, irrevocable, worldwide license in the Software to reproduce, distribute copies to the public, prepare derivative works, and perform publicly and display publicly, and to permit other to do so. 
-
-
-# Virtual Building Energy Efficiency Targeting Tool
+# Building Efficiency Targeting Tool for Energy Retrofits (BETTER)
 The lack of public-access, data-driven tools requiring minimal inputs and short run time to benchmark against peers, quantify energy-/cost-savings, and recommend energy efficiency (EE) improvements is one of the main barriers to capturing untapped EE opportunities in the United States and globally. To fill the gap, and simultaneously address the need for automated, cost-effective, and standardized EE assessment of large volumes of buildings in U.S. state and municipal benchmarking and disclosure programs, an automated, open-source, virtual building EE targeting tool is being developed by Lawrence Berkeley National Laboratory (LBNL), Johnson Controls, and ICF International (ICF).
 
 The tool requires very simple building data inputs; minimum manual work; and provides fast, “no-cost/no-touch” building EE upgrade targeting (equipment and operations) with an acceptable accuracy. It implements the ASHRAE Inverse Modeling Toolkit (IMT) to find piece-wise linear regression models between building energy consumption (electricity and fossil fuel) and outdoor air temperature. The model coefficients of each individual building are then benchmarked against the coefficients of buildings in the same space type category. Johnson Controls’ LEAN Energy Analysis is used to identify the EE measures for the building. Finally, the potential energy and cost savings are estimated with the EE measures.
