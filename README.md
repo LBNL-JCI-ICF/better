@@ -15,6 +15,7 @@ The focus of the development is the building energy benchmarking and energy effi
  4. Make sure `better` is installed by running `better --help`
  5. Run example `better single ` # TODO: create an example
  6. Run your analysis
+ 
     ##Examples
     Single building: ``` better single --building-id 1 --savings-target 2 --no-cached-weather --portfolio-file PATH/TO/portfolio.xlsx --output-path PATH/TO/output/ ```
     
