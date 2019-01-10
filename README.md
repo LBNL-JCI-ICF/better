@@ -24,4 +24,5 @@ The focus of the development is the building energy benchmarking and energy effi
     Portfolio: 
     
     ```better portfolio --building-id 2 --to 10 --no-cached-weather --portfolio-file PATH/TO/portfolio.xlsx --output-path PATH/TO/output/```
+    
     *you can use "=" or space e.g --building-id 1 or --building-id=1*
