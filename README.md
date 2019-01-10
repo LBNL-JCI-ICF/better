@@ -8,9 +8,9 @@ NOTICE.  This Software was developed under funding from the U.S. Department of E
 
 ## How to Use
 The focus of the development is the building energy benchmarking and energy efficiency targeting analytical core but not the user interface. To demondatrate the data input/output and the use of the tool, a demo.py script is provided. Below is a brief guidance of the demo: 
-1. Install python and pip. 
-2. Download the latest release
-3. Open a `cmd` window and run 
+1. Install python and pip from [here](https://www.python.org/downloads/)
+2. Download the [latest release](https://github.com/LBNL-JCI-ICF/better/releases).
+3. Open a `cmd` or a `Terminal` window and run 
  ```pip install .```
  4. Make sure `better` is installed by running `better --help`
  5. Run example `better single ` # TODO: create an example

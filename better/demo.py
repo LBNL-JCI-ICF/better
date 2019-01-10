@@ -135,19 +135,22 @@ def run_batch(
     end_id, 
     saving_target=2, 
     cached_weather=True, 
-    batch_report=False
+    batch_report=False,
+    portfolio_path=None,
+    report_path=None
     ):
     v_single_buildings = []
     v_single_building_reports = []
     for i in range(start_id, end_id+1):
         print('--------------------------------------------------')
         print('Analyzing building ' + str(i))
-        single_building = run_single(bldg_id=i, saving_target=saving_target, use_default_benchmark_data=True, cached_weather=cached_weather)[1]
+        single_building = run_single(bldg_id=i, saving_target=saving_target, use_default_benchmark_data=True, cached_weather=cached_weather, portfolio_path=portfolio_path,
+    report_path=report_path)[1]
         v_single_buildings.append(single_building)
 
     if batch_report:
-        report_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__))) + '/outputs/'
-        portfolio_out = Portfolio('Sample Portfolio')
+        report_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__))) + '/outputs/' if report_path == None else report_path
+        portfolio_out = Portfolio('Portfolio')
         portfolio_out.prepare_portfolio_report_data(v_single_buildings, report_path)
         report_portfolio = Report(portfolio = portfolio_out)
         report_portfolio.generate_portfolio_report(report_path)
