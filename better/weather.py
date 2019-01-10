@@ -8,7 +8,7 @@ NOTICE.  This Software was developed under funding from the U.S. Department of E
 
 '''
 
-from constants import Constants
+from .constants import Constants
 import pandas as pd
 import numpy as np
 import os

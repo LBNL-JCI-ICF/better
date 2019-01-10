@@ -9,10 +9,10 @@ NOTICE.  This Software was developed under funding from the U.S. Department of E
 '''
 
 
-import model
-import benchmark
-import constants
-import assessment
+from .model import *
+from .benchmark import *
+from .constants import *
+from .assessment import *
 
 import pandas as pd
 import numpy as np
@@ -91,12 +91,12 @@ class Building:
             if self.utility_electricity.recent_annual_cost > 0:
                 self.recent_annual_electricity_cost = int(self.utility_electricity.recent_annual_cost)
             else:
-                self.recent_annual_electricity_cost = int(self.recent_annual_electricity_kWh * constants.Constants.electricity_unit_price)
+                self.recent_annual_electricity_cost = int(self.recent_annual_electricity_kWh * Constants.electricity_unit_price)
             self.recent_annual_electricity_EUI = round(self.recent_annual_electricity_kWh /self.bldg_area, 1)
             self.eui_daily_electricity = self.utility_electricity.daily_kWh / self.bldg_area
             self.eui_daily_all_periods_electricity = self.utility_electricity.daily_kWh_all_periods / self.bldg_area
             self.annual_eui_electricity = round(
-                self.eui_daily_all_periods_electricity * constants.Constants.days_in_year, 2)
+                self.eui_daily_all_periods_electricity * Constants.days_in_year, 2)
 
 
         if (hasattr(self, "utility_fossil_fuel") and hasattr(self.utility_fossil_fuel, "daily_kWh")):
@@ -104,12 +104,12 @@ class Building:
             if self.utility_fossil_fuel.recent_annual_cost > 0:
                 self.recent_annual_fossil_fuel_cost = int(self.utility_fossil_fuel.recent_annual_cost)
             else:
-                self.recent_annual_fossil_fuel_cost = int(self.recent_annual_fossil_fuel_kWh * constants.Constants.fossil_fuel_unit_price)
+                self.recent_annual_fossil_fuel_cost = int(self.recent_annual_fossil_fuel_kWh * Constants.fossil_fuel_unit_price)
             self.recent_annual_fossil_fuel_EUI = round(self.recent_annual_fossil_fuel_kWh /self.bldg_area, 1)
             self.eui_daily_fossil_fuel = self.utility_fossil_fuel.daily_kWh / self.bldg_area
             self.eui_daily_all_periods_fossil_fuel = self.utility_fossil_fuel.daily_kWh_all_periods / self.bldg_area
             self.annual_eui_fossil_fuel = round(
-                self.eui_daily_all_periods_fossil_fuel * constants.Constants.days_in_year, 2)
+                self.eui_daily_all_periods_fossil_fuel * Constants.days_in_year, 2)
 
     def fit_inverse_model(self):
 
@@ -119,7 +119,7 @@ class Building:
         # Fit change-point model for electricity consumption
         print('Fitting electricity model...')
         if (hasattr(self, "weather_electricity")):
-            self.im_electricity = model.InverseModel(self.weather_electricity.v_T_C,
+            self.im_electricity = InverseModel(self.weather_electricity.v_T_C,
                                                      self.eui_daily_electricity,
                                                      'Electricity')
             has_fit_e = self.im_electricity.fit_model()
@@ -128,7 +128,7 @@ class Building:
         # Fit change-point model for fossil fuel consumption
         print('Fitting fossil fuel model...')
         if (hasattr(self, "weather_fossil_fuel")):
-            self.im_fossil_fuel = model.InverseModel(self.weather_fossil_fuel.v_T_C,
+            self.im_fossil_fuel = InverseModel(self.weather_fossil_fuel.v_T_C,
                                                      self.eui_daily_fossil_fuel,
                                                      'Fossil Fuel')
             has_fit_f = self.im_fossil_fuel.fit_model()
@@ -143,31 +143,31 @@ class Building:
         """
         print("Start benchamrking")
         if use_default:
-            df_sample_bench_stats_e = constants.Constants.df_sample_benchmark_stats_e
-            df_sample_bench_stats_f = constants.Constants.df_sample_benchmark_stats_f
+            df_sample_bench_stats_e = Constants.df_sample_benchmark_stats_e
+            df_sample_bench_stats_f = Constants.df_sample_benchmark_stats_f
         else:
             df_sample_bench_stats_e = df_benchmark_stats_electricity
             df_sample_bench_stats_f = df_benchmark_stats_fossil_fuel
 
         if (hasattr(self, "im_electricity") and hasattr(self.im_electricity, "coeffs")):
             # Electricity
-            self.benchmark_HSL_e = benchmark.Benchmark('beta_hdd',
+            self.benchmark_HSL_e = Benchmark('beta_hdd',
                                                        self.im_electricity.coeffs['hsl'],
                                                        df_bench_stats=df_sample_bench_stats_e,
                                                        valid=self.im_electricity.coeff_validation['hsl'])
-            self.benchmark_HCP_e = benchmark.Benchmark('beta_beth',
+            self.benchmark_HCP_e = Benchmark('beta_beth',
                                                        self.im_electricity.coeffs['hcp'],
                                                        df_bench_stats=df_sample_bench_stats_e,
                                                        valid=self.im_electricity.coeff_validation['hcp'])
-            self.benchmark_BASE_e = benchmark.Benchmark('beta_base',
+            self.benchmark_BASE_e = Benchmark('beta_base',
                                                         self.im_electricity.coeffs['base'],
                                                         df_bench_stats=df_sample_bench_stats_e,
                                                        valid=self.im_electricity.coeff_validation['base'])
-            self.benchmark_CCP_e = benchmark.Benchmark('beta_betc',
+            self.benchmark_CCP_e = Benchmark('beta_betc',
                                                        self.im_electricity.coeffs['ccp'],
                                                        df_bench_stats=df_sample_bench_stats_e,
                                                        valid=self.im_electricity.coeff_validation['ccp'])
-            self.benchmark_CSL_e = benchmark.Benchmark('beta_cdd',
+            self.benchmark_CSL_e = Benchmark('beta_cdd',
                                                        self.im_electricity.coeffs['csl'],
                                                        df_bench_stats=df_sample_bench_stats_e,
                                                        valid=self.im_electricity.coeff_validation['csl'])
@@ -186,23 +186,23 @@ class Building:
             # Need to add default fossil fuel in the constants module !!!
             # Default benchmark stats will be used is no specific benchmark stats are provided
             # Fossil fuel
-            self.benchmark_HSL_f = benchmark.Benchmark('beta_hdd',
+            self.benchmark_HSL_f = Benchmark('beta_hdd',
                                                        self.im_fossil_fuel.coeffs['hsl'],
                                                        df_bench_stats=df_sample_bench_stats_f,
                                                        valid=self.im_fossil_fuel.coeff_validation['hsl'])
-            self.benchmark_HCP_f = benchmark.Benchmark('beta_beth',
+            self.benchmark_HCP_f = Benchmark('beta_beth',
                                                        self.im_fossil_fuel.coeffs['hcp'],
                                                        df_bench_stats=df_sample_bench_stats_f,
                                                        valid=self.im_fossil_fuel.coeff_validation['hcp'])
-            self.benchmark_BASE_f = benchmark.Benchmark('beta_base',
+            self.benchmark_BASE_f = Benchmark('beta_base',
                                                         self.im_fossil_fuel.coeffs['base'],
                                                         df_bench_stats=df_sample_bench_stats_f,
                                                        valid=self.im_fossil_fuel.coeff_validation['base'])
-            self.benchmark_CCP_f = benchmark.Benchmark('beta_betc',
+            self.benchmark_CCP_f = Benchmark('beta_betc',
                                                        self.im_fossil_fuel.coeffs['ccp'],
                                                        df_bench_stats=df_sample_bench_stats_f,
                                                        valid=self.im_fossil_fuel.coeff_validation['ccp'])
-            self.benchmark_CSL_f = benchmark.Benchmark('beta_cdd',
+            self.benchmark_CSL_f = Benchmark('beta_cdd',
                                                        self.im_fossil_fuel.coeffs['csl'],
                                                        df_bench_stats=df_sample_bench_stats_f,
                                                        valid=self.im_fossil_fuel.coeff_validation['csl'])
@@ -219,17 +219,17 @@ class Building:
             self.benchmark_CSL_f = None
 
         # Plot benchmark html sections
-        self.benchmarking_bar_hsl_e_html = benchmark.Benchmark.generate_benchmark_bar_html(self.benchmark_HSL_e)
-        self.benchmarking_bar_hcp_e_html = benchmark.Benchmark.generate_benchmark_bar_html(self.benchmark_HCP_e)
-        self.benchmarking_bar_base_e_html = benchmark.Benchmark.generate_benchmark_bar_html(self.benchmark_BASE_e)
-        self.benchmarking_bar_ccp_e_html = benchmark.Benchmark.generate_benchmark_bar_html(self.benchmark_CCP_e)
-        self.benchmarking_bar_csl_e_html = benchmark.Benchmark.generate_benchmark_bar_html(self.benchmark_CSL_e)
+        self.benchmarking_bar_hsl_e_html = Benchmark.generate_benchmark_bar_html(self.benchmark_HSL_e)
+        self.benchmarking_bar_hcp_e_html = Benchmark.generate_benchmark_bar_html(self.benchmark_HCP_e)
+        self.benchmarking_bar_base_e_html = Benchmark.generate_benchmark_bar_html(self.benchmark_BASE_e)
+        self.benchmarking_bar_ccp_e_html = Benchmark.generate_benchmark_bar_html(self.benchmark_CCP_e)
+        self.benchmarking_bar_csl_e_html = Benchmark.generate_benchmark_bar_html(self.benchmark_CSL_e)
 
-        self.benchmarking_bar_hsl_f_html = benchmark.Benchmark.generate_benchmark_bar_html(self.benchmark_HSL_f)
-        self.benchmarking_bar_hcp_f_html = benchmark.Benchmark.generate_benchmark_bar_html(self.benchmark_HCP_f)
-        self.benchmarking_bar_base_f_html = benchmark.Benchmark.generate_benchmark_bar_html(self.benchmark_BASE_f)
-        self.benchmarking_bar_ccp_f_html = benchmark.Benchmark.generate_benchmark_bar_html(self.benchmark_CCP_f)
-        self.benchmarking_bar_csl_f_html = benchmark.Benchmark.generate_benchmark_bar_html(self.benchmark_CSL_f)
+        self.benchmarking_bar_hsl_f_html = Benchmark.generate_benchmark_bar_html(self.benchmark_HSL_f)
+        self.benchmarking_bar_hcp_f_html = Benchmark.generate_benchmark_bar_html(self.benchmark_HCP_f)
+        self.benchmarking_bar_base_f_html = Benchmark.generate_benchmark_bar_html(self.benchmark_BASE_f)
+        self.benchmarking_bar_ccp_f_html = Benchmark.generate_benchmark_bar_html(self.benchmark_CCP_f)
+        self.benchmarking_bar_csl_f_html = Benchmark.generate_benchmark_bar_html(self.benchmark_CSL_f)
 
     def ee_assess(self, use_default=True, df_benchmark_stats_electricity=None,
                   df_benchmark_stats_fossil_fuel=None):
@@ -258,8 +258,8 @@ class Building:
 
         if (use_default):
             # Use default benchmarking stats
-            df_assessment_e = copy.deepcopy(constants.Constants.df_sample_benchmark_stats_e)
-            df_assessment_f = copy.deepcopy(constants.Constants.df_sample_benchmark_stats_f)
+            df_assessment_e = copy.deepcopy(Constants.df_sample_benchmark_stats_e)
+            df_assessment_f = copy.deepcopy(Constants.df_sample_benchmark_stats_f)
         else:
             df_assessment_e = copy.deepcopy(df_benchmark_stats_electricity)
             df_assessment_f = copy.deepcopy(df_benchmark_stats_fossil_fuel)
@@ -270,7 +270,7 @@ class Building:
         # Assess energy efficient measures
         if (not pd.isna(df_assessment_e['site_coefficients']).all()):
             # Assess only if there is an electricity change-point model
-            FIM_analysis_e = assessment.LEAN_FIMs(df_assessment_e, 1)  # (electricity = 1, fossil fuel = 2)
+            FIM_analysis_e = LEAN_FIMs(df_assessment_e, 1)  # (electricity = 1, fossil fuel = 2)
             FIM_analysis_e.set_targets(self.saving_target)  # conservative = 1, nominal = 2, aggressive = 3
             self.FIM_table_e = FIM_analysis_e.FIM_recommendations(save_file=False)
             self.coeff_out_e = FIM_analysis_e.savings_coefficients(save_file=False)
@@ -290,7 +290,7 @@ class Building:
 
         if (not pd.isna(df_assessment_f['site_coefficients']).all()):
             # Assess only if there is a fossil fuel change-point model
-            FIM_analysis_f = assessment.LEAN_FIMs(df_assessment_f, 2)  # (electricity = 1, fossil fuel = 2)
+            FIM_analysis_f = LEAN_FIMs(df_assessment_f, 2)  # (electricity = 1, fossil fuel = 2)
             FIM_analysis_f.set_targets(self.saving_target)  # conservative = 1, nominal = 2, aggressive = 3
             self.FIM_table_f = FIM_analysis_f.FIM_recommendations(save_file=False)
             self.coeff_out_f = FIM_analysis_f.savings_coefficients(save_file=False)
@@ -323,8 +323,8 @@ class Building:
             print("No saving model found for electricity consumption!")
         else:
             # Calculate electricity savings (all and most recent year)
-            self.v_old_daily_eui_all_e = model.InverseModel.piecewise_linear(self.weather_electricity.v_T_C, *self.im_electricity.model_p)
-            self.v_new_daily_eui_all_e = model.InverseModel.piecewise_linear(self.weather_electricity.v_T_C, *self.p_new_e)
+            self.v_old_daily_eui_all_e = InverseModel.piecewise_linear(self.weather_electricity.v_T_C, *self.im_electricity.model_p)
+            self.v_new_daily_eui_all_e = InverseModel.piecewise_linear(self.weather_electricity.v_T_C, *self.p_new_e)
             self.v_old_consumption_all_e = np.round(self.bldg_area * np.multiply(self.v_old_daily_eui_all_e, self.utility_electricity.days), 1)
             self.v_new_consumption_all_e = np.round(self.bldg_area * np.multiply(self.v_new_daily_eui_all_e, self.utility_electricity.days), 1)
             self.v_old_consumption_last_year_e = self.v_old_consumption_all_e[-12:]
@@ -335,7 +335,7 @@ class Building:
             self.total_energy_savings_pct_last_year_e = np.round(self.total_energy_savings_last_year_e / self.old_consumption_last_year_e * 100, 2)
             # Calculate cost savings
             if (not hasattr(self.utility_electricity, 'utility_unit_price')):
-                self.utility_electricity.utility_unit_price = constants.Constants.electricity_unit_price
+                self.utility_electricity.utility_unit_price = Constants.electricity_unit_price
                 print('Warning: No electricity cost data provided, using default value!')
             self.total_cost_savings_e = round(self.utility_electricity.utility_unit_price * self.total_energy_savings_last_year_e, 1)
             self.total_energy_consumption_old += self.old_consumption_last_year_e
@@ -344,8 +344,8 @@ class Building:
             print("No saving model found for fossil fuel consumption!")
         else:
             # Calculate fossil_fuel savings (all and most recent year)
-            self.v_old_daily_eui_all_f = model.InverseModel.piecewise_linear(self.weather_fossil_fuel.v_T_C, *self.im_fossil_fuel.model_p)
-            self.v_new_daily_eui_all_f = model.InverseModel.piecewise_linear(self.weather_fossil_fuel.v_T_C, *self.p_new_f)
+            self.v_old_daily_eui_all_f = InverseModel.piecewise_linear(self.weather_fossil_fuel.v_T_C, *self.im_fossil_fuel.model_p)
+            self.v_new_daily_eui_all_f = InverseModel.piecewise_linear(self.weather_fossil_fuel.v_T_C, *self.p_new_f)
             self.v_old_consumption_all_f = np.round(self.bldg_area * np.multiply(self.v_old_daily_eui_all_f, self.utility_fossil_fuel.days), 1)
             self.v_new_consumption_all_f = np.round(self.bldg_area * np.multiply(self.v_new_daily_eui_all_f, self.utility_fossil_fuel.days), 1)
             self.v_old_consumption_last_year_f = self.v_old_consumption_all_f[-12:]
@@ -356,7 +356,7 @@ class Building:
             self.total_energy_savings_pct_last_year_f = np.round(self.total_energy_savings_last_year_f / self.old_consumption_last_year_f * 100, 2)
             # Calculate cost savings
             if (not hasattr(self.utility_fossil_fuel, 'utility_unit_price')):
-                self.utility_fossil_fuel.utility_unit_price = constants.Constants.fossil_fuel_unit_price
+                self.utility_fossil_fuel.utility_unit_price = Constants.fossil_fuel_unit_price
                 print('Warning: No fossil_fuel cost data provided, using default value!')
             self.total_cost_savings_f = round(self.utility_fossil_fuel.utility_unit_price * self.total_energy_savings_last_year_f, 1)
             self.total_energy_consumption_old += self.old_consumption_last_year_f
@@ -497,12 +497,12 @@ class Building:
         v_base_consumption = base * v_days * area
 
         if(len(v_T_heating) > 1):
-            v_heating_consumption = (model.InverseModel.piecewise_linear(v_T_heating,
+            v_heating_consumption = (InverseModel.piecewise_linear(v_T_heating,
                                                                          *model_p) - base) * v_days_heating * area
         else:
             v_heating_consumption = [0]
         if(len(v_T_cooling) > 1):
-            v_cooling_consumption = (model.InverseModel.piecewise_linear(v_T_cooling,
+            v_cooling_consumption = (InverseModel.piecewise_linear(v_T_cooling,
                                                                          *model_p) - base) * v_days_cooling * area
         else:
             v_cooling_consumption = [0]

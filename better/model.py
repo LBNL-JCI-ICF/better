@@ -11,7 +11,7 @@ NOTICE.  This Software was developed under funding from the U.S. Department of E
 from scipy import optimize, stats
 import numpy as np
 
-import constants
+from .constants import *
 
 
 class InverseModel:
@@ -401,7 +401,7 @@ class InverseModel:
         if (self.has_fit):
             model_description_html += '<p>'
             model_description_html += '<b>' + self.energy_type + ':</b> '
-            model_description_html += 'Your consistent baseload is ' + str(round(self.base, 1)) + ' kWh/(m<sup>2</sup>*day), or ' + str(round(self.base * 1 * constants.Constants.days_in_year, 1)) + ' kWh/(m<sup>2</sup>*yr) <b>[Baseload]:</b>. '
+            model_description_html += 'Your consistent baseload is ' + str(round(self.base, 1)) + ' kWh/(m<sup>2</sup>*day), or ' + str(round(self.base * 1 * Constants.days_in_year, 1)) + ' kWh/(m<sup>2</sup>*yr) <b>[Baseload]:</b>. '
             if(self.model_type_str != '3P Heating'):
                 model_description_html += 'The building is in cooling mode when the outside air temperature is above ' + str(round(self.ccp, 1)) + ' &#176;C <b>[Cooling Change Point]</b>. '
                 model_description_html += 'During cooling, the building daily energy consumption increases by ' + str(round(building.bldg_area * self.csl, 1)) + ' kWh/day for each 1 degree increase in outside air temperature <b>[Cooling Sensitivity]</b>. '

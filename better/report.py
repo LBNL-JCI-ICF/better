@@ -10,7 +10,7 @@ NOTICE.  This Software was developed under funding from the U.S. Department of E
 
 import datetime
 import numpy as np
-import constants
+from .constants import *
 
 class Report:
 
@@ -704,7 +704,7 @@ class Report:
             window.PLOTLYENV = window.PLOTLYENV || {};
             window.PLOTLYENV.BASE_URL = "https://plot.ly";
             Plotly.newPlot("'''+div_id+'''", ['''
-        v_rgb_str = np.random.choice(constants.Constants.rgb_color_strs, replace=False)
+        v_rgb_str = np.random.choice(Constants.rgb_color_strs, replace=False)
         for i, location in enumerate(locations):
             df_temp = df_summary.loc[df_summary['Building Address']==location]
             v_x = df_temp['Building Annual Electricity EUI (kWh/m2)']

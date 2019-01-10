@@ -12,11 +12,11 @@ import pandas as pd
 import numpy as np
 from collections import OrderedDict
 
-import constants
-import building
-import utility
-import weather
-import benchmark
+from .constants import *
+from .building import *
+from .utility import *
+from .weather import *
+from .benchmark import *
 
 
 class Portfolio:
@@ -61,15 +61,15 @@ class Portfolio:
             Current solution: proportionally allocate the by the number of days in each calendar month
             '''
         # Convert the energy unit to kwh
-        df_temp.loc[df_temp['energy_unit'] == 'MJ 兆焦', 'energy_consumption'] *= constants.Constants.MJ_to_kWh
-        df_temp.loc[df_temp['energy_unit'] == 'GJ 吉焦', 'energy_consumption'] *= constants.Constants.GJ_to_kWh
-        df_temp.loc[df_temp['energy_unit'] == 'MWh 兆瓦时', 'energy_consumption'] *= constants.Constants.MWH_to_kWh
-        df_temp.loc[df_temp['energy_unit'] == 'Btu  英热', 'energy_consumption'] *= constants.Constants.Btu_to_kWh
-        df_temp.loc[df_temp['energy_unit'] == 'MMBtu 百万英热', 'energy_consumption'] *= constants.Constants.MMBtu_to_kWh
-        df_temp.loc[df_temp['energy_unit'] == 'Cubic Meters 立方米', 'energy_consumption'] *= constants.Constants.M3_to_kWh
-        df_temp.loc[df_temp['energy_unit'] == 'Therms 撒姆', 'energy_consumption'] *= constants.Constants.Therms_to_kWh
+        df_temp.loc[df_temp['energy_unit'] == 'MJ 兆焦', 'energy_consumption'] *= Constants.MJ_to_kWh
+        df_temp.loc[df_temp['energy_unit'] == 'GJ 吉焦', 'energy_consumption'] *= Constants.GJ_to_kWh
+        df_temp.loc[df_temp['energy_unit'] == 'MWh 兆瓦时', 'energy_consumption'] *= Constants.MWH_to_kWh
+        df_temp.loc[df_temp['energy_unit'] == 'Btu  英热', 'energy_consumption'] *= Constants.Btu_to_kWh
+        df_temp.loc[df_temp['energy_unit'] == 'MMBtu 百万英热', 'energy_consumption'] *= Constants.MMBtu_to_kWh
+        df_temp.loc[df_temp['energy_unit'] == 'Cubic Meters 立方米', 'energy_consumption'] *= Constants.M3_to_kWh
+        df_temp.loc[df_temp['energy_unit'] == 'Therms 撒姆', 'energy_consumption'] *= Constants.Therms_to_kWh
         df_temp.loc[
-            df_temp['energy_unit'] == 'Decatherms 十撒姆', 'energy_consumption'] *= constants.Constants.Decatherms_to_kWh
+            df_temp['energy_unit'] == 'Decatherms 十撒姆', 'energy_consumption'] *= Constants.Decatherms_to_kWh
 
         # Format the dataframe to match he raw utility data frame
         df_temp = df_temp[['bill_start_dates', 'bill_end_dates', 'energy_consumption', 'energy_cost']]
@@ -115,10 +115,10 @@ class Portfolio:
         for i in df_temp_meta['building_ID']:
             if (utility_type == 1):
                 df_temp_detail_utility = (self.get_utility_by_building_id_and_energy_type(i, 1))
-                utility_temp = utility.Utility('electricity', df_temp_detail_utility)
+                utility_temp = Utility('electricity', df_temp_detail_utility)
             else:
                 df_temp_detail_utility = (self.get_utility_by_building_id_and_energy_type(i, 2))
-                utility_temp = utility.Utility('fossil fuel', df_temp_detail_utility)
+                utility_temp = Utility('fossil fuel', df_temp_detail_utility)
 
             index = df_temp_meta[df_temp_meta['building_ID'] == i].index.tolist()[0]
 
@@ -160,8 +160,8 @@ class Portfolio:
 
             if (hasattr(utility_temp, "df_raw_data")):
                 # Proceed only if there is utility data for the current building
-                building_temp = building.Building(bldg_id, bldg_name, bldg_address, bldg_type, bldg_area, currency)
-                weather_temp = weather.Weather(building_temp.coord)
+                building_temp = Building(bldg_id, bldg_name, bldg_address, bldg_type, bldg_area, currency)
+                weather_temp = Weather(building_temp.coord)
                 building_temp.add_utility(utility_temp)
                 building_temp.add_weather(True, weather_temp)
                 has_fit = building_temp.fit_inverse_model()
@@ -192,11 +192,11 @@ class Portfolio:
     def generate_benchmark_stats(df_building_models):
         df_bench_stats = pd.DataFrame(columns=['beta_median', 'beta_standard_deviation'])
         df_bench_stats.index.name = "coefficient"
-        median_BASE, std_BASE = benchmark.Benchmark.generate_benchmark_stats('BASE', df_building_models['beta_base'])
-        median_CSL, std_CSL = benchmark.Benchmark.generate_benchmark_stats('CSL', df_building_models['beta_cdd'])
-        median_CCP, std_CCP = benchmark.Benchmark.generate_benchmark_stats('CCP', df_building_models['beta_betc'])
-        median_HSL, std_HSL = benchmark.Benchmark.generate_benchmark_stats('HSL', df_building_models['beta_hdd'])
-        median_HCP, std_HCP = benchmark.Benchmark.generate_benchmark_stats('HCP', df_building_models['beta_beth'])
+        median_BASE, std_BASE = Benchmark.generate_benchmark_stats('BASE', df_building_models['beta_base'])
+        median_CSL, std_CSL = Benchmark.generate_benchmark_stats('CSL', df_building_models['beta_cdd'])
+        median_CCP, std_CCP = Benchmark.generate_benchmark_stats('CCP', df_building_models['beta_betc'])
+        median_HSL, std_HSL = Benchmark.generate_benchmark_stats('HSL', df_building_models['beta_hdd'])
+        median_HCP, std_HCP = Benchmark.generate_benchmark_stats('HCP', df_building_models['beta_beth'])
         df_bench_stats.at['beta_base', 'beta_median'], df_bench_stats.at['beta_base', 'beta_standard_deviation'] = median_BASE, std_BASE
         df_bench_stats.at['beta_cdd', 'beta_median'], df_bench_stats.at['beta_cdd', 'beta_standard_deviation'] = median_CSL, std_CSL
         df_bench_stats.at['beta_betc', 'beta_median'], df_bench_stats.at['beta_betc', 'beta_standard_deviation'] = median_CCP, std_CCP
