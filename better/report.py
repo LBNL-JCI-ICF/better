@@ -18,9 +18,7 @@ class Report:
         self.logo()
         if building != None:
             self.building = building
-            if (building.currency == 'Chinese Yuan 人民币'):
-                self.currency_str = '¥'
-            elif (building.currency == 'US Dollar 美元'):
+            if (building.currency == 'US Dollar'):
                 self.currency_str = '$'
             self.charts_js()
         if portfolio != None:

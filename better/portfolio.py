@@ -50,10 +50,10 @@ class Portfolio:
         df_temp = df_temp[['bill_start_dates', 'bill_end_dates', 'energy_type',
                            'energy_unit', 'energy_consumption', 'energy_cost']]
         if (energy_type == 1):
-            df_temp = df_temp.loc[df_temp['energy_type'] == 'Electricity - Grid Purchased 电-购自电网']
+            df_temp = df_temp.loc[df_temp['energy_type'] == 'Electricity - Grid Purchased']
             if df_temp.empty: return None
         else:
-            df_temp = df_temp.loc[df_temp['energy_type'] != 'Electricity - Grid Purchased 电-购自电网']
+            df_temp = df_temp.loc[df_temp['energy_type'] != 'Electricity - Grid Purchased']
             if df_temp.empty: return None
 
             '''
@@ -61,20 +61,19 @@ class Portfolio:
             Current solution: proportionally allocate the by the number of days in each calendar month
             '''
         # Convert the energy unit to kwh
-        df_temp.loc[df_temp['energy_unit'] == 'MJ 兆焦', 'energy_consumption'] *= constants.Constants.MJ_to_kWh
-        df_temp.loc[df_temp['energy_unit'] == 'GJ 吉焦', 'energy_consumption'] *= constants.Constants.GJ_to_kWh
-        df_temp.loc[df_temp['energy_unit'] == 'MWh 兆瓦时', 'energy_consumption'] *= constants.Constants.MWH_to_kWh
-        df_temp.loc[df_temp['energy_unit'] == 'Btu  英热', 'energy_consumption'] *= constants.Constants.Btu_to_kWh
-        df_temp.loc[df_temp['energy_unit'] == 'MMBtu 百万英热', 'energy_consumption'] *= constants.Constants.MMBtu_to_kWh
-        df_temp.loc[df_temp['energy_unit'] == 'Cubic Meters 立方米', 'energy_consumption'] *= constants.Constants.M3_to_kWh
-        df_temp.loc[df_temp['energy_unit'] == 'Therms 撒姆', 'energy_consumption'] *= constants.Constants.Therms_to_kWh
-        df_temp.loc[
-            df_temp['energy_unit'] == 'Decatherms 十撒姆', 'energy_consumption'] *= constants.Constants.Decatherms_to_kWh
+        df_temp.loc[df_temp['energy_unit'] == 'MJ', 'energy_consumption'] *= constants.Constants.MJ_to_kWh
+        df_temp.loc[df_temp['energy_unit'] == 'GJ', 'energy_consumption'] *= constants.Constants.GJ_to_kWh
+        df_temp.loc[df_temp['energy_unit'] == 'MWh', 'energy_consumption'] *= constants.Constants.MWH_to_kWh
+        df_temp.loc[df_temp['energy_unit'] == 'Btu', 'energy_consumption'] *= constants.Constants.Btu_to_kWh
+        df_temp.loc[df_temp['energy_unit'] == 'MMBtu', 'energy_consumption'] *= constants.Constants.MMBtu_to_kWh
+        df_temp.loc[df_temp['energy_unit'] == 'Cubic Meters', 'energy_consumption'] *= constants.Constants.M3_to_kWh
+        df_temp.loc[df_temp['energy_unit'] == 'Therms', 'energy_consumption'] *= constants.Constants.Therms_to_kWh
+        df_temp.loc[df_temp['energy_unit'] == 'Decatherms', 'energy_consumption'] *= constants.Constants.Decatherms_to_kWh
 
         # Format the dataframe to match he raw utility data frame
         df_temp = df_temp[['bill_start_dates', 'bill_end_dates', 'energy_consumption', 'energy_cost']]
-        df_temp.columns = ["Monthly Billing Start Date 账单起始日", "Monthly Billing End Date 账单月结日",
-                           "kWh 度", "Cost"]
+        df_temp.columns = ["Monthly Billing Start Date", "Monthly Billing End Date",
+                           "kWh", "Cost"]
 
         return (df_temp)
 

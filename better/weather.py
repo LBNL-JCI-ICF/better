@@ -43,7 +43,7 @@ class Weather:
         distance = 2 * Constants.earth_radius * np.arcsin(np.sqrt(temp))
         return (distance)
 
-    def find_closest_weather_station(self, df_weather_station_list=Constants.df_cn_weather_station):
+    def find_closest_weather_station(self, df_weather_station_list=Constants.df_us_weather_station):
         self.v_coord = np.asarray(df_weather_station_list[['latitude', 'longitude']].values)
         # Find the closest and second closest weather station (backup if the closest doesn't work)
         v_distance = [Weather.haversine_distance(self.latitude, self.longitude, coord[0], coord[1])
