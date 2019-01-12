@@ -3,6 +3,9 @@
 *.zip
 *.pdf
 *.jpg
+*Coeffs_out.csv
+*recommendations.csv
+*_development*
 
 __pycache__/
 releases/
