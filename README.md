@@ -28,10 +28,13 @@ The BETTER source code posted here can provide analysis on a building-by-buildin
   - Consumption units are required (e.g., kWh, therms, etc.)<br/>
   - Cost units are required (e.g., US Dollars)<br/>
 <br/>
+
 #### Input Data Format
 Sample data for 10 buildings are included in `./data/portfolio.xlsx`. Metadata for each building to be analyzed should be entered in the “Metadata” tab, one row per building. Utility data for all fuel types should be entered on the “Utility” tab. Be sure to double check that the building ID, fuel type, and units are accurate for each utility bill entry, and be sure to save the file as `portfolio.xlsx`. Overwrite the file to suit your needs.
+
 #### Benchmark Statistics
 A sample benchmark statistic is provided in `better/constants.py`. The team is working to create a database of U.S. buildings to allow the benchmarking and analysis of individual buildings.
+
 #### Weather Data
 Weather data is downloaded from the [NOAA website](https://governmentshutdown.noaa.gov/?page=gsod.html) for the building location. To use previously downloaded weather data at later runs set `cached_weather` to `False` in `run.py`.
 
