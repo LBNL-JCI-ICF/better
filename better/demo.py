@@ -20,7 +20,7 @@ def run_single(
     use_default_benchmark_data=True, 
     bldg_id = 1, 
     saving_target = 2, 
-    space_type='Hotel_酒店', 
+    space_type='Office',
     cached_weather=True, 
     write_fim=True, 
     write_model=True, 
@@ -38,7 +38,7 @@ def run_single(
     # Initialize a portfolio instance
     p = portfolio.Portfolio('Test')
     # p.read_raw_data_from_xlsx(data_path + 'portfolio.xlsx')
-    p.read_raw_data_from_xlsx(data_path + 'portfolio_development.xlsx')
+    p.read_raw_data_from_xlsx(data_path + 'portfolio.xlsx')
 
     # Get building data from the portfolio
     building_id = bldg_id
