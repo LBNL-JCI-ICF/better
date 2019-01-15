@@ -1,7 +1,7 @@
 # Building Efficiency Targeting Tool for Energy Retrofits (BETTER)
 
 ## Latest Releases
-Download latest releases [here](https://github.com/LBNL-JCI-ICF/better/releases/).
+Download latest release [here](https://github.com/LBNL-JCI-ICF/better/releases/).
 
 ## Background
 The lack of public-access, data-driven tools requiring minimal inputs and short run time to benchmark against peers, quantify energy/cost savings, and recommend energy efficiency (EE) improvements is one of the main barriers to capturing untapped EE opportunities in the United States and globally. To fill the gap, and simultaneously address the need for automated, cost-effective, and standardized EE assessment of large volumes of buildings in U.S. state and municipal benchmarking and disclosure programs, an automated, open-source, virtual building EE targeting tool is being developed by Lawrence Berkeley National Laboratory (LBNL), Johnson Controls (JCI), and ICF.
@@ -16,7 +16,6 @@ The tool is being developed under Cooperative Research and Development Agreement
 ### Software Prerequisites
 BETTER is developed using Python 3.6. We recommend using Anaconda to manage Python environments. If you'd rather not install Anaconda, you can download Python 3.6 from [here](https://www.python.org/downloads/).
 
-Please note that this tool was initially developed for an international market and therefore the current alpha version uses metric/SI units (such as square meters instead of square feet for building area) for some inputs and outputs. Later releases will focus on the US market and will use imperial units (e.g., square feet).
 ### Data Requirements
 
 The BETTER source code posted here can provide analysis on a building-by-building and portfolio basis as long as the following data points for at least 30 buildings of an identical type are provided:
@@ -32,10 +31,12 @@ The BETTER source code posted here can provide analysis on a building-by-buildin
 <br/>
 
 #### Input Data Format
+Please note that this tool was initially developed for an international market and therefore the current alpha version uses metric/SI units (such as square meters instead of square feet for building area) for some inputs and outputs. Later releases will focus on the US market and will use imperial units (e.g., square feet).
+
 Sample data for 10 buildings are included in `./data/portfolio.xlsx`. Metadata for each building to be analyzed should be entered in the “Metadata” tab, one row per building. Utility data for all fuel types should be entered on the “Utility” tab. Be sure to double check that the building ID, fuel type, and units are accurate for each utility bill entry, and be sure to save the file as `portfolio.xlsx`. Overwrite the file to suit your needs.
 
 #### Benchmark Statistics
-A sample benchmark statistic is provided in `better/constants.py`. The team is working to create a database of U.S. buildings to allow the benchmarking and analysis of individual buildings.
+A sample benchmark statistic is provided in `./better/constants.py`. The team is working to create a database of U.S. buildings to allow the benchmarking and analysis of individual buildings.
 
 #### Weather Data
 Weather data is downloaded from the [NOAA website](https://governmentshutdown.noaa.gov/?page=gsod.html) for the building location. To use previously downloaded weather data at later runs set `cached_weather` to `False` in `run.py`.
@@ -57,7 +58,7 @@ The focus of the development is the building energy benchmarking and EE targetin
 3. Output is stored in `./outputs`
 
 ### Run Single Building
-1. Change building information and utility data in the `data/portfolio.xlsx` and save the file
+1. Change building information and utility data in the `./data/portfolio.xlsx` and save the file
 2. Open `./better/run.py` file using a text editor and
    - For a single building: uncomment `run_single()`, set the target building id<br/>
    - For a portfolio: uncomment `run_batch()`, set the start and end building id<br/>
