@@ -1,0 +1,476 @@
+<!DOCTYPE html><html><title>Building Efficiency Targeting Tool for Energy Retrofits (BETTER) Report</title>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+            <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.js"></script>
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/1.42.5/plotly.js"></script>
+            <style>
+            body,
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                font-family: "Helvetica", sans-serif
+                }
+            .td_border {
+                border: solid 0px grey;
+                }
+            .w3-table td {
+                padding: 0px;
+                }
+            .number {
+                position: relative;
+                font: bold italic 45px/1.5 Helvetica, Verdana, sans-serif;
+                color: green;
+                margin: 10px;
+                text-align: left;
+                }
+            .benchmark_bar {
+                height: 38px;
+                background: linear-gradient(to right, #ff0000 0%, #ffff00 50%, #00ff00 100%);
+                }
+            .vertical_line {
+                height: 38px;
+                width: 3px;
+                background: #000;
+                position: relative;
+                }
+            </style>
+        <body class="w3-light-grey w3-content" style="max-width:1500px"><!-- Sidebar/menu --><nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:270px;" id="mySidebar"><br>    <div class="w3-container">        <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">            <i class="fa fa-remove"></i>        </a><a href="https://www.lbl.gov/"><img src="https://creative.lbl.gov/wp-content/uploads/sites/23/2015/05/Berkeley_Lab_Logo_Large.png" style="height:100px;"></a><a href="https://www.icf.com/"><img src="https://upload.wikimedia.org/wikipedia/commons/2/29/ICF_International_logo.png" style="height:100px;"></a><a href="https://www.johnsoncontrols.com/"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/0f/Johnson_Controls.svg/250px-Johnson_Controls.svg.png" style="height:100px;"></a>        <br><br>        <h4><b>Building Efficiency Targeting Tool for Energy Retrofits (BETTER)</b></h4>        <p class="w3-text-grey">2019-01-15  17:34</p>    </div>    <div class="w3-bar-block">        <a href="#overview" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-th-large fa-fw w3-margin-right"></i>Overview</a>         <a href="#benchmark" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-group fa-fw w3-margin-right"></i>Benchmark</a>         <a href="#EE" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-calculator fa-fw w3-margin-right"></i>Energy Efficiency Analysis</a>        <a href="#IMT" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-key fa-fw w3-margin-right"></i>Performance Key</a>        <a href="#About" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-info fa-fw w3-margin-right"></i>About BETTER</a>    </div></nav><div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div><!-- !PAGE CONTENT! --><div class="w3-main" style="margin-left:300px; margin-right:20px">  <div class="w3-container w3-padding-large w3-white">    <h2 id="overview"><b>OFFICE 15</b></h2>    <hr class="w3-opacity"><div class="w3-container w3-margin-bottom w3-padding-small">    <table class="w3-table w3-bordered w3-border" style="width:95% border: solid 1 px blue">  <tr>    <td class="td_border" colspan="3"><b>Building Type</b></td>    <td class="td_border" colspan="3">Office</td>    <td class="td_border" colspan="3"><b>Building Location</b></td>    <td class="td_border" colspan="3">Duluth, MN</td>  </tr>  <tr>    <td class="td_border" colspan="3"><b>Gross Floor Area (m<sup>2</sup>)</b></td>    <td class="td_border" colspan="9">4,982.2</td>  </tr>  </table>  <br>    <table class="w3-table w3-bordered w3-border" style="width:95% border: solid 1 px blue">  <tr>    <td class="td_border" colspan="4"></td>    <td class="td_border" colspan="4"><b>Electricity</b></td>    <td class="td_border" colspan="4"><b>Fossil Fuel</b></td>  </tr>  <tr>    <td class="td_border" colspan="4"><b>Annual Consumption (kWh)</b></td>    <td class="td_border" colspan="4">789,631</td>    <td class="td_border" colspan="4">137,630</td>  </tr>  <tr>    <td class="td_border" colspan="4"><b>Annual Cost ($)</b></td>    <td class="td_border"  colspan="4">78,963</td>    <td class="td_border"  colspan="4">3,440</td>  </tr>  <tr>    <td class="td_border" colspan="4"><b>Annual Site EUI (kWh/m<sup>2</sup>)</b></td>    <td class="td_border" colspan="4">158.5</td>    <td class="td_border" colspan="4">27.6</td>  </tr>    </table><p style="margin:0px;">&nbsp;&nbsp;<i>Note: The annual results are from the most recent 12 months' input.</i></p></div></div><br>  <div class="w3-container w3-padding-large w3-white">    <h2 id="about"><b>Saving Potentials</b></h2>    <hr class="w3-opacity"><div class="w3-container w3-margin-bottom w3-col m12 w3-padding-small"><div class="w3-container "><div class="w3-cell-row"><div class="w3-container w3-cell w3-hover-indigo w3-mobile"><p class="w3-xlarge">    Target Selection: Nominal</p><p class="w3-xlarge">    Potential Cost Savings: </p><p class="number">$ 2,917</p><p class="w3-xlarge">    Potential Percent Savings: </p><p class = "number">3.0%</p></div><div class="w3-container w3-hover-indigo w3-cell w3-mobile"><h5><b>Energy Efficiency Recommendations</b></h5><ul><li>Reduce Equipment Schedules</li><li>Eliminate Electric Heating</li><li>Reduce Lighting Load</li><li>Reduce Plug Loads</li></ul><a href="#EE" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-th-large fa-info w3-margin-right"></i>Details</a> </div></div><hr>
+                  <div class="w3-row">
+                      <div class="w3-half">
+                      <p  class="w3-center"> <b> Utility Cost Breakdown (Thousands$) </b> </p>
+                          <canvas id="disag" style="height:500px"></canvas>
+                      </div>
+                      <div  class="w3-half">
+                      <p  class="w3-center"><b> Utility Cost Savings ($) </b></p>
+                          <canvas id="saving_pie_chart" style="height:500px"></canvas>
+                      </div>
+                  </div>
+            <script>
+                var barOptions_stacked = {
+                    responsive: true,
+                    legend: {
+                    position: "bottom"
+                    },
+
+                    tooltips: {
+                        enabled: true,
+                        callbacks: {
+                            label: function(tooltipItem, data) {
+                                return Math.round(tooltipItem.xLabel).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+" $"
+                            },
+                        }
+                    },
+                    hover :{
+                        animationDuration:0
+                    },
+                    scales: {
+                        xAxes: [{
+                            ticks: {
+                                callback: function (value) {
+                                    return (value/1000.).toLocaleString()+" "
+                                },
+                                beginAtZero:true,
+                                fontFamily: "sans-serif",
+                                fontSize:16
+                            },
+                            scaleLabel:{
+                                display:false
+                            },
+                            gridLines: {},
+                            stacked: true
+                        }],
+                        yAxes: [{
+                            gridLines: {
+                                display:false,
+                                color: "#fff",
+                                zeroLineColor: "#fff",
+                                zeroLineWidth: 1
+                            },
+                            ticks: {
+                                fontFamily: "sans-serif",
+                                fontSize:16
+                            },
+                            stacked: true
+                        }],
+                        legend:{
+                            display:true
+                        },
+                        animation: {},
+                        pointLabelFontFamily : "Quadon Extra Bold",
+                        scaleFontFamily : "Quadon Extra Bold",
+                    }}
+                var ctx = document.getElementById("disag");
+                var myChart = new Chart(ctx, {
+                    type: 'horizontalBar',
+                    data: {
+                        labels: ["Your Building", "Typical Building", "Goal"],
+                        datasets: [
+                            {
+                                label: "Cooling",
+                                data: [0.0, 1302.8710640313304, 0.0],
+                                backgroundColor: "rgba(31,78,121,1)",
+                                hoverBackgroundColor: "rgba(21,68,111,1)"
+                            },
+                            {
+                                label: "Baseload",
+                                data: [66160.12041907973, 67411.72599137048, 63242.99405436601],
+                                backgroundColor: "rgba(127,127,127,1)",
+                                hoverBackgroundColor: "rgba(117,117,117,1)"
+                            },
+                            {
+                                label: "Heating",
+                                data: [19967.230909161084, 49320.79589691514, 19967.23090916108],
+                                backgroundColor: "rgba(192,0,0,1)",
+                                hoverBackgroundColor: "rgba(182,0,0,1)"
+                            }
+                        ]
+                    },
+                    options: barOptions_stacked,
+                });
+            </script>
+        
+            <script>
+                var ctx = document.getElementById("saving_pie_chart");
+                var myChart = new Chart(ctx, {
+                    type: "doughnut",
+                    data: {
+                      labels: ["Cooling", "Baseload", "Heating"],
+                      datasets: [
+                      {
+                          label: "Utility Cost Savings ($)",
+                          backgroundColor: ["rgba(31,78,121,1)", "rgba(127,127,127,1)", "rgba(192,0,0,1)"],
+                          data: [0.0,
+                                 2917.1263647137166,
+                                 3.637978807091713e-12]
+                      }
+                      ]
+                  },
+                  options: {
+                      legend: {
+                         position: "bottom"
+                          },
+
+                    tooltips: {
+                      callbacks: {
+                        label: function(tooltipItem, data) {
+                            var dataset = data.datasets[tooltipItem.datasetIndex];
+                            var meta = dataset._meta[Object.keys(dataset._meta)[0]];
+                            var total = meta.total;
+                            var currentValue = Math.round(data.datasets[0].data[tooltipItem.index]).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+' $';
+                            var percentage = parseFloat((dataset.data[tooltipItem.index]/total*100).toFixed(1));
+                            return currentValue + ' (' + percentage + '%)';
+                        },
+                    },
+                    responsive: true,
+                    enabled: true
+                },
+
+            }
+            });
+            </script>
+        <div class="w3-container w3-content"><hr><button class="w3-button w3-border w3-hover-grey" onclick="showTrends()">Show/Hide original and predicted consumption with upgrade</button></div><div class="w3-cell-row" id="trend_plot" style = "display:none">
+                <div id="trend_plot" class = "w3-row-padding">
+                      <div class ="w3-half">
+                            <canvas id="consumption_e"></canvas>
+                      </div>
+                      <div class="w3-half">
+                            <canvas id="consumption_f"></canvas>
+                      </div>
+                </div>
+            <script>
+              var options = {
+                legend: {
+                    position: "bottom"
+                    },
+                title: {
+                  display: true,
+                  text: "Electricity Consumption"
+                },
+                scales: {
+                  xAxes: [{
+                     ticks: {
+                        maxRotation: 0,
+                        autoSkip: 0,
+                        callback(value) {
+                        var rem = parseInt(value.substring(5,7))%3;
+                        if (rem == 0){
+                        return value;
+                        } else {
+                        return ;
+                        }
+                      }
+                    }    
+                  }
+                  ],
+                  yAxes: [{
+                    scaleLabel:{
+                      display : true,
+                      labelString: "Electricity Consumption (MWh)",
+                    },
+                    ticks: {
+                      beginAtZero: true,
+                      callback: function (value) {
+                        return (value/1000.).toLocaleString()
+                      },
+                    }
+                  }
+                  ]
+                },
+              }
+              var myChart = new Chart(document.getElementById("consumption_e"), {
+                type: 'line',
+                data: {
+                  labels: ['2018-01', '2018-02', '2018-03', '2018-04', '2018-05', '2018-06', '2018-07', '2018-08', '2018-09', '2018-10', '2018-11', '2018-12'],
+                  datasets: [{
+                    data: [92163.33333333333, 78124.44444444445, 73110.83333333333, 55355.555555555555, 53425.277777777774, 52146.944444444445, 56609.722222222226, 57341.38888888889, 51618.333333333336, 58295.277777777774, 72676.66666666667, 88763.33333333333],
+                    label: "Original Consumption",
+                    borderColor: "rgba(255,192,0,1)",
+                    backgroundColor: "rgba(255,192,0,1)",
+                    fill: false,
+                    pointRadius: 0,
+                  }, {
+                    data: [83279.0, 79718.3, 78112.8, 71137.6, 56184.7, 51515.8, 53292.2, 53292.2, 51515.8, 64473.2, 72782.6, 78249.5],
+                    label: "Improved Consumption",
+                    borderColor: "rgba(0,176,80,1)",
+                    backgroundColor: "rgba(0,176,80,1)",
+                    fill: false,
+                    pointRadius: 0,
+                  },
+                  ]
+                },
+                options: options
+              });
+            </script>
+        
+            <script>
+              var options = {
+                legend: {
+                    position: "bottom"
+                    },
+                title: {
+                  display: true,
+                  text: "Fossil Fuel Consumption"
+                },
+                scales: {
+                  xAxes: [{
+                     ticks: {
+                        maxRotation: 0,
+                        autoSkip: 0,
+                        callback(value) {
+                        var rem = parseInt(value.substring(5,7))%3;
+                        if (rem == 0){
+                        return value;
+                        } else {
+                        return ;
+                        }
+                      }
+                    }    
+                  }
+                  ],
+                  yAxes: [{
+                    scaleLabel:{
+                      display : true,
+                      labelString: "Fossil Fuel Consumption (MWh)",
+                    },
+                    ticks: {
+                      beginAtZero: true,
+                      callback: function (value) {
+                        return (value/1000.).toLocaleString()
+                      },
+                    }
+                  }
+                  ]
+                },
+              }
+              var myChart = new Chart(document.getElementById("consumption_f"), {
+                type: 'line',
+                data: {
+                  labels: ['2018-01', '2018-02', '2018-03', '2018-04', '2018-05', '2018-06', '2018-07', '2018-08', '2018-09', '2018-10', '2018-11', '2018-12'],
+                  datasets: [{
+                    data: [36035.034366299995, 27862.7979312, 18025.115022899998, 4607.330024399999, 1477.0200474, 990.7583033999998, 911.7407699999999, 951.2495366999998, 969.4843520999998, 2616.6960099, 13107.7931367, 30075.288866399995],
+                    label: "Original Consumption",
+                    borderColor: "rgba(255,192,0,1)",
+                    backgroundColor: "rgba(255,192,0,1)",
+                    fill: false,
+                    pointRadius: 0,
+                  }, {
+                    data: [29058.8, 32309.2, 22387.3, 15995.8, 1821.5, 1760.8, 1821.5, 1821.5, 1760.8, 4773.3, 18120.1, 22563.8],
+                    label: "Improved Consumption",
+                    borderColor: "rgba(0,176,80,1)",
+                    backgroundColor: "rgba(0,176,80,1)",
+                    fill: false,
+                    pointRadius: 0,
+                  },
+                  ]
+                },
+                options: options
+              });
+            </script>
+        </div></div></div><div class="w3-container w3-margin-bottom w3-padding-small"></div></div><br>  <div class="w3-container w3-padding-large w3-white" id="about">    <h2 id="benchmark"><b>Weather Sensitivity and Benchmarks</b></h2>    <hr class="w3-opacity">Daily electricity and fossil fuel  use per floor area is plotted below against monthly average outdoor air temperature. When energy use goes up at low temperatures on the left side of the graph, it represents heating energy. When energy use goes up at high temperatures on the right side of the graph, it represents cooling energy. The flat part of the graph shows the building's base load.    <hr><div class="w3-row"><p><b>Electricity:</b> Your consistent baseload is 0.4 kWh/(m<sup>2</sup>*day), or 136.2 kWh/(m<sup>2</sup>*yr) <b>[Baseload]</b>. The building is in heating mode when the outside air temperature is below 12.7 &#176;C <b>[Heating Start Point]</b>. During heating, the building daily energy consumption increases by 52.1 kWh/day for each 1 degree decrease in outside air temperature <b>[Heating Sensitivity]</b>.</p></div><div class="w3-row">  <div class="w3-half w3-container w3-margin-bottom w3-col m5 w3-padding-small">    <div class="w3-container ">      <p><b>Electricity Change-point Model</b></p><div class="graph_container"> <canvas id="e_model" style="height:240px;"></canvas></div>
+            <script>
+            var ctx = document.getElementById("e_model");
+            var myChart = new Chart(ctx, {
+              type: 'scatter',
+              data: {
+                datasets: [
+                    
+                  {
+                    label: 'Data',
+                    data: [{x:-6.50, y:0.62}, {y:0.58, x:-9.89}, {y:0.49, x:-3.19}, {x:-0.30, y:0.38}, {x:10.84, y:0.36}, {x:13.49, y:0.36}, {x:19.40, y:0.38}, {x:18.08, y:0.38}, {x:15.09, y:0.36}, {y:0.39, x:5.54}, {x:-1.39, y:0.50}, {y:0.59, x:-3.28}],
+                    showLine: false,
+                    fill: false,
+                    borderColor: 'rgba(0,0,0,1)',
+                    backgroundColor: 'rgba(0,0,0,1)'
+                    },{
+                    label: 'Heating',
+                    data:[{x:-10.89, y:0.62}, {y:0.37, x:12.69}],
+                    showLine: true,
+                    lineTension: 0,
+                    pointRadius: 0,
+                    fill: false,
+                    borderColor: 'rgba(192,0,0,1)',
+                    backgroundColor: 'rgba(192,0,0,1)'
+                    },
+                  {
+                    label: 'Baseload',
+                    data:[{y:0.37, x:12.69}, {y:0.37, x:20.40}],
+                    showLine: true,
+                    lineTension: 0,
+                    pointRadius: 0,
+                    fill: false,
+                    borderColor: 'rgba(127, 127, 127, 1)',
+                    backgroundColor: 'rgba(127, 127, 127, 1)'
+                    } ]
+              },
+              options: {
+          		 maintainAspectRatio: false,
+              legend: {
+                    position: "bottom"
+                    },
+              scales: {
+                    xAxes: [{
+                    ticks: {
+                      beginAtZero:true
+                    },
+                    scaleLabel:{
+                            display : true,
+                            labelString: "Outside Air Temperature (°C)",
+                            },
+                    }],
+                    yAxes: [{
+                    ticks: {
+                      beginAtZero:true
+                    },
+                    scaleLabel:{
+                            display : true,
+                            labelString: "Energy Intensity (kWh/m²-day)",
+                            },
+                    }]
+                },
+
+                tooltips: {
+                  mode: 'index',
+                  intersect: false,
+                },
+                hover: {
+                  mode: 'nearest',
+                  intersect: true
+                },
+              }
+            });
+            </script>    </div>  </div><div class="w3-half w3-container w3-margin-bottom w3-col m7 w3-padding-small"><p><b>Electricity Consumption Benchmarking</b></p><div class="w3-row">  <div class="w3-third">    <p style="margin:0px"><b>Baseload</b> <br/> (Typical)</p>  </div>  <div class="w3-twothird">    <div class="benchmark_bar w3-round-xlarge"><div class="vertical_line"style="left:24%;"><div class="w3-container w3-padding w3-center">24%</div></div></div>  </div></div><div class="w3-row">  <div class="w3-third">    <p style="margin:0px"><b>Heating Sensitivity</b> <br/> (Typical)</p>  </div>  <div class="w3-twothird">    <div class="benchmark_bar w3-round-xlarge"><div class="vertical_line"style="left:69%;"><div class="w3-container w3-padding w3-center">69%</div></div></div>  </div></div><div class="w3-row">  <div class="w3-third">    <p style="margin:0px"><b>Heating Change-point</b> <br/> (Typical)</p>  </div>  <div class="w3-twothird">    <div class="benchmark_bar w3-round-xlarge"><div class="vertical_line"style="left:64%;"><div class="w3-container w3-padding w3-center">64%</div></div></div>  </div></div><p><i>Note: % indicate the percentage of buildings your building is superior to.</i></p><a href="#IMT" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-th-large fa-info w3-margin-right"></i>Details</a> </div></div><hr><div class="w3-row"><p><b>Fossil Fuel:</b> Your consistent baseload is 0.0 kWh/(m<sup>2</sup>*day), or 4.4 kWh/(m<sup>2</sup>*yr) <b>[Baseload]</b>. The building is in heating mode when the outside air temperature is below 7.0 &#176;C <b>[Heating Start Point]</b>. During heating, the building daily energy consumption increases by 67.3 kWh/day for each 1 degree decrease in outside air temperature <b>[Heating Sensitivity]</b>.</p></div><div class="w3-row">  <div class="w3-half w3-container w3-margin-bottom w3-col m5 w3-padding-small">    <div class="w3-container">      <p><b>Fossil Fuel Change-point Model</b></p><div class="graph_container"> <canvas id="f_model" style="height:240px;"></canvas></div>
+            <script>
+            var ctx = document.getElementById("f_model");
+            var myChart = new Chart(ctx, {
+              type: 'scatter',
+              data: {
+                datasets: [
+                    
+                  {
+                    label: 'Data',
+                    data: [{y:0.24, x:-6.50}, {y:0.21, x:-9.89}, {y:0.12, x:-3.19}, {x:-0.30, y:0.03}, {x:10.84, y:0.01}, {x:13.49, y:0.01}, {x:19.40, y:0.01}, {x:18.08, y:0.01}, {x:15.09, y:0.01}, {y:0.02, x:5.54}, {x:-1.39, y:0.09}, {x:-3.28, y:0.20}],
+                    showLine: false,
+                    fill: false,
+                    borderColor: 'rgba(0,0,0,1)',
+                    backgroundColor: 'rgba(0,0,0,1)'
+                    },{
+                    label: 'Heating',
+                    data:[{x:-10.89, y:0.25}, {y:0.01, x:7.00}],
+                    showLine: true,
+                    lineTension: 0,
+                    pointRadius: 0,
+                    fill: false,
+                    borderColor: 'rgba(192,0,0,1)',
+                    backgroundColor: 'rgba(192,0,0,1)'
+                    },
+                  {
+                    label: 'Baseload',
+                    data:[{y:0.01, x:7.00}, {y:0.01, x:20.40}],
+                    showLine: true,
+                    lineTension: 0,
+                    pointRadius: 0,
+                    fill: false,
+                    borderColor: 'rgba(127, 127, 127, 1)',
+                    backgroundColor: 'rgba(127, 127, 127, 1)'
+                    } ]
+              },
+              options: {
+          		 maintainAspectRatio: false,
+              legend: {
+                    position: "bottom"
+                    },
+              scales: {
+                    xAxes: [{
+                    ticks: {
+                      beginAtZero:true
+                    },
+                    scaleLabel:{
+                            display : true,
+                            labelString: "Outside Air Temperature (°C)",
+                            },
+                    }],
+                    yAxes: [{
+                    ticks: {
+                      beginAtZero:true
+                    },
+                    scaleLabel:{
+                            display : true,
+                            labelString: "Energy Intensity (kWh/m²-day)",
+                            },
+                    }]
+                },
+
+                tooltips: {
+                  mode: 'index',
+                  intersect: false,
+                },
+                hover: {
+                  mode: 'nearest',
+                  intersect: true
+                },
+              }
+            });
+            </script>    </div>  </div>    <div class="w3-half w3-container w3-margin-bottom w3-col m7 w3-padding-small"><div class="w3-container"><p><b>Fossil Fuel Consumption Benchmarking</b></p><div class="w3-row">  <div class="w3-third">    <p style="margin:0px"><b>Baseload</b> <br/> (Good)</p>  </div>  <div class="w3-twothird">    <div class="benchmark_bar w3-round-xlarge"><div class="vertical_line"style="left:100%;"><div class="w3-container w3-padding w3-right">100%</div></div></div>  </div></div><div class="w3-row">  <div class="w3-third">    <p style="margin:0px"><b>Heating Sensitivity</b> <br/> (Good)</p>  </div>  <div class="w3-twothird">    <div class="benchmark_bar w3-round-xlarge"><div class="vertical_line"style="left:94%;"><div class="w3-container w3-padding w3-right">94%</div></div></div>  </div></div><div class="w3-row">  <div class="w3-third">    <p style="margin:0px"><b>Heating Change-point</b> <br/> (Typical)</p>  </div>  <div class="w3-twothird">    <div class="benchmark_bar w3-round-xlarge"><div class="vertical_line"style="left:83%;"><div class="w3-container w3-padding w3-center">83%</div></div></div>  </div></div><p><i>Note: % indicate the percentage of buildings your building is superior to.</i></p><a href="#IMT" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-th-large fa-info w3-margin-right"></i>Details</a> </div></div></div></div>  <br>  <div class="w3-container w3-padding-large w3-white">    <h2 id="EE"><b>Energy Efficiency Recommendation Details</b></h2>    <p>More details on each energy efficiency opportunity identified </p><h4>Reduce Equipment Schedules</h4><p>Your building equipment load is higher than typical. Equipment and systems within any building should operate using a schedule. Check equipment schedule and if equipment is operational during low occupancy times or during reduced building use. Setup a notification to identify when schedules are overridden and are not returned to normal.</p><h4>Eliminate Electric Heating</h4><p>Your building electric heating load is higher than typical. Electric heating is expensive and increases heating system energy consumption. Check electric heating system schedules and controls. </p><h4>Reduce Lighting Load</h4><p>Your building lighting load is higher than typical. Lighting load is an ample portion of any building energy consumption. Lighting efficiency and controls have big impact on lighting system performance. Consider upgrading bulbs and fixtures to improve efficiency and check existing (or upgrade to) controls that dim and turn off the lights appropriately. Take advantage of natural daylighting whenever possible. Lights near existing window or skylights can be controlled to dim or turn off for maximum daylight utilization. Renovations to the building envelope and internal space configurations are good opportunity to check lighting system performance. </p><h4>Reduce Plug Loads</h4><p> Your building plug load is higher than typical. Anything that is plugged into standard electric receptacles or outlets fall under plug load. Personal computers, monitors, printers, coffeemakers, other office/lab/lighting equipment are examples of plug loads. Consider upgrading to more efficient models and operate on a schedule where possible.</p><p><i>Note: Special thanks to Johnson Controls (JCI) technical team for their valuable technical support and for their algorithm in identifying Energy Efficiency Recommendations.</i></p>    <hr class="w3-opacity">  </div>  <br>  <div class="w3-container w3-padding-large w3-white">    <h2 id="IMT"><b>Understand the Model</b></h2>
+                <h4>Baseload</h4>
+                <p>Energy consumption of all non-weather-related equipment like computers and lighting. The lower the baseload, the less the energy consumed in plugs and permanently plugged equipment.</p>
+
+                <h4>Cooling Sensitivity </h4>
+                <p>Cooling system energy consumption for each degree increase in outdoor temperature. Low cooling sensitivity results in less energy-consuming cooling system.</p>
+
+                <h4>Cooling change-point</h4>
+                <p>The temperature at which cooling system starts. Below the cooling change point, the cooling system is not operational.</p>
+
+                <h4>Heating Sensitivity</h4>
+                <p>Heating system consumption of energy for each degree decrease in outdoor temperature. Low heating sensitivity results in less energy-consuming heating system.</p>
+
+                <h4>Heating change-point</h4>
+                <p>The temperature at which heating system starts. Above the heating change point, the cooling system is not operational.</p>
+                               <hr class="w3-opacity">  </div>  <br>  <div class="w3-container w3-padding-large w3-white">    <h2 id="About"><b>What is BETTER?</b></h2>  <p>The Building Efficiency Targeting Tool for Energy Retrofits (BETTER) helps building owners and managers quickly assess potential opportunities for energy savings, to inform decisions on where to target energy efficiency efforts. The tool can identify low and no-cost opportunities that can be implemented immediately, as well as retrofit opportunities that can be investigated further through more detailed audits or studies.</p>  <p>The tool uses regression techniques to analyze a building's monthly energy data and weather, in order to determine how much energy is used for heating, cooling, and baseload (lighting, plug loads, etc.). The performance of the building is then benchmarked against similar building. In addition to telling you whether a building's energy consumption is higher or lower than peers, it goes a step further to tell you why that is the case. If a building's energy use is high compared to peers, for example, it can tell you it is because the heating system is performing poorly, while the cooling system and baseload equipment are typical compared to peers. With this information, a building owner can adjust heating setpoints, add insulation, or perform an energy audit that focuses on heating equipment.</p>    <hr class="w3-opacity">  </div>  <br>  <!-- Footer -->  <footer class="w3-container w3-padding-32 w3-white">  <div class="w3-row-padding">    <div class="w3-half">      <h3>Partners</h3><a href="https://www.lbl.gov/"><img src="https://creative.lbl.gov/wp-content/uploads/sites/23/2015/05/Berkeley_Lab_Logo_Large.png" style="height:100px;"></a><a href="https://www.icf.com/"><img src="https://upload.wikimedia.org/wikipedia/commons/2/29/ICF_International_logo.png" style="height:100px;"></a><a href="https://www.johnsoncontrols.com/"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/0f/Johnson_Controls.svg/250px-Johnson_Controls.svg.png" style="height:100px;"></a>    </div>    <div class="w3-half">      <h3>Links</h3>      <ul class="w3-ul w3-hoverable">        <li class="w3-padding-16">          <span class="w3-large"><a href="https://github.com/LBNL-JCI-ICF/better">GitHub Repository</a></span><br>        </li>      </ul>    </div>  </div>  </footer>  <div class="w3-black w3-center w3-padding-24"></div></div><script>function w3_open() {    document.getElementById("mySidebar").style.display = "block";    document.getElementById("myOverlay").style.display = "block";}function w3_close() {    document.getElementById("mySidebar").style.display = "none";    document.getElementById("myOverlay").style.display = "none";}function showTrends() {    var x = document.getElementById("trend_plot");    if (x.style.display === "none") {        x.style.display = "block";    } else {        x.style.display = "none";    }}</script></body></html>
