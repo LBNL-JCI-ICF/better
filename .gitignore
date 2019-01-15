@@ -8,7 +8,6 @@
 *.gz
 *.csv
 
-
 #Directories
 .idea/
 __pycache__/

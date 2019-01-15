@@ -444,6 +444,7 @@ class Report:
             report_html.write('    </div>')
             report_html.write('  </div>')
             report_html.write('  </footer>')
+
             report_html.write('  <div class="w3-black w3-center w3-padding-24"></div>')
             report_html.write('</div>')
             report_html.write('<script>')
@@ -770,10 +771,6 @@ class Report:
                             <td width="50%" class="td_border" colspan="3"><b>Total Building Area (m<sup>2</sup>)</b></td>
                             <td width="50%" class="td_border" colspan="3">''' + '{:,}'.format(self.portfolio.total_area) + '''</td>
                         </tr>
-                        <tr>
-                            <td width="50%" class="td_border" colspan="3"><b>Total Building Area (m<sup>2</sup>)</b></td>
-                            <td width="50%" class="td_border" colspan="3">''' + '{:,}'.format(self.portfolio.total_area) + '''</td>
-                        </tr>
                     </table> <br>
                     <table class="w3-table w3-bordered w3-border" style="width:95% border: solid 1 px blue">
                         <tr>
@@ -862,6 +859,29 @@ class Report:
                 <div class="w3-container w3-margin-bottom w3-padding-small"></div>
             </div><br>
             ''')
+
+            # Footer card
+            report_html.write('  <!-- Footer -->')
+            report_html.write('  <footer class="w3-container w3-padding-32 w3-white">')
+            report_html.write('  <div class="w3-row-padding">')
+            report_html.write('    <div class="w3-half">')
+            report_html.write('      <h3>Partners</h3>')
+            # report_html.write('      <p>Place holder.</p>')
+            report_html.write(self.lbl_logo)
+            report_html.write(self.icf_logo)
+            report_html.write(self.jci_logo)
+            report_html.write('    </div>')
+            report_html.write('    <div class="w3-half">')
+            report_html.write('      <h3>Links</h3>')
+            report_html.write('      <ul class="w3-ul w3-hoverable">')
+            report_html.write('        <li class="w3-padding-16">')
+            report_html.write('          <span class="w3-large"><a href="https://github.com/LBNL-CERC-BEE/CERC-BEE-Virtual-Energy-Efficiency-Targeting-Tool">GitHub Repository</a></span><br>')
+            report_html.write('        </li>')
+            report_html.write('      </ul>')
+            report_html.write('    </div>')
+            report_html.write('  </div>')
+            report_html.write('  </footer>')
+            report_html.write('  <div class="w3-black w3-center w3-padding-24"></div>')
 
 
             report_html.write('</body>')

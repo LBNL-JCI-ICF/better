@@ -78,12 +78,16 @@ class Portfolio:
         return (df_temp)
 
     def get_building_info_by_id(self, building_ID):
-        df_temp = self.df_meta.loc[self.df_meta['building_ID'] == building_ID]
-        building_info = df_temp.iloc[0]['building_name'], \
-                        df_temp.iloc[0]['building_address'], \
-                        df_temp.iloc[0]['building_space_type_1st'], \
-                        df_temp.iloc[0]['building_area'], \
-                        df_temp.iloc[0]['currency']
+        try:
+            df_temp = self.df_meta.loc[self.df_meta['building_ID'] == building_ID]
+            building_info = df_temp.iloc[0]['building_name'], \
+                            df_temp.iloc[0]['building_address'], \
+                            df_temp.iloc[0]['building_space_type_1st'], \
+                            df_temp.iloc[0]['building_area'], \
+                            df_temp.iloc[0]['currency']
+        except:
+            building_info = None
+            print('Cannot find the building with ID: ' + str(building_ID))
         return building_info
 
     def fit_model_for_buildings(self):
