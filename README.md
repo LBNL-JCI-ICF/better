@@ -1,4 +1,6 @@
 # Building Efficiency Targeting Tool for Energy Retrofits (BETTER)
+
+## Latest Releases
 Download latest releases [here](https://github.com/LBNL-JCI-ICF/better/releases/).
 
 ## Background
@@ -22,11 +24,11 @@ The BETTER source code posted here can provide analysis on a building-by-buildin
 2. Gross Floor Area in m<sup>2</sup> (exclude parking)
 3. Building Primary/Secondary Space Use Type
 4. Monthly Utility Bill Consumption and Cost Data (by fuel type)<br/>
-  - Electricity and fossil fuel (if any) consumption and cost<br/>
-  - Minimum of 1 year is required (2-5 years of data is desirable)<br/>
-  - For each consumption point, start and end dates (“bill dates”) are required<br/>
-  - Consumption units are required (e.g., kWh, therms, etc.)<br/>
-  - Cost units are required (e.g., US Dollars)<br/>
+   - Electricity and fossil fuel (if any) consumption and cost<br/>
+   - Minimum of 1 year is required (2-5 years of data is desirable)<br/>
+   - For each consumption point, start and end dates (“bill dates”) are required<br/>
+   - Consumption units are required (e.g., kWh, therms, etc.)<br/>
+   - Cost units are required (e.g., US Dollars)<br/>
 <br/>
 
 #### Input Data Format
@@ -57,9 +59,9 @@ The focus of the development is the building energy benchmarking and EE targetin
 ### Run Single Building
 1. Change building information and utility data in the `data/portfolio.xlsx` and save the file
 2. Open `./better/run.py` file using a text editor and
-  - For a single building: uncomment `run_single()`, set the target building id<br/>
-  - For a portfolio: uncomment `run_batch()`, set the start and end building id<br/>
-  - Set the saving target level.
+   - For a single building: uncomment `run_single()`, set the target building id<br/>
+   - For a portfolio: uncomment `run_batch()`, set the start and end building id<br/>
+   - Set the saving target level.
 3. Run the analysis by running the `python run.py` from your cmd or terminal
 
 ## Interpreting Results
