@@ -45,7 +45,7 @@ Weather data is downloaded from the [NOAA website](https://governmentshutdown.no
 1. Download and install [Python >=3.6](https://www.python.org/downloads/)
 2. Download the source code from the [latest release](https://github.com/LBNL-JCI-ICF/better/releases/)
 3. Extract and navigate to the downloaded release 
-3. Install dependencies by running `python setup.py install`
+3. Install dependencies by clicking on `install.bat` or run `python setup.py install` on your cmd
 
 <i>Note: The current release is an alpha version. The tool will be packaged and setup files will be provided in future releases.</i> 
 
@@ -58,7 +58,7 @@ The focus of the development is the building energy benchmarking and EE targetin
 3. Output is stored in `./outputs`
 
 ### Run Single Building
-1. Change building information and utility data in the `./data/portfolio.xlsx` and save the file
+1. Replace building information and utility data in the `./data/portfolio.xlsx` and save the file, or run as is for demo
 2. Open `./better/run.py` file using a text editor and
    - For a single building: uncomment `run_single()`, set the target building id<br/>
    - For a portfolio: uncomment `run_batch()`, set the start and end building id<br/>
