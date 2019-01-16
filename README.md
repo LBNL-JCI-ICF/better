@@ -35,7 +35,7 @@ Please note that this tool was initially developed for an international market a
 Sample data for 10 buildings are included in `./data/portfolio.xlsx`. Metadata for each building to be analyzed should be entered in the “Metadata” tab, one row per building. Utility data for all fuel types should be entered on the “Utility” tab. Be sure to double check that the building ID, fuel type, and units are accurate for each utility bill entry, and be sure to save the file as `portfolio.xlsx`. Overwrite the file to suit your needs.
 
 #### Benchmark Statistics
-A sample benchmark statistic is provided in `./better/constants.py`. The team is working to create a database of U.S. buildings to allow the benchmarking and analysis of individual buildings. If you have a portfolio of at least 30 buildings, you may choose to benchmark individual buildings against your own data set. For smaller portfolios, your benchmark will be based on buildings in the demo. See “[How to Use](#how_to_use)” for information on how to select your benchmark data set.
+A sample benchmark statistic is provided in `./better/constants.py`. The team is working to create a database of U.S. buildings to allow the benchmarking and analysis of individual buildings. If you have a portfolio of at least 30 buildings, you may choose to benchmark individual buildings against your own data set. For smaller portfolios, your benchmark will be based on buildings in the demo. See “[How to Use](#how-to-use)” for information on how to select your benchmark data set.
 
 #### Weather Data
 Weather data is downloaded from the [NOAA website](https://governmentshutdown.noaa.gov/?page=gsod.html) for the building location. To use previously downloaded weather data at later runs set `cached_weather` to `True` in `run.py`.
@@ -46,7 +46,7 @@ Weather data is downloaded from the [NOAA website](https://governmentshutdown.no
 3. Extract and navigate to the downloaded release 
 3. Install dependencies by running `python setup.py install`
 
-<i>Note: The current release is an alpha version. The tool will be packaged and setup files will be provided in future releases.</i> 
+*Note: The current release is an alpha version. The tool will be packaged and setup files will be provided in future releases.* 
 
 ## How to Use
 The focus of the development is the building energy benchmarking and EE targeting analytical core but not the user interface. To demonstrate the data input/output and the use of the tool.
@@ -60,15 +60,15 @@ Once you have run the demo and familiarized yourself with the tool, you can use 
 
 ### Run Single Building
 1.	Change building information and utility data in the `./data/portfolio.xlsx` and save the file.
-2.	Open `./better/run.py` file using a text editor and ensure that line 11 (“run_single”) is uncommented, and line 13 (“run_batch”) is commented out (i.e., has a “#” at the beginning of the line).
-3.	Set the target building ID based on the ID in `portfolio.xlsx` (e.g., `bldg_id = 1` – change the “1” to match the ID of the building you wish to analyze).
+2.	Open `./better/run.py` file using a text editor and ensure that line **11** (`run_single(...)`) is uncommented, and line **13** (`run_batch(...)`) is commented out (i.e., has a “#” at the beginning of the line).
+3.	Set the target building ID based on the ID in `portfolio.xlsx` (e.g., `bldg_id = 1` – change the **1** to match the ID of the building you wish to analyze).
 4.	Set the saving target level (1 = conservative, 2 = nominal, 3 = aggressive) 
 5.	Run the analysis by running python run.py from your cmd or terminal
 
 ### Run Portfolio
 1.	Change building information and utility data in the `./data/portfolio.xlsx` and save the file.
 2.	Open ./better/run.py file using a text editor and ensure that line 11 (“run_single”) is commented out (i.e., has a “#” at the beginning of the line), and line 13 (“run_batch”) is uncommented.
-3.	Set the start and end building IDs based on the IDs in portfolio.xlsx (e.g., “start_id=1” and “end_id=20” – change the “1” and “20” to match the first and last IDs of the buildings you wish to analyze).
+3.	Set the start and end building IDs based on the IDs in portfolio.xlsx (e.g., `start_id=1` and `end_id=20` – change the **1** and **20** to match the first and last IDs of the buildings you wish to analyze).
 4.	Set the saving target level (1 = conservative, 2 = nominal, 3 = aggressive)
 5.  Run the analysis by running the `python run.py` from your cmd or terminal
 
