@@ -60,7 +60,7 @@ Once you have run the demo and familiarized yourself with the tool, you can use 
 
 ### Run Single Building
 1.	Change building information and utility data in the `./data/portfolio.xlsx` and save the file.
-2.	Open `./better/run.py` file using a text editor and ensure that line 11 (`run_single(...)`) is uncommented, and line **13** (`run_batch(...)`) is commented out (i.e., has a “#” at the beginning of the line).
+2.	Open `./better/run.py` file using a text editor and ensure that line **11** (`run_single(...)`) is uncommented, and line **13** (`run_batch(...)`) is commented out (i.e., has a “#” at the beginning of the line).
 3.	Set the target building ID based on the ID in `portfolio.xlsx` (e.g., `bldg_id = 1` – change the **1** to match the ID of the building you wish to analyze).
 4.	Set the saving target level (1 = conservative, 2 = nominal, 3 = aggressive) 
 5.	Run the analysis by running python run.py from your cmd or terminal
