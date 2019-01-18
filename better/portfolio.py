@@ -136,7 +136,7 @@ class Portfolio:
         return (dict_raw_utility)
 
     @staticmethod
-    def generate_building_models(dict_raw_utility):
+    def generate_building_models(dict_raw_utility, cached_weather):
         # This function may take several minutes, print the progress
         v_building_ID = list(dict_raw_utility.keys())
         v_EUI = np.empty(0)
@@ -166,7 +166,7 @@ class Portfolio:
                 building_temp = building.Building(bldg_id, bldg_name, bldg_address, bldg_type, bldg_area, currency)
                 weather_temp = weather.Weather(building_temp.coord)
                 building_temp.add_utility(utility_temp)
-                building_temp.add_weather(True, weather_temp)
+                building_temp.add_weather(cached_weather, weather_temp)
                 has_fit = building_temp.fit_inverse_model()
                 if (has_fit):
                     v_EUI = np.append(v_EUI, np.nan)
@@ -208,8 +208,8 @@ class Portfolio:
         return df_bench_stats
 
     @staticmethod
-    def generate_benchmark_stats_wrapper(dict_raw_utility):
-        df_building_models = Portfolio.generate_building_models(dict_raw_utility)
+    def generate_benchmark_stats_wrapper(dict_raw_utility, cached_weather):
+        df_building_models = Portfolio.generate_building_models(dict_raw_utility, cached_weather)
         df_bench_stats = Portfolio.generate_benchmark_stats(df_building_models)
         return df_bench_stats
 
@@ -347,8 +347,6 @@ class Portfolio:
             )
 
         # self.df_bldg_summary.to_csv('tbtbt.csv', index=False)
-
-
 
         return
 

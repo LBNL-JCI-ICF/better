@@ -50,6 +50,7 @@ def run_single(
         # Initialize a building instance
         building_test = building.Building(building_id, *building_info, saving_target)
         # building_test.saving_target = saving_target
+        print('=========== Building id: ' +str(building_id) + ' ===========')
     
         # Get utility data from portfolio
         df_raw_electricity = p.get_utility_by_building_id_and_energy_type(building_ID=building_id, energy_type=1)
@@ -77,8 +78,8 @@ def run_single(
                 dict_raw_fossil_fuel = p.get_portfolio_raw_data_by_spaceType_and_utilityType(space_type, utility_type=2)
     
                 # Generate the benchmark stats from the user provided data in the portfolio spreadsheet
-                df_user_bench_stats_e = p.generate_benchmark_stats_wrapper(dict_raw_electricity)
-                df_user_bench_stats_f = p.generate_benchmark_stats_wrapper(dict_raw_fossil_fuel)
+                df_user_bench_stats_e = p.generate_benchmark_stats_wrapper(dict_raw_electricity, cached_weather)
+                df_user_bench_stats_f = p.generate_benchmark_stats_wrapper(dict_raw_fossil_fuel, cached_weather)
     
                 building_test.benchmark(use_default=False,
                                         df_benchmark_stats_electricity=df_user_bench_stats_e,
@@ -128,14 +129,15 @@ def run_batch(
     end_id, 
     saving_target=2, 
     cached_weather=True, 
-    batch_report=False
+    batch_report=False,
+    use_default_benchmark_data=True
     ):
     v_single_buildings = []
     v_single_building_reports = []
     for i in range(start_id, end_id+1):
         print('--------------------------------------------------')
         print('Analyzing building ' + str(i))
-        single_building = run_single(bldg_id=i, saving_target=saving_target, use_default_benchmark_data=True, cached_weather=cached_weather)[1]
+        single_building = run_single(bldg_id=i, saving_target=saving_target, use_default_benchmark_data=use_default_benchmark_data, cached_weather=cached_weather)[1]
         v_single_buildings.append(single_building)
 
     if batch_report:
