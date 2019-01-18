@@ -11,7 +11,7 @@ NOTICE.  This Software was developed under funding from the U.S. Department of E
 from scipy import optimize, stats
 import numpy as np
 
-from better import constants
+import constants
 
 
 class InverseModel:

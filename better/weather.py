@@ -9,6 +9,7 @@ under funding from the U.S. Department of Energy and the U.S. Government consequ
 
 '''
 
+from constants import Constants
 import pandas as pd
 import numpy as np
 import os
@@ -16,7 +17,6 @@ from ish_parser import ish_report, ish_reportException
 from ftplib import FTP
 import gzip
 
-from better import constants
 
 class Weather:
 
@@ -41,10 +41,10 @@ class Weather:
 
         # Calculate the distance between the two locations
         temp = np.sin((r_lat2 - r_lat1) / 2) ** 2 + np.cos(r_lat1) * np.cos(r_lat2) * np.sin((r_lon2 - r_lon1) / 2) ** 2
-        distance = 2 * constants.Constants.earth_radius * np.arcsin(np.sqrt(temp))
+        distance = 2 * Constants.earth_radius * np.arcsin(np.sqrt(temp))
         return (distance)
 
-    def find_closest_weather_station(self, df_weather_station_list=constants.Constants.df_us_weather_station):
+    def find_closest_weather_station(self, df_weather_station_list=Constants.df_us_weather_station):
         self.v_coord = np.asarray(df_weather_station_list[['latitude', 'longitude']].values)
         # Find the closest and second closest weather station (backup if the closest doesn't work)
         v_distance = [Weather.haversine_distance(self.latitude, self.longitude, coord[0], coord[1])

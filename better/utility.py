@@ -8,7 +8,7 @@ NOTICE.  This Software was developed under funding from the U.S. Department of E
 
 '''
 
-from better import constants
+import constants
 
 import numpy as np
 

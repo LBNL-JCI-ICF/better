@@ -12,7 +12,7 @@ import numpy as np
 import scipy.stats as st
 import copy
 
-from better import constants
+import constants
 
 class Benchmark:
 
@@ -106,3 +106,19 @@ class Benchmark:
         else:
             bench_bar_html = ''
         return bench_bar_html
+
+# Test
+if __name__ == "__main__":
+    df = constants.Constants.df_sample_hotel_coeffs_e
+    # print(df)
+    df_sample_bench_stats_e = constants.Constants.df_sample_benchmark_stats_e
+    b1 = Benchmark('beta_base', 0.5, df_sample_bench_stats_e)
+    b2 = Benchmark('beta_betc', 25, df_sample_bench_stats_e)
+    b3 = Benchmark('beta_beth', 13, df_sample_bench_stats_e)
+    b4 = Benchmark('beta_hdd', 0.15, df_sample_bench_stats_e)
+    b5 = Benchmark('beta_cdd', 0.02, df_sample_bench_stats_e)
+    b1.benchmark(plot=True)
+    # b2.benchmark(plot=True)
+    # b3.benchmark(plot=True)
+    # b4.benchmark(plot=True)
+    # b5.benchmark(plot=True)
