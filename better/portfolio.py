@@ -176,7 +176,7 @@ class Portfolio:
                     v_beta_beth = np.append(v_beta_beth, building_temp.im_electricity.coeffs['hcp'])
                     v_beta_cdd = np.append(v_beta_cdd, building_temp.im_electricity.coeffs['csl'])
                     v_beta_hdd = np.append(v_beta_hdd, building_temp.im_electricity.coeffs['hsl'])
-                print(str(i) + '/' + str(len(v_building_ID)-1) + " completed.")
+                print(str(i) + '/' + str(len(v_building_ID)) + " completed.")
             else:
                 print("No " + utility_type + " utility data found for current building, ",
                       str(i) + '/' + str(len(v_building_ID)) + " completed.")
