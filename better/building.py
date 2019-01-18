@@ -9,10 +9,10 @@ NOTICE.  This Software was developed under funding from the U.S. Department of E
 '''
 
 
-import model
-import benchmark
-import constants
-import assessment
+from better import model
+from better import benchmark
+from better import constants
+from better import assessment
 
 import pandas as pd
 import numpy as np

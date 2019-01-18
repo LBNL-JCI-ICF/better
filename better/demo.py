@@ -8,11 +8,11 @@ NOTICE.  This Software was developed under funding from the U.S. Department of E
 
 '''
 
-import utility
-import weather
-import building
-import portfolio
-import report
+from better import utility
+from better import weather
+from better import building
+from better import portfolio
+from better import report
 
 import os
 
@@ -144,17 +144,3 @@ def run_batch(
         portfolio_out.prepare_portfolio_report_data(v_single_buildings, report_path)
         report_portfolio = report.Report(portfolio = portfolio_out)
         report_portfolio.generate_portfolio_report(report_path)
-
-
-def main():
-    # Saving target: 1 ~ conservative, 2 ~ nominal, 3 ~ aggressive
-    # Change the building id and saving target for the building you want to analyze
-    # run_single(bldg_id = 11, saving_target=2, cached_weather=True)
-    # run_single(bldg_id=18, saving_target=3, cached_weather=True)
-    # run_single(bldg_id=10, saving_target=2, cached_weather=False)
-
-    # Uncomment the line below [delete the '#' before run_batch(...)] to run the analysis for buildings between start_id and end_id
-    run_batch(start_id = 1, end_id = 10, saving_target=2, cached_weather=False, batch_report=True)
-
-if __name__ == "__main__":
-    main()

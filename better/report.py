@@ -10,7 +10,8 @@ NOTICE.  This Software was developed under funding from the U.S. Department of E
 
 import datetime
 import numpy as np
-import constants
+
+from better import constants
 
 class Report:
 

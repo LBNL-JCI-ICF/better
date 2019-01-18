@@ -12,7 +12,7 @@ import pandas as pd
 import numpy as np
 import copy
 
-import constants
+from better import constants
 
 
 # Modified by Han Li on 2018-7-31 for the open source tool
@@ -303,16 +303,3 @@ class LEAN_FIMs:
         self.coeff_out = self.coeff_out.set_index(columns[0])
         # if(save_file): self.coeff_out.to_csv(self.utility_type_str + " Coeffs_out.csv")
         return self.coeff_out
-
-
-if __name__ == "__main__":
-    test_site_coeffs = [0, 2, 3, 0, 0]
-    df_assessment = constants.Constants.df_sample_benchmark_stats
-    df_assessment["site_coefficients"] = test_site_coeffs
-
-    # print(df_assessment)
-
-    example_FIM_analysis = LEAN_FIMs(df_assessment, 1)  # (electricity = 1, fossil fuel = 2)
-    example_FIM_analysis.set_targets(1)  # conservative = 1, nominal = 2, aggressive = 3
-    example_FIM_analysis.FIM_recommendations()
-    example_FIM_analysis.savings_coefficients()
