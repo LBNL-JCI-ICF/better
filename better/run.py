@@ -10,4 +10,4 @@ from demo import *
     # Change the building id and saving target for the building you want to analyze
 #run_single(bldg_id=16, saving_target=2, cached_weather=False)
     # Uncomment the line below [delete the '#' before run_batch(...)] to run the analysis for buildings between start_id and end_id
-run_batch(start_id = 1, end_id = 2, saving_target=2, cached_weather=False, batch_report=True, use_default_benchmark_data=False)
+run_batch(start_id = 1, end_id = 2, saving_target=2, cached_weather=False, batch_report=True, use_default_benchmark_data=True)

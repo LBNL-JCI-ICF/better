@@ -63,13 +63,13 @@ class Constants:
     # # Sample benchmarking statistics (for demonstration purposes only)
     ## Electricity
         # From simulation
-    d_sample_benchmark_stats_e = {'beta_median': [0.356550675, 0.0115249, 14.99895357, 0.013061297, 14.37165836],
-                                   'beta_standard_deviation': [0.023339094, 0.005313114, 4.323367826, 0.005181999, 4.838926188],
+    d_sample_benchmark_stats_e = {'beta_median': [0.352, 0.008635, 11.8, 0.00609, 13.3 ],
+                                   'beta_standard_deviation': [0.042105175, 0.003189988, 5.128711432, 0.00546208, 5.159961489 ],
                                   }
     ## Fossil fuel
     # From simulation
-    d_sample_benchmark_stats_f = {'beta_median': [0.107, 0, 4.493517689, 0.072, 12.4],
-                                  'beta_standard_deviation': [0.0125, 0, 0.34410526, 0.0386, 5.7],
+    d_sample_benchmark_stats_f = {'beta_median': [0.005805, 0,0, 0.00698, 13.5],
+                                  'beta_standard_deviation': [0.008327917, 0, 0, 0.00901039, 5.965051821],
                                    }
 
     df_sample_benchmark_stats_e = pd.DataFrame(data=d_sample_benchmark_stats_e,
