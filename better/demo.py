@@ -17,22 +17,23 @@ import report
 import os
 
 def run_single(
-    use_default_benchmark_data=True, 
     bldg_id = 1, 
     saving_target = 2, 
     space_type='Office',
     cached_weather=True, 
     write_fim=True, 
     write_model=True, 
-    return_data=False
+    return_data=False,
+    use_default_benchmark_data=True,
+    df_user_bench_stats_e=None,
+    df_user_bench_stats_f=None
     ):
-    print("--- Start ---")
     # Set paths
     s_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
     data_path = s_path + '/Data/'
     report_path = s_path + '/outputs/'
 
-    # Create an outputs directoty is there isn't one.
+    # Create an outputs directoty if there isn't one.
     if not os.path.exists(report_path): os.makedirs(report_path)
 
     # Initialize a portfolio instance
@@ -44,13 +45,10 @@ def run_single(
     building_id = bldg_id
     building_info = p.get_building_info_by_id(building_id)
     if(building_info == None):
-        print("--- End ---")
         return False, None
     else:
         # Initialize a building instance
         building_test = building.Building(building_id, *building_info, saving_target)
-        # building_test.saving_target = saving_target
-    
         # Get utility data from portfolio
         df_raw_electricity = p.get_utility_by_building_id_and_energy_type(building_ID=building_id, energy_type=1)
         df_raw_fossil_fuel = p.get_utility_by_building_id_and_energy_type(building_ID=building_id, energy_type=2)
@@ -77,8 +75,10 @@ def run_single(
                 dict_raw_fossil_fuel = p.get_portfolio_raw_data_by_spaceType_and_utilityType(space_type, utility_type=2)
     
                 # Generate the benchmark stats from the user provided data in the portfolio spreadsheet
-                df_user_bench_stats_e = p.generate_benchmark_stats_wrapper(dict_raw_electricity)
-                df_user_bench_stats_f = p.generate_benchmark_stats_wrapper(dict_raw_fossil_fuel)
+                if df_user_bench_stats_e is None:
+                    df_user_bench_stats_e = p.generate_benchmark_stats_wrapper(dict_raw_electricity, cached_weather)
+                if df_user_bench_stats_f is None:
+                    df_user_bench_stats_f = p.generate_benchmark_stats_wrapper(dict_raw_fossil_fuel, cached_weather)
     
                 building_test.benchmark(use_default=False,
                                         df_benchmark_stats_electricity=df_user_bench_stats_e,
@@ -90,9 +90,6 @@ def run_single(
             building_test.calculate_savings()
             building_test.plot_savings()
             building_test.disaggregate_consumption_wrapper()
-    
-            print('---+>' + str(building_test.total_energy_savings_pct))
-            print('---*>' + str(building_test.total_cost_savings))
     
             # Output to files
             # Save FIM to csv
@@ -110,7 +107,7 @@ def run_single(
         else:
             print("No meaningful change-point model was found for the current building.")
             return False, None
-        print("--- End ---")
+
 
 def summary_html(report_path, start_id, end_id):
     report_file = report_path + '/summary_report.html'
@@ -126,16 +123,42 @@ def summary_html(report_path, start_id, end_id):
 def run_batch(
     start_id, 
     end_id, 
+    space_type='Office',
     saving_target=2, 
     cached_weather=True, 
-    batch_report=False
+    batch_report=False,
+    use_default_benchmark_data=True
     ):
+    
+    # Conditionally generate the benchmark stats for the porfolio
+    if use_default_benchmark_data:
+        df_user_bench_stats_e, df_user_bench_stats_f = None, None
+    else:
+        # Initialize a portfolio instance
+        s_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+        data_path = s_path + '/Data/'
+        p = portfolio.Portfolio('Test')
+        p.read_raw_data_from_xlsx(data_path + 'portfolio.xlsx')
+
+        # 1 ~ electricity; 2 ~ fossil fuel
+        dict_raw_electricity = p.get_portfolio_raw_data_by_spaceType_and_utilityType(space_type, utility_type=1)
+        dict_raw_fossil_fuel = p.get_portfolio_raw_data_by_spaceType_and_utilityType(space_type, utility_type=2)
+        df_user_bench_stats_e = p.generate_benchmark_stats_wrapper(dict_raw_electricity, cached_weather)
+        df_user_bench_stats_f = p.generate_benchmark_stats_wrapper(dict_raw_fossil_fuel, cached_weather)
+        
     v_single_buildings = []
     v_single_building_reports = []
     for i in range(start_id, end_id+1):
         print('--------------------------------------------------')
         print('Analyzing building ' + str(i))
-        single_building = run_single(bldg_id=i, saving_target=saving_target, use_default_benchmark_data=True, cached_weather=cached_weather)[1]
+        single_building = run_single(
+            bldg_id=i, 
+            saving_target=saving_target, 
+            cached_weather=cached_weather,
+            use_default_benchmark_data=use_default_benchmark_data, 
+            df_user_bench_stats_e=df_user_bench_stats_e,
+            df_user_bench_stats_f=df_user_bench_stats_f
+            )[1]
         v_single_buildings.append(single_building)
 
     if batch_report:
@@ -154,7 +177,7 @@ def main():
     # run_single(bldg_id=10, saving_target=2, cached_weather=False)
 
     # Uncomment the line below [delete the '#' before run_batch(...)] to run the analysis for buildings between start_id and end_id
-    run_batch(start_id = 1, end_id = 10, saving_target=2, cached_weather=False, batch_report=True)
+    run_batch(start_id = 1, end_id = 3, saving_target=2, cached_weather=False, batch_report=True)
 
 if __name__ == "__main__":
     main()

@@ -98,7 +98,6 @@ class Building:
             self.annual_eui_electricity = round(
                 self.eui_daily_all_periods_electricity * constants.Constants.days_in_year, 2)
 
-
         if (hasattr(self, "utility_fossil_fuel") and hasattr(self.utility_fossil_fuel, "daily_kWh")):
             self.recent_annual_fossil_fuel_kWh = self.utility_fossil_fuel.recent_annual_consumption
             if self.utility_fossil_fuel.recent_annual_cost > 0:
