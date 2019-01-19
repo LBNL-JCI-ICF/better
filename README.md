@@ -1,7 +1,7 @@
 # Building Efficiency Targeting Tool for Energy Retrofits (BETTER)
 
-## Latest Releases
-Download the [latest release](https://github.com/LBNL-JCI-ICF/better/releases/), see [Installation](#installation) for how to install the tool or download [Introduction to BETTER presentation](https://github.com/LBNL-JCI-ICF/better/releases/download/v0.4-alpha/BETTER.Training.Slides.pptx) to start.
+## Quick Start 
+Download the [latest release](https://github.com/LBNL-JCI-ICF/better/releases/), see [Installation](#installation) for how to install the tool or download [Introduction to BETTER Presentation](https://github.com/LBNL-JCI-ICF/better/releases/download/v0.4-alpha/BETTER.Training.Slides.pptx) to start.
 
 ## Background
 The lack of public-access, data-driven tools requiring minimal inputs and short run time to benchmark against peers, quantify energy/cost savings, and recommend energy efficiency (EE) improvements is one of the main barriers to capturing untapped EE opportunities in the United States and globally. To fill the gap, and simultaneously address the need for automated, cost-effective, and standardized EE assessment of large volumes of buildings in U.S. state and municipal benchmarking and disclosure programs, an automated, open-source, virtual building EE targeting tool is being developed by Lawrence Berkeley National Laboratory (LBNL), Johnson Controls (JCI), and ICF.
