@@ -44,7 +44,7 @@ Weather data is downloaded from the [NOAA website](https://governmentshutdown.no
 1. Download and install [Python >=3.6](https://www.python.org/downloads/)
 2. Download the source code from the [latest release](https://github.com/LBNL-JCI-ICF/better/releases/)
 3. Extract and navigate to the downloaded release 
-3. Install dependencies by running `python setup.py install`
+3. Install dependencies by clicking on `install.bat` or run `python setup.py install` on your cmd
 
 *Note: The current release is an alpha version. The tool will be packaged and setup files will be provided in future releases.* 
 
@@ -71,6 +71,7 @@ Once you have run the demo and familiarized yourself with the tool, you can use 
 3.	Set the start and end building IDs based on the IDs in portfolio.xlsx (e.g., `start_id=1` and `end_id=20` – change the **1** and **20** to match the first and last IDs of the buildings you wish to analyze).
 4.	Set the saving target level (1 = conservative, 2 = nominal, 3 = aggressive)
 5.  Run the analysis by running the `python run.py` from your cmd or terminal
+
 
 ## Interpreting Results
 The analysis results are in the `./outputs` folder. Comprehensive reports are provided in .html format for each individual building, and results are explained within those html files. For portfolio analyses, a separate Portfolio html output is also provided.
