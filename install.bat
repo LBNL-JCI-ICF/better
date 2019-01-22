@@ -1,15 +1,20 @@
-@echo off
-rem  python.exe is in the path?
-python.exe --version >NUL 2>&1
-if errorlevel 1 goto error
+@ECHO off
+:: Check for Python Installation
+python --version 2>NUL
+IF %ERRORLEVEL% NEQ 0 goto errorNoPython
 python setup.py install
-if errorlevel 1 goto error
-goto end
+IF %ERRORLEVEL% NEQ 0 goto errorNoSetup
 
-:ERROR
+goto END
+
+:errorNoPython
 echo.
-echo Please, install Python or add it to your system PATH and try again.
-echo If the installation is not successful, try to run "python setup.py install"
+echo Error^: Python not found. Please, install Python or add it to your system PATH and try again.
+goto END
+
+:errorNoSetup
+echo.
+echo Error^: Installation not successful, try to run "python setup.py install"
 
 :END
 pause
