@@ -60,6 +60,9 @@ class Weather:
         self.third_closest_weather_station_ID = df_weather_station_list.loc[third_closest_index, 'station_ID']
         self.third_closest_weather_station_name = df_weather_station_list.loc[third_closest_index, 'station_name']
 
+        print(self.closest_weather_station_name)
+        print(self.second_closest_weather_station_name)
+
     def download_weather_NOAA(self):
         print("Downloading weather data...")
         try:
@@ -67,7 +70,7 @@ class Weather:
         except:
             try:
                 print("Weather from the closest weather station not available...")
-                print("Trying to download the third second data from the third closest weather station.")
+                print("Trying to download the third second data from the second closest weather station.")
                 self.v_T_F, self.v_T_C = self.process_downloaded_weather(self.second_closest_weather_station_ID)
             except:
                 print("Weather from the second closest weather station not available...")
@@ -127,6 +130,7 @@ class Weather:
             os.remove(file_name_gz)
 
         def get_ish_report_helper(raw_rpt):
+            print(raw_rpt)
             return (ish_report().loads(raw_rpt))
 
         def get_ish_report_datetime_helper(raw_rpt):
