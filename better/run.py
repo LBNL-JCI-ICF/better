@@ -8,6 +8,6 @@ from demo import *
 # Notes:
     # Saving target: 1 ~ conservative, 2 ~ nominal, 3 ~ aggressive
     # Change the building id and saving target for the building you want to analyze
-run_single(bldg_id=26, saving_target=2, cached_weather=False)
+# run_single(bldg_id=26, saving_target=2, cached_weather=False)
     # Uncomment the line below [delete the '#' before run_batch(...)] to run the analysis for buildings between start_id and end_id
-#run_batch(start_id = 1, end_id = 2, saving_target=2, cached_weather=False, batch_report=True, use_default_benchmark_data=True)
+run_batch(start_id = 1, end_id = 30, saving_target=2, cached_weather=False, batch_report=True, use_default_benchmark_data=True)

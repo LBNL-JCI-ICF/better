@@ -4,7 +4,7 @@ Energy Efficiency Targeting Tool Copyright (c) 2018, The Regents of the Universi
 
 If you have questions about your rights to use or distribute this software, please contact Berkeley Lab's Intellectual Property Office at  IPO@lbl.gov.
 
-NOTICE.  This Software was developed under funding from the U.S. Department of Energy and the U.S. Government consequently retains certain rights. As such, the U.S. Government has been granted for itself and others acting on its behalf a paid-up, nonexclusive, irrevocable, worldwide license in the Software to reproduce, distribute copies to the public, prepare derivative works, and perform publicly and display publicly, and to permit other to do so. 
+NOTICE.  This Software was developed under funding from the U.S. Department of Energy and the U.S. Government consequently retains certain rights. As such, the U.S. Government has been granted for itself and others acting on its behalf a paid-up, nonexclusive, irrevocable, worldwide license in the Software to reproduce, distribute copies to the public, prepare derivative works, and perform publicly and display publicly, and to permit other to do so.
 
 '''
 
@@ -17,12 +17,12 @@ import report
 import os
 
 def run_single(
-    bldg_id = 1, 
-    saving_target = 2, 
+    bldg_id = 1,
+    saving_target = 2,
     space_type='Office',
-    cached_weather=True, 
-    write_fim=True, 
-    write_model=True, 
+    cached_weather=True,
+    write_fim=True,
+    write_model=True,
     return_data=False,
     use_default_benchmark_data=True,
     df_user_bench_stats_e=None,
@@ -60,7 +60,7 @@ def run_single(
         weather_test_e = weather.Weather(building_test.coord)
         weather_test_f = weather.Weather(building_test.coord)
         building_test.add_weather(cached_weather, weather_test_e, weather_test_f)
-    
+
         # Fit inverse model and benchmark
         has_fit = building_test.fit_inverse_model()
         # Continue only if there is at least one change-point model fit.
@@ -73,33 +73,34 @@ def run_single(
                 # 1 ~ electricity; 2 ~ fossil fuel
                 dict_raw_electricity = p.get_portfolio_raw_data_by_spaceType_and_utilityType(space_type, utility_type=1)
                 dict_raw_fossil_fuel = p.get_portfolio_raw_data_by_spaceType_and_utilityType(space_type, utility_type=2)
-    
+
                 # Generate the benchmark stats from the user provided data in the portfolio spreadsheet
                 if df_user_bench_stats_e is None:
                     df_user_bench_stats_e = p.generate_benchmark_stats_wrapper(dict_raw_electricity, cached_weather)
                 if df_user_bench_stats_f is None:
                     df_user_bench_stats_f = p.generate_benchmark_stats_wrapper(dict_raw_fossil_fuel, cached_weather)
-    
+
                 building_test.benchmark(use_default=False,
                                         df_benchmark_stats_electricity=df_user_bench_stats_e,
                                         df_benchmark_stats_fossil_fuel=df_user_bench_stats_f)
                 building_test.ee_assess(use_default=False,
                                         df_benchmark_stats_electricity=df_user_bench_stats_e,
                                         df_benchmark_stats_fossil_fuel=df_user_bench_stats_f)
-    
+
             building_test.calculate_savings()
             building_test.plot_savings()
             building_test.disaggregate_consumption_wrapper()
-    
+
             # Output to files
             # Save FIM to csv
-            if (hasattr(building_test, 'FIM_table_e')):
-                if write_model: building_test.coeff_out_e.to_csv(report_path + 'bldg_' + str(building_test.bldg_id) + "_Electricity Coeffs_out.csv")
-                if write_fim: building_test.FIM_table_e.to_csv(report_path + 'bldg_' + str(building_test.bldg_id) + "_Electricity FIM_recommendations.csv")
-            if (hasattr(building_test, 'FIM_table_f')):
-                if write_model: building_test.coeff_out_f.to_csv(report_path + 'bldg_' + str(building_test.bldg_id) + "_Fossil Fuel Coeffs_out.csv")
-                if write_fim: building_test.FIM_table_f.to_csv(report_path + 'bldg_' + str(building_test.bldg_id) + "_Fossil Fuel FIM_recommendations.csv")
-    
+            if return_data:
+                if hasattr(building_test, 'FIM_table_e'):
+                    if write_model: building_test.coeff_out_e.to_csv(report_path + 'bldg_' + str(building_test.bldg_id) + "_Electricity Coeffs_out.csv")
+                    if write_fim: building_test.FIM_table_e.to_csv(report_path + 'bldg_' + str(building_test.bldg_id) + "_Electricity FIM_recommendations.csv")
+                if hasattr(building_test, 'FIM_table_f'):
+                    if write_model: building_test.coeff_out_f.to_csv(report_path + 'bldg_' + str(building_test.bldg_id) + "_Fossil Fuel Coeffs_out.csv")
+                    if write_fim: building_test.FIM_table_f.to_csv(report_path + 'bldg_' + str(building_test.bldg_id) + "_Fossil Fuel FIM_recommendations.csv")
+
             # Generate static HTML report
             report_building = report.Report(building = building_test)
             report_building.generate_building_report_beta(report_path)
@@ -121,15 +122,16 @@ def summary_html(report_path, start_id, end_id):
         report_html.write('</html>\n')
 
 def run_batch(
-    start_id, 
-    end_id, 
+    start_id,
+    end_id,
     space_type='Office',
-    saving_target=2, 
-    cached_weather=True, 
+    saving_target=2,
+    cached_weather=True,
     batch_report=False,
-    use_default_benchmark_data=True
+    use_default_benchmark_data=True,
+    save_portfolio_results=True
     ):
-    
+
     # Conditionally generate the benchmark stats for the porfolio
     if use_default_benchmark_data:
         df_user_bench_stats_e, df_user_bench_stats_f = None, None
@@ -145,17 +147,17 @@ def run_batch(
         dict_raw_fossil_fuel = p.get_portfolio_raw_data_by_spaceType_and_utilityType(space_type, utility_type=2)
         df_user_bench_stats_e = p.generate_benchmark_stats_wrapper(dict_raw_electricity, cached_weather)
         df_user_bench_stats_f = p.generate_benchmark_stats_wrapper(dict_raw_fossil_fuel, cached_weather)
-        
+
     v_single_buildings = []
     v_single_building_reports = []
     for i in range(start_id, end_id+1):
         print('--------------------------------------------------')
         print('Analyzing building ' + str(i))
         single_building = run_single(
-            bldg_id=i, 
-            saving_target=saving_target, 
+            bldg_id=i,
+            saving_target=saving_target,
             cached_weather=cached_weather,
-            use_default_benchmark_data=use_default_benchmark_data, 
+            use_default_benchmark_data=use_default_benchmark_data,
             df_user_bench_stats_e=df_user_bench_stats_e,
             df_user_bench_stats_f=df_user_bench_stats_f
             )[1]
@@ -164,7 +166,7 @@ def run_batch(
     if batch_report:
         report_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__))) + '/outputs/'
         portfolio_out = portfolio.Portfolio('Sample Portfolio')
-        portfolio_out.prepare_portfolio_report_data(v_single_buildings, report_path)
+        portfolio_out.prepare_portfolio_report_data(v_single_buildings, report_path, save_portfolio_results)
         report_portfolio = report.Report(portfolio = portfolio_out)
         report_portfolio.generate_portfolio_report(report_path)
 

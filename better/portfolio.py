@@ -8,6 +8,7 @@ NOTICE.  This Software was developed under funding from the U.S. Department of E
 
 '''
 
+import os
 import pandas as pd
 import numpy as np
 from collections import OrderedDict
@@ -214,7 +215,7 @@ class Portfolio:
         return df_bench_stats
 
 
-    def prepare_portfolio_report_data(self, v_single_buildings, report_path):
+    def prepare_portfolio_report_data(self, v_single_buildings, report_path, save_portfolio_results):
         # This function prepares the data for portfolio report
         print(v_single_buildings)
         # Count of effective building in the porfolio
@@ -346,7 +347,10 @@ class Portfolio:
             index=False
             )
 
-        # self.df_bldg_summary.to_csv('tbtbt.csv', index=False)
+        if save_portfolio_results:
+            s_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+            output_path = s_path + '/outputs/'
+            self.df_bldg_summary.to_csv(output_path + 'portfolio_results.csv', index=False)
 
         return
 
@@ -369,10 +373,6 @@ if __name__ == "__main__":
     print(df_bench_coeffs_e)
     print(df_bench_coeffs_f)
 
-    # df_models_e.to_csv('C:/Users/Han/Dropbox (Energy Technologies)/Projects/CERC-BEE  Benchmarking Tool/Demonstration/2018-11-05/tool/data/models_e.csv')
-    # df_models_f.to_csv('C:/Users/Han/Dropbox (Energy Technologies)/Projects/CERC-BEE  Benchmarking Tool/Demonstration/2018-11-05/tool/data/models_f.csv')
-    # df_bench_coeffs_e.to_csv('C:/Users/Han/Dropbox (Energy Technologies)/Projects/CERC-BEE  Benchmarking Tool/Demonstration/2018-11-05/tool/data/bench_stats_e.csv')
-    # df_bench_coeffs_f.to_csv('C:/Users/Han/Dropbox (Energy Technologies)/Projects/CERC-BEE  Benchmarking Tool/Demonstration/2018-11-05/tool/data/bench_stats_f.csv')
     import datetime
     df_models_e.to_csv('C:/Users/Han/Documents/GitHub/CERC/CERC-BEE-Benchmarking-Tool/data/' + datetime.datetime.today().strftime('%Y-%m-%d') + 'models_e.csv')
     df_models_f.to_csv('C:/Users/Han/Documents/GitHub/CERC/CERC-BEE-Benchmarking-Tool/data/' + datetime.datetime.today().strftime('%Y-%m-%d') + 'models_f.csv')

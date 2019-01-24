@@ -1,0 +1,919 @@
+<!DOCTYPE html><html><title>Building Efficiency Targeting Tool for Energy Retrofits (BETTER) Report</title>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1">
+            <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+            <script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.js"></script>
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/plotly.js/1.42.5/plotly.js"></script>
+            <style>
+            body,
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                font-family: "Helvetica", sans-serif
+                }
+            .td_border {
+                border: solid 0px grey;
+                }
+            .w3-table td {
+                padding: 0px;
+                }
+            .number {
+                position: relative;
+                font: bold italic 45px/1.5 Helvetica, Verdana, sans-serif;
+                color: green;
+                margin: 10px;
+                text-align: left;
+                }
+            .benchmark_bar {
+                height: 38px;
+                background: linear-gradient(to right, #ff0000 0%, #ffff00 50%, #00ff00 100%);
+                }
+            .vertical_line {
+                height: 38px;
+                width: 3px;
+                background: #000;
+                position: relative;
+                }
+            </style>
+        <body class="w3-light-grey w3-content" style="max-width:1500px"><nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:270px;" id="mySidebar"><br>    <div class="w3-container">        <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">            <i class="fa fa-remove"></i>        </a><a href="https://www.lbl.gov/"><img src="https://creative.lbl.gov/wp-content/uploads/sites/23/2015/05/Berkeley_Lab_Logo_Large.png" style="height:100px;"></a><a href="https://www.icf.com/"><img src="https://upload.wikimedia.org/wikipedia/commons/2/29/ICF_International_logo.png" style="height:100px;"></a><a href="https://www.johnsoncontrols.com/"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/0f/Johnson_Controls.svg/250px-Johnson_Controls.svg.png" style="height:100px;"></a>        <br><br>        <h4><b>Building Efficiency Targeting Tool for Energy Retrofits (BETTER)</b></h4>        <p class="w3-text-grey">2019-01-23  17:15</p>    </div>    <div class="w3-bar-block">        <a href="#overview" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-th-large fa-fw w3-margin-right"></i>Overview</a>         <a href="#benchmark" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-group fa-fw w3-margin-right"></i>Benchmark</a>         <a href="#EE" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-calculator fa-fw w3-margin-right"></i>Energy Efficiency Analysis</a>        <a href="#IMT" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-key fa-fw w3-margin-right"></i>Performance Key</a>        <a href="#About" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-info fa-fw w3-margin-right"></i>About BETTER</a>    </div></nav><div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div><!-- !PAGE CONTENT! --><div class="w3-main" style="margin-left:300px; margin-right:20px">
+            <div class="w3-container w3-padding-large w3-white"> <h2 id="overview"><b>Portfolio Summary</b></h2>
+                <hr class="w3-opacity">
+                <div class="w3-container w3-margin-bottom w3-padding-small">
+                    <table class="w3-table w3-bordered w3-border">
+                        <tr>
+                            <td width="50%" class="td_border" colspan="3"><b>Portfolio Name</b></td>
+                            <td width="50%" class="td_border" colspan="3">Sample Portfolio</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" class="td_border" colspan="3"><b>Number of Buildings</b></td>
+                            <td width="50%" class="td_border" colspan="3">30</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" class="td_border" colspan="3"><b>Total Building Area (m<sup>2</sup>)</b></td>
+                            <td width="50%" class="td_border" colspan="3">728,200</td>
+                        </tr>
+                    </table> <br>
+                    <table class="w3-table w3-bordered w3-border" style="width:95% border: solid 1 px blue">
+                        <tr>
+                            <td width="50%" class="td_border" colspan="4"></td>
+                            <td width="25%" class="td_border" colspan="4"><b>Electricity</b></td>
+                            <td width="25%" class="td_border" colspan="4"><b>Fossil Fuel</b></td>
+                        </tr>
+                        <tr>
+                            <td width="50%" class="td_border" colspan="4"><b>Portfolio Annual Consumption (kWh)</b></td>
+                            <td width="25%" class="td_border" colspan="4">100,779,735</td>
+                            <td width="25%" class="td_border" colspan="4">12,196,957</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" class="td_border" colspan="4"><b>Portfolio Annual Cost (¥)</b></td>
+                            <td width="25%" class="td_border" colspan="4">10,077,962</td>
+                            <td width="25%" class="td_border" colspan="4">304,912</td>
+                        </tr>
+                        <tr>
+                            <td width="50%" class="td_border" colspan="4"><b>Portfolio Average Annual Site EUI (kWh/m<sup>2</sup>)</b></td>
+                            <td width="25%" class="td_border" colspan="4">138.0</td>
+                            <td width="25%" class="td_border" colspan="4">17.0</td>
+                        </tr>
+                    </table>
+                    <p style="margin:0px;">&nbsp;&nbsp;<i>Note: The annual results are from the most recent 12 months' input.</i></p>
+                </div>
+            </div><br>
+            
+            <div class="w3-container w3-padding-large w3-white"> <h2 id="about"><b>Benchmarking</b></h2>
+                <hr class="w3-opacity">
+                <div class="w3-container w3-margin-bottom w3-col m12 w3-padding-small">
+                    <div class="w3-container ">
+
+                        The bubble chart below shows the energy use intensities and saving potentials of each building in the portfolio. The X-axis represents the annual electricity use intensity, and the Y-axis represents the annual fossil fuel energy use intensity. The size of the bubbles indicate the utility bill cost (US Dollar) saving potentials. Bigger size means higher saving potentials. The bubbles are color-coded by their locations.
+                        
+            <div id="2019-01-23 17:15:10.931376" style="height: 100%; width: 100%;" class="plotly-graph-div"></div>
+            <script type="text/javascript">
+            window.PLOTLYENV = window.PLOTLYENV || {};
+            window.PLOTLYENV.BASE_URL = "https://plot.ly";
+            Plotly.newPlot("2019-01-23 17:15:10.931376", [
+
+            {
+                "type": "scatter",
+                "name": "Miami, FL",
+                "x": [158, 174],
+                "y": [1, 1],
+                "mode": "markers",
+                "text": "Building ID: 1 <br>Building Location: Miami, FL <br>Annual electricity EUI : 158(kWh/m<sup>2</sup>) <br>Annual fossil fuel EUI : 1(kWh/m<sup>2</sup>) <br>Potential cost savings: $11,613 <br>Potential energy savings: 14%",
+                "hoverinfo" : "text",
+                "marker": {
+                    "autocolorscale": true,
+                    "sizeref": 0.8,
+                    "size": [8.4, 22.5],
+                    "color": "rgb(0, 51, 102)",
+                    "line": {
+                        "width": 2
+                    },
+                    "opacity": 0.9
+                }
+            }
+        ,
+
+            {
+                "type": "scatter",
+                "name": "Houston, TX",
+                "x": [157, 161],
+                "y": [2, 11],
+                "mode": "markers",
+                "text": "Building ID: 2 <br>Building Location: Houston, TX <br>Annual electricity EUI : 157(kWh/m<sup>2</sup>) <br>Annual fossil fuel EUI : 2(kWh/m<sup>2</sup>) <br>Potential cost savings: $12,893 <br>Potential energy savings: 16%",
+                "hoverinfo" : "text",
+                "marker": {
+                    "autocolorscale": true,
+                    "sizeref": 0.8,
+                    "size": [8.5, 17.8],
+                    "color": "rgb(0, 51, 102)",
+                    "line": {
+                        "width": 2
+                    },
+                    "opacity": 0.9
+                }
+            }
+        ,
+
+            {
+                "type": "scatter",
+                "name": "Phoenix, AZ",
+                "x": [159, 158],
+                "y": [1, 7],
+                "mode": "markers",
+                "text": "Building ID: 3 <br>Building Location: Phoenix, AZ <br>Annual electricity EUI : 159(kWh/m<sup>2</sup>) <br>Annual fossil fuel EUI : 1(kWh/m<sup>2</sup>) <br>Potential cost savings: $11,990 <br>Potential energy savings: 15%",
+                "hoverinfo" : "text",
+                "marker": {
+                    "autocolorscale": true,
+                    "sizeref": 0.8,
+                    "size": [8.4, 13.9],
+                    "color": "rgb(0, 51, 102)",
+                    "line": {
+                        "width": 2
+                    },
+                    "opacity": 0.9
+                }
+            }
+        ,
+
+            {
+                "type": "scatter",
+                "name": "Atlanta, GA",
+                "x": [145, 146],
+                "y": [4, 11],
+                "mode": "markers",
+                "text": "Building ID: 4 <br>Building Location: Atlanta, GA <br>Annual electricity EUI : 145(kWh/m<sup>2</sup>) <br>Annual fossil fuel EUI : 4(kWh/m<sup>2</sup>) <br>Potential cost savings: $7,093 <br>Potential energy savings: 10%",
+                "hoverinfo" : "text",
+                "marker": {
+                    "autocolorscale": true,
+                    "sizeref": 0.8,
+                    "size": [8.0, 10.2],
+                    "color": "rgb(0, 51, 102)",
+                    "line": {
+                        "width": 2
+                    },
+                    "opacity": 0.9
+                }
+            }
+        ,
+
+            {
+                "type": "scatter",
+                "name": "Los Angeles, CA",
+                "x": [127, 137],
+                "y": [1, 2],
+                "mode": "markers",
+                "text": "Building ID: 5 <br>Building Location: Los Angeles, CA <br>Annual electricity EUI : 127(kWh/m<sup>2</sup>) <br>Annual fossil fuel EUI : 1(kWh/m<sup>2</sup>) <br>Potential cost savings: $1,094 <br>Potential energy savings: 1%",
+                "hoverinfo" : "text",
+                "marker": {
+                    "autocolorscale": true,
+                    "sizeref": 0.8,
+                    "size": [7.6, 11.1],
+                    "color": "rgb(0, 51, 102)",
+                    "line": {
+                        "width": 2
+                    },
+                    "opacity": 0.9
+                }
+            }
+        ,
+
+            {
+                "type": "scatter",
+                "name": "Las Vegas, NV",
+                "x": [147, 137],
+                "y": [2, 5],
+                "mode": "markers",
+                "text": "Building ID: 6 <br>Building Location: Las Vegas, NV <br>Annual electricity EUI : 147(kWh/m<sup>2</sup>) <br>Annual fossil fuel EUI : 2(kWh/m<sup>2</sup>) <br>Potential cost savings: $3,700 <br>Potential energy savings: 5%",
+                "hoverinfo" : "text",
+                "marker": {
+                    "autocolorscale": true,
+                    "sizeref": 0.8,
+                    "size": [7.8, 9.1],
+                    "color": "rgb(0, 51, 102)",
+                    "line": {
+                        "width": 2
+                    },
+                    "opacity": 0.9
+                }
+            }
+        ,
+
+            {
+                "type": "scatter",
+                "name": "San Francisco, CA",
+                "x": [133, 123],
+                "y": [2, 15],
+                "mode": "markers",
+                "text": "Building ID: 7 <br>Building Location: San Francisco, CA <br>Annual electricity EUI : 133(kWh/m<sup>2</sup>) <br>Annual fossil fuel EUI : 2(kWh/m<sup>2</sup>) <br>Potential cost savings: $3,799 <br>Potential energy savings: 5%",
+                "hoverinfo" : "text",
+                "marker": {
+                    "autocolorscale": true,
+                    "sizeref": 0.8,
+                    "size": [7.8, 9.2],
+                    "color": "rgb(0, 51, 102)",
+                    "line": {
+                        "width": 2
+                    },
+                    "opacity": 0.9
+                }
+            }
+        ,
+
+            {
+                "type": "scatter",
+                "name": "Baltimore, MD",
+                "x": [151, 142],
+                "y": [7, 21],
+                "mode": "markers",
+                "text": "Building ID: 8 <br>Building Location: Baltimore, MD <br>Annual electricity EUI : 151(kWh/m<sup>2</sup>) <br>Annual fossil fuel EUI : 7(kWh/m<sup>2</sup>) <br>Potential cost savings: $5,505 <br>Potential energy savings: 7%",
+                "hoverinfo" : "text",
+                "marker": {
+                    "autocolorscale": true,
+                    "sizeref": 0.8,
+                    "size": [7.9, 11.3],
+                    "color": "rgb(0, 51, 102)",
+                    "line": {
+                        "width": 2
+                    },
+                    "opacity": 0.9
+                }
+            }
+        ,
+
+            {
+                "type": "scatter",
+                "name": "Albuquerque, NM",
+                "x": [140, 126],
+                "y": [3, 11],
+                "mode": "markers",
+                "text": "Building ID: 9 <br>Building Location: Albuquerque, NM <br>Annual electricity EUI : 140(kWh/m<sup>2</sup>) <br>Annual fossil fuel EUI : 3(kWh/m<sup>2</sup>) <br>Potential cost savings: $0 <br>Potential energy savings: 0%",
+                "hoverinfo" : "text",
+                "marker": {
+                    "autocolorscale": true,
+                    "sizeref": 0.8,
+                    "size": [7.5, 9.7],
+                    "color": "rgb(0, 51, 102)",
+                    "line": {
+                        "width": 2
+                    },
+                    "opacity": 0.9
+                }
+            }
+        ,
+
+            {
+                "type": "scatter",
+                "name": "Seattle, WA",
+                "x": [138, 118],
+                "y": [3, 20],
+                "mode": "markers",
+                "text": "Building ID: 10 <br>Building Location: Seattle, WA <br>Annual electricity EUI : 138(kWh/m<sup>2</sup>) <br>Annual fossil fuel EUI : 3(kWh/m<sup>2</sup>) <br>Potential cost savings: $3,645 <br>Potential energy savings: 5%",
+                "hoverinfo" : "text",
+                "marker": {
+                    "autocolorscale": true,
+                    "sizeref": 0.8,
+                    "size": [7.8, 9.8],
+                    "color": "rgb(0, 51, 102)",
+                    "line": {
+                        "width": 2
+                    },
+                    "opacity": 0.9
+                }
+            }
+        ,
+
+            {
+                "type": "scatter",
+                "name": "Chicago, IL",
+                "x": [150, 128],
+                "y": [13, 32],
+                "mode": "markers",
+                "text": "Building ID: 11 <br>Building Location: Chicago, IL <br>Annual electricity EUI : 150(kWh/m<sup>2</sup>) <br>Annual fossil fuel EUI : 13(kWh/m<sup>2</sup>) <br>Potential cost savings: $4,850 <br>Potential energy savings: 7%",
+                "hoverinfo" : "text",
+                "marker": {
+                    "autocolorscale": true,
+                    "sizeref": 0.8,
+                    "size": [7.9, 13.6],
+                    "color": "rgb(0, 51, 102)",
+                    "line": {
+                        "width": 2
+                    },
+                    "opacity": 0.9
+                }
+            }
+        ,
+
+            {
+                "type": "scatter",
+                "name": "Boulder, CO",
+                "x": [139, 120],
+                "y": [8, 19],
+                "mode": "markers",
+                "text": "Building ID: 12 <br>Building Location: Boulder, CO <br>Annual electricity EUI : 139(kWh/m<sup>2</sup>) <br>Annual fossil fuel EUI : 8(kWh/m<sup>2</sup>) <br>Potential cost savings: $429 <br>Potential energy savings: 1%",
+                "hoverinfo" : "text",
+                "marker": {
+                    "autocolorscale": true,
+                    "sizeref": 0.8,
+                    "size": [7.5, 10.5],
+                    "color": "rgb(0, 51, 102)",
+                    "line": {
+                        "width": 2
+                    },
+                    "opacity": 0.9
+                }
+            }
+        ,
+
+            {
+                "type": "scatter",
+                "name": "Minneapolis, MN",
+                "x": [157, 126],
+                "y": [24, 48],
+                "mode": "markers",
+                "text": "Building ID: 13 <br>Building Location: Minneapolis, MN <br>Annual electricity EUI : 157(kWh/m<sup>2</sup>) <br>Annual fossil fuel EUI : 24(kWh/m<sup>2</sup>) <br>Potential cost savings: $11,707 <br>Potential energy savings: 18%",
+                "hoverinfo" : "text",
+                "marker": {
+                    "autocolorscale": true,
+                    "sizeref": 0.8,
+                    "size": [8.4, 14.9],
+                    "color": "rgb(0, 51, 102)",
+                    "line": {
+                        "width": 2
+                    },
+                    "opacity": 0.9
+                }
+            }
+        ,
+
+            {
+                "type": "scatter",
+                "name": "Helena, MT",
+                "x": [147, 116],
+                "y": [15, 34],
+                "mode": "markers",
+                "text": "Building ID: 14 <br>Building Location: Helena, MT <br>Annual electricity EUI : 147(kWh/m<sup>2</sup>) <br>Annual fossil fuel EUI : 15(kWh/m<sup>2</sup>) <br>Potential cost savings: $6,546 <br>Potential energy savings: 9%",
+                "hoverinfo" : "text",
+                "marker": {
+                    "autocolorscale": true,
+                    "sizeref": 0.8,
+                    "size": [8.0, 11.8],
+                    "color": "rgb(0, 51, 102)",
+                    "line": {
+                        "width": 2
+                    },
+                    "opacity": 0.9
+                }
+            }
+        ,
+
+            {
+                "type": "scatter",
+                "name": "Duluth, MN",
+                "x": [158],
+                "y": [27],
+                "mode": "markers",
+                "text": "Building ID: 15 <br>Building Location: Duluth, MN <br>Annual electricity EUI : 158(kWh/m<sup>2</sup>) <br>Annual fossil fuel EUI : 27(kWh/m<sup>2</sup>) <br>Potential cost savings: $12,550 <br>Potential energy savings: 18%",
+                "hoverinfo" : "text",
+                "marker": {
+                    "autocolorscale": true,
+                    "sizeref": 0.8,
+                    "size": [8.5],
+                    "color": "rgb(0, 51, 102)",
+                    "line": {
+                        "width": 2
+                    },
+                    "opacity": 0.9
+                }
+            }
+        ,
+
+            {
+                "type": "scatter",
+                "name": "Fairbanks, AK",
+                "x": [174],
+                "y": [64],
+                "mode": "markers",
+                "text": "Building ID: 16 <br>Building Location: Fairbanks, AK <br>Annual electricity EUI : 174(kWh/m<sup>2</sup>) <br>Annual fossil fuel EUI : 64(kWh/m<sup>2</sup>) <br>Potential cost savings: $24,558 <br>Potential energy savings: 33%",
+                "hoverinfo" : "text",
+                "marker": {
+                    "autocolorscale": true,
+                    "sizeref": 0.8,
+                    "size": [9.4],
+                    "color": "rgb(0, 51, 102)",
+                    "line": {
+                        "width": 2
+                    },
+                    "opacity": 0.9
+                }
+            }
+        ,
+            ],
+            {
+              "title": "Building Saving Opportunities",
+              "hovermode": "closest",
+              "height": 1000,
+              "xaxis": { "title": "Building Annual Electricity EUI (kWh/m2)", "ticklen": 5, "gridwidth": 2 },
+              "yaxis": { "title": "Building Annual Fossil Fuel EUI (kWh/m2)", "ticklen": 5, "gridwidth": 2 },
+              "legend": { "x": 0, "y": 1, "orientation": "h" },
+              "showlegend": false
+            },
+            {
+              "showLink": true,
+              "linkText": "Export to plot.ly"
+            }
+            )
+
+            </script>
+            <script type="text/javascript">
+            window.addEventListener("resize", function() { Plotly.Plots.resize(document.getElementById("2019-01-23 17:15:10.931376")); });
+            </script>
+        
+                    </div>
+                </div>
+                <div class="w3-container w3-margin-bottom w3-padding-small"></div>
+            </div><br>
+            
+            <div class="w3-container w3-padding-large w3-white"> <h2 id="about"><b>Building Details</b></h2>
+                <hr class="w3-opacity">
+                <div class="w3-container w3-margin-bottom w3-col m12 w3-padding-small">
+                    <div class="w3-container ">
+                        The table lists the building information, energy consumptions, cost, and saving potentials. Click on the table headers to sort the buildings. For detailed analysis results of a single building, use link on the associated building ID.
+                        <table border="1" class="dataframe w3-table w3-bordered w3-border tablesorter" id="myTable"">
+    <thead>
+      <tr style=" text-align: right;">
+          <th>Building ID</th>
+          <th>Building Name</th>
+          <th>Building Address</th>
+          <th>Building Area</th>
+          <th>Building Annual Electricity Consumption (kWh)</th>
+          <th>Building Annual Fossil Fuel Consumption (kWh)</th>
+          <th>Building Annual Electricity Cost</th>
+          <th>Building Annual Fossil Fuel Cost</th>
+          <th>Building Annual Electricity EUI (kWh/m2)</th>
+          <th>Building Annual Fossil Fuel EUI (kWh/m2)</th>
+          <th>Building Annual Energy Cost Savings</th>
+          <th>Building Annual Energy Saving (%)</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/1_Miami,_FL_Office_1_report.html>1</a></td>
+            <td>Office 1</td>
+            <td>Miami, FL</td>
+            <td>4,982</td>
+            <td>791,630</td>
+            <td>6,561</td>
+            <td>79,163</td>
+            <td>164</td>
+            <td>158</td>
+            <td>1</td>
+            <td>11,613</td>
+            <td>14</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/2_Houston,_TX_Office_2_report.html>2</a></td>
+            <td>Office 2</td>
+            <td>Houston, TX</td>
+            <td>4,982</td>
+            <td>783,413</td>
+            <td>11,770</td>
+            <td>78,341</td>
+            <td>294</td>
+            <td>157</td>
+            <td>2</td>
+            <td>12,893</td>
+            <td>16</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/3_Phoenix,_AZ_Office_3_report.html>3</a></td>
+            <td>Office 3</td>
+            <td>Phoenix, AZ</td>
+            <td>4,982</td>
+            <td>796,841</td>
+            <td>7,467</td>
+            <td>79,684</td>
+            <td>186</td>
+            <td>159</td>
+            <td>1</td>
+            <td>11,990</td>
+            <td>15</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/4_Atlanta,_GA_Office_4_report.html>4</a></td>
+            <td>Office 4</td>
+            <td>Atlanta, GA</td>
+            <td>4,982</td>
+            <td>724,063</td>
+            <td>22,526</td>
+            <td>72,406</td>
+            <td>563</td>
+            <td>145</td>
+            <td>4</td>
+            <td>7,093</td>
+            <td>10</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/5_Los_Angeles,_CA_Office_5_report.html>5</a></td>
+            <td>Office 5</td>
+            <td>Los Angeles, CA</td>
+            <td>4,982</td>
+            <td>635,253</td>
+            <td>8,585</td>
+            <td>63,525</td>
+            <td>214</td>
+            <td>127</td>
+            <td>1</td>
+            <td>1,094</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/6_Las_Vegas,_NV_Office_6_report.html>6</a></td>
+            <td>Office 6</td>
+            <td>Las Vegas, NV</td>
+            <td>4,982</td>
+            <td>735,056</td>
+            <td>9,728</td>
+            <td>73,505</td>
+            <td>243</td>
+            <td>147</td>
+            <td>2</td>
+            <td>3,700</td>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/7_San_Francisco,_CA_Office_7_report.html>7</a></td>
+            <td>Office 7</td>
+            <td>San Francisco, CA</td>
+            <td>4,982</td>
+            <td>667,309</td>
+            <td>9,871</td>
+            <td>66,730</td>
+            <td>246</td>
+            <td>133</td>
+            <td>2</td>
+            <td>3,799</td>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/8_Baltimore,_MD_Office_8_report.html>8</a></td>
+            <td>Office 8</td>
+            <td>Baltimore, MD</td>
+            <td>4,982</td>
+            <td>756,172</td>
+            <td>37,220</td>
+            <td>75,617</td>
+            <td>930</td>
+            <td>151</td>
+            <td>7</td>
+            <td>5,505</td>
+            <td>7</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/9_Albuquerque,_NM_Office_9_report.html>9</a></td>
+            <td>Office 9</td>
+            <td>Albuquerque, NM</td>
+            <td>4,982</td>
+            <td>700,549</td>
+            <td>19,207</td>
+            <td>70,054</td>
+            <td>480</td>
+            <td>140</td>
+            <td>3</td>
+            <td>0</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/10_Seattle,_WA_Office_10_report.html>10</a></td>
+            <td>Office 10</td>
+            <td>Seattle, WA</td>
+            <td>4,982</td>
+            <td>691,561</td>
+            <td>18,371</td>
+            <td>69,156</td>
+            <td>459</td>
+            <td>138</td>
+            <td>3</td>
+            <td>3,645</td>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/11_Chicago,_IL_Office_11_report.html>11</a></td>
+            <td>Office 11</td>
+            <td>Chicago, IL</td>
+            <td>4,982</td>
+            <td>749,236</td>
+            <td>68,802</td>
+            <td>74,923</td>
+            <td>1,720</td>
+            <td>150</td>
+            <td>13</td>
+            <td>4,850</td>
+            <td>7</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/12_Boulder,_CO_Office_12_report.html>12</a></td>
+            <td>Office 12</td>
+            <td>Boulder, CO</td>
+            <td>4,982</td>
+            <td>695,124</td>
+            <td>40,925</td>
+            <td>69,512</td>
+            <td>1,023</td>
+            <td>139</td>
+            <td>8</td>
+            <td>429</td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/13_Minneapolis,_MN_Office_13_report.html>13</a></td>
+            <td>Office 13</td>
+            <td>Minneapolis, MN</td>
+            <td>4,982</td>
+            <td>782,976</td>
+            <td>119,325</td>
+            <td>78,297</td>
+            <td>2,983</td>
+            <td>157</td>
+            <td>24</td>
+            <td>11,707</td>
+            <td>18</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/14_Helena,_MT_Office_14_report.html>14</a></td>
+            <td>Office 14</td>
+            <td>Helena, MT</td>
+            <td>4,982</td>
+            <td>732,358</td>
+            <td>75,929</td>
+            <td>73,235</td>
+            <td>1,898</td>
+            <td>147</td>
+            <td>15</td>
+            <td>6,546</td>
+            <td>9</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/15_Duluth,_MN_Office_15_report.html>15</a></td>
+            <td>Office 15</td>
+            <td>Duluth, MN</td>
+            <td>4,982</td>
+            <td>789,631</td>
+            <td>137,630</td>
+            <td>78,963</td>
+            <td>3,440</td>
+            <td>158</td>
+            <td>27</td>
+            <td>12,550</td>
+            <td>18</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/16_Fairbanks,_AK_Office_16_report.html>16</a></td>
+            <td>Office 16</td>
+            <td>Fairbanks, AK</td>
+            <td>4,982</td>
+            <td>871,127</td>
+            <td>319,282</td>
+            <td>87,112</td>
+            <td>7,982</td>
+            <td>174</td>
+            <td>64</td>
+            <td>24,558</td>
+            <td>33</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/17_Miami,_FL_Office_17_report.html>17</a></td>
+            <td>Office 17</td>
+            <td>Miami, FL</td>
+            <td>46,320</td>
+            <td>8,076,530</td>
+            <td>73,571</td>
+            <td>807,653</td>
+            <td>1,839</td>
+            <td>174</td>
+            <td>1</td>
+            <td>194,231</td>
+            <td>24</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/18_Houston,_TX_Office_18_report.html>18</a></td>
+            <td>Office 18</td>
+            <td>Houston, TX</td>
+            <td>46,320</td>
+            <td>7,490,511</td>
+            <td>529,821</td>
+            <td>749,051</td>
+            <td>13,245</td>
+            <td>161</td>
+            <td>11</td>
+            <td>133,941</td>
+            <td>21</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/19_Phoenix,_AZ_Office_19_report.html>19</a></td>
+            <td>Office 19</td>
+            <td>Phoenix, AZ</td>
+            <td>46,320</td>
+            <td>7,346,788</td>
+            <td>368,021</td>
+            <td>734,678</td>
+            <td>9,200</td>
+            <td>158</td>
+            <td>7</td>
+            <td>83,129</td>
+            <td>13</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/20_Atlanta,_GA_Office_20_report.html>20</a></td>
+            <td>Office 20</td>
+            <td>Atlanta, GA</td>
+            <td>46,320</td>
+            <td>6,783,541</td>
+            <td>526,083</td>
+            <td>678,354</td>
+            <td>13,152</td>
+            <td>146</td>
+            <td>11</td>
+            <td>35,015</td>
+            <td>8</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/21_Los_Angeles,_CA_Office_21_report.html>21</a></td>
+            <td>Office 21</td>
+            <td>Los Angeles, CA</td>
+            <td>46,320</td>
+            <td>6,346,613</td>
+            <td>125,801</td>
+            <td>634,661</td>
+            <td>3,145</td>
+            <td>137</td>
+            <td>2</td>
+            <td>47,211</td>
+            <td>7</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/22_Las_Vegas,_NV_Office_22_report.html>22</a></td>
+            <td>Office 22</td>
+            <td>Las Vegas, NV</td>
+            <td>46,320</td>
+            <td>6,372,202</td>
+            <td>257,433</td>
+            <td>637,220</td>
+            <td>6,435</td>
+            <td>137</td>
+            <td>5</td>
+            <td>20,647</td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/23_San_Francisco,_CA_Office_23_report.html>23</a></td>
+            <td>Office 23</td>
+            <td>San Francisco, CA</td>
+            <td>46,320</td>
+            <td>5,741,113</td>
+            <td>699,496</td>
+            <td>574,111</td>
+            <td>17,487</td>
+            <td>123</td>
+            <td>15</td>
+            <td>22,354</td>
+            <td>9</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/24_Baltimore,_MD_Office_24_report.html>24</a></td>
+            <td>Office 24</td>
+            <td>Baltimore, MD</td>
+            <td>46,320</td>
+            <td>6,580,669</td>
+            <td>999,146</td>
+            <td>658,066</td>
+            <td>24,978</td>
+            <td>142</td>
+            <td>21</td>
+            <td>48,817</td>
+            <td>12</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/25_Albuquerque,_NM_Office_25_report.html>25</a></td>
+            <td>Office 25</td>
+            <td>Albuquerque, NM</td>
+            <td>46,320</td>
+            <td>5,841,561</td>
+            <td>512,729</td>
+            <td>584,156</td>
+            <td>12,818</td>
+            <td>126</td>
+            <td>11</td>
+            <td>28,352</td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/26_Seattle,_WA_Office_26_report.html>26</a></td>
+            <td>Office 26</td>
+            <td>Seattle, WA</td>
+            <td>46,320</td>
+            <td>5,496,130</td>
+            <td>937,439</td>
+            <td>549,613</td>
+            <td>23,435</td>
+            <td>118</td>
+            <td>20</td>
+            <td>29,440</td>
+            <td>8</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/27_Chicago,_IL_Office_27_report.html>27</a></td>
+            <td>Office 27</td>
+            <td>Chicago, IL</td>
+            <td>46,320</td>
+            <td>5,944,877</td>
+            <td>1,511,231</td>
+            <td>594,487</td>
+            <td>37,780</td>
+            <td>128</td>
+            <td>32</td>
+            <td>78,958</td>
+            <td>19</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/28_Boulder,_CO_Office_28_report.html>28</a></td>
+            <td>Office 28</td>
+            <td>Boulder, CO</td>
+            <td>46,320</td>
+            <td>5,598,452</td>
+            <td>891,041</td>
+            <td>559,845</td>
+            <td>22,276</td>
+            <td>120</td>
+            <td>19</td>
+            <td>39,085</td>
+            <td>9</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/29_Minneapolis,_MN_Office_29_report.html>29</a></td>
+            <td>Office 29</td>
+            <td>Minneapolis, MN</td>
+            <td>46,320</td>
+            <td>5,855,580</td>
+            <td>2,257,628</td>
+            <td>585,558</td>
+            <td>56,440</td>
+            <td>126</td>
+            <td>48</td>
+            <td>96,221</td>
+            <td>27</td>
+        </tr>
+        <tr>
+            <td><a href=C:\Users\Han\Documents\GitHub\CERC\CERC_EE_Targeting_Tool/outputs/30_Helena,_MT_Office_30_report.html>30</a></td>
+            <td>Office 30</td>
+            <td>Helena, MT</td>
+            <td>46,320</td>
+            <td>5,402,869</td>
+            <td>1,594,318</td>
+            <td>540,286</td>
+            <td>39,857</td>
+            <td>116</td>
+            <td>34</td>
+            <td>55,834</td>
+            <td>17</td>
+        </tr>
+    </tbody>
+</table>
+
+                    </div>
+                </div>
+                <div class="w3-container w3-margin-bottom w3-padding-small"></div>
+            </div><br>
+              <!-- Footer -->  <footer class="w3-container w3-padding-32 w3-white">  <div class="w3-row-padding">    <div class="w3-half">      <h3>Partners</h3><a href="https://www.lbl.gov/"><img src="https://creative.lbl.gov/wp-content/uploads/sites/23/2015/05/Berkeley_Lab_Logo_Large.png" style="height:100px;"></a><a href="https://www.icf.com/"><img src="https://upload.wikimedia.org/wikipedia/commons/2/29/ICF_International_logo.png" style="height:100px;"></a><a href="https://www.johnsoncontrols.com/"><img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/0f/Johnson_Controls.svg/250px-Johnson_Controls.svg.png" style="height:100px;"></a>    </div>    <div class="w3-half">      <h3>Links</h3>      <ul class="w3-ul w3-hoverable">        <li class="w3-padding-16">          <span class="w3-large"><a href="https://github.com/LBNL-CERC-BEE/CERC-BEE-Virtual-Energy-Efficiency-Targeting-Tool">GitHub Repository</a></span><br>        </li>      </ul>    </div>  </div>  </footer>  <div class="w3-black w3-center w3-padding-24"></div></body>
+            <script type="text/javascript">
+                $(function() {
+                    $("#myTable").tablesorter();
+                });
+            </script>
+            </html>

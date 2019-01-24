@@ -130,7 +130,6 @@ class Weather:
             os.remove(file_name_gz)
 
         def get_ish_report_helper(raw_rpt):
-            print(raw_rpt)
             return (ish_report().loads(raw_rpt))
 
         def get_ish_report_datetime_helper(raw_rpt):
