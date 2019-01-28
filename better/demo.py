@@ -156,15 +156,15 @@ def run_batch(
         report_portfolio.generate_portfolio_report(report_path)
 
 
-#def main():
+def main():
     # Saving target: 1 ~ conservative, 2 ~ nominal, 3 ~ aggressive
     # Change the building id and saving target for the building you want to analyze
     # run_single(bldg_id = 11, saving_target=2, cached_weather=True)
     # run_single(bldg_id=18, saving_target=3, cached_weather=True)
-    # run_single(bldg_id=18, saving_target=2, cached_weather=True)
+     run_single(bldg_id=18, saving_target=2, cached_weather=True)
 
     # Uncomment the line below [delete the '#' before run_batch(...)] to run the analysis for buildings between start_id and end_id
     # run_batch(start_id = 1, end_id = 36, saving_target=2, cached_weather=True, batch_report=True)
 
-#if __name__ == "__main__":
-#    main()
+if __name__ == "__main__":
+    main()
