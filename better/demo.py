@@ -28,14 +28,11 @@ def run_single(
     use_default_benchmark_data=True, 
     bldg_id = 1, 
     saving_target = 2, 
-    space_type='Hotel_酒店', 
-
+    space_type='Hotel_酒店',
     cached_weather=True, 
     write_fim=True, 
     write_model=True, 
     return_data=False,
-
-    use_default_benchmark_data=True,
     df_user_bench_stats_e=None,
     df_user_bench_stats_f=None,
     portfolio_path=None,
@@ -65,17 +62,17 @@ def run_single(
         return False, None
     else:
         # Initialize a building instance
-        building_test = building.Building(building_id, *building_info, saving_target)
+        building_test = Building(building_id, *building_info, saving_target)
         # Get utility data from portfolio
         df_raw_electricity = p.get_utility_by_building_id_and_energy_type(building_ID=building_id, energy_type=1)
         df_raw_fossil_fuel = p.get_utility_by_building_id_and_energy_type(building_ID=building_id, energy_type=2)
         df_raw_utility_e = df_raw_electricity
         df_raw_utility_f = df_raw_fossil_fuel
-        utility_test_e = utility.Utility('electricity', df_raw_utility_e)
-        utility_test_f = utility.Utility('fossil fuel', df_raw_utility_f)
+        utility_test_e = Utility('electricity', df_raw_utility_e)
+        utility_test_f = Utility('fossil fuel', df_raw_utility_f)
         building_test.add_utility(utility_test_e, utility_test_f)
-        weather_test_e = weather.Weather(building_test.coord)
-        weather_test_f = weather.Weather(building_test.coord)
+        weather_test_e = Weather(building_test.coord)
+        weather_test_f = Weather(building_test.coord)
         building_test.add_weather(cached_weather, weather_test_e, weather_test_f)
     
         # Fit inverse model and benchmark
@@ -118,13 +115,13 @@ def run_single(
                 if write_fim: building_test.FIM_table_f.to_csv(report_path + 'bldg_' + str(building_test.bldg_id) + "_Fossil Fuel FIM_recommendations.csv")
     
             # Generate static HTML report
-            report_building = report.Report(building = building_test)
+            report_building = Report(building = building_test)
             report_building.generate_building_report_beta(report_path)
             return True, building_test
         else:
             print("No meaningful change-point model was found for the current building.")
             return False, None
-          print("--- End ---")
+        print("--- End ---")
 
 
 def summary_html(report_path, start_id, end_id):
@@ -184,9 +181,9 @@ def run_batch(
 
     if batch_report:
         report_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__))) + '/outputs/' if report_path == None else report_path
-        portfolio_out = portfolio.Portfolio('Sample Portfolio')
+        portfolio_out = Portfolio('Sample Portfolio')
         portfolio_out.prepare_portfolio_report_data(v_single_buildings, report_path)
-        report_portfolio = report.Report(portfolio = portfolio_out)
+        report_portfolio = Report(portfolio = portfolio_out)
         report_portfolio.generate_portfolio_report(report_path)
 
 
