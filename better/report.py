@@ -1,6 +1,8 @@
 '''
 
+
 Building Efficiency Targeting Tool for Energy Retrofits (BETTER) Copyright (c) 2018, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy). All rights reserved.
+
 
 If you have questions about your rights to use or distribute this software, please contact Berkeley Lab's Intellectual Property Office at  IPO@lbl.gov.
 
@@ -10,7 +12,8 @@ NOTICE.  This Software was developed under funding from the U.S. Department of E
 
 import datetime
 import numpy as np
-import constants
+from .constants import *
+
 
 class Report:
 
@@ -95,6 +98,7 @@ class Report:
         html_text += self.jci_logo
         html_text += '        <br><br>'
         html_text += '        <h4><b>Building Efficiency Targeting Tool for Energy Retrofits (BETTER)</b></h4>'
+
         html_text += '        <p class="w3-text-grey">' + datetime.datetime.now().strftime("%Y-%m-%d  %H:%M") + '</p>'
         html_text += '    </div>'
         html_text += '    <div class="w3-bar-block">'
@@ -281,6 +285,7 @@ class Report:
             report_html.write('    <hr class="w3-opacity">')
             report_html.write(
                 "Daily electricity and fossil fuel  use per floor area is plotted below against monthly average outdoor air temperature. When energy use goes up at low temperatures on the left side of the graph, it represents heating energy. When energy use goes up at high temperatures on the right side of the graph, it represents cooling energy. The flat part of the graph shows the building's base load.")
+
             report_html.write('    <hr>')
 
             # Electricity model and benchmarking
@@ -419,6 +424,7 @@ class Report:
                 "  <p>The Building Efficiency Targeting Tool for Energy Retrofits (BETTER) helps building owners and managers quickly assess potential opportunities for energy savings, to inform decisions on where to target energy efficiency efforts. The tool can identify low and no-cost opportunities that can be implemented immediately, as well as retrofit opportunities that can be investigated further through more detailed audits or studies.</p>")
             report_html.write(
                 "  <p>The tool uses regression techniques to analyze a building's monthly energy data and weather, in order to determine how much energy is used for heating, cooling, and baseload (lighting, plug loads, etc.). The performance of the building is then benchmarked against similar building. In addition to telling you whether a building's energy consumption is higher or lower than peers, it goes a step further to tell you why that is the case. If a building's energy use is high compared to peers, for example, it can tell you it is because the heating system is performing poorly, while the cooling system and baseload equipment are typical compared to peers. With this information, a building owner can adjust heating setpoints, add insulation, or perform an energy audit that focuses on heating equipment.</p>")
+
 
             report_html.write('    <hr class="w3-opacity">')
             report_html.write('  </div>')
@@ -702,7 +708,9 @@ class Report:
             window.PLOTLYENV = window.PLOTLYENV || {};
             window.PLOTLYENV.BASE_URL = "https://plot.ly";
             Plotly.newPlot("'''+div_id+'''", ['''
-        v_rgb_str = np.random.choice(constants.Constants.rgb_color_strs, replace=False)
+
+        v_rgb_str = np.random.choice(Constants.rgb_color_strs, replace=False)
+
         for i, location in enumerate(locations):
             df_temp = df_summary.loc[df_summary['Building Address']==location]
             v_x = df_temp['Building Annual Electricity EUI (kWh/m2)']
@@ -746,6 +754,7 @@ class Report:
             report_html.write('<!DOCTYPE html>')
             report_html.write('<html>')
             report_html.write('<title>Building Efficiency Targeting Tool for Energy Retrofits (BETTER) Report</title>')
+
             report_html.write(self.html_basic())
 
             report_html.write('<body class="w3-light-grey w3-content" style="max-width:1500px">')
@@ -771,6 +780,7 @@ class Report:
                             <td width="50%" class="td_border" colspan="3"><b>Total Building Area (m<sup>2</sup>)</b></td>
                             <td width="50%" class="td_border" colspan="3">''' + '{:,}'.format(self.portfolio.total_area) + '''</td>
                         </tr>
+
                     </table> <br>
                     <table class="w3-table w3-bordered w3-border" style="width:95% border: solid 1 px blue">
                         <tr>
@@ -884,6 +894,7 @@ class Report:
             report_html.write('  <div class="w3-black w3-center w3-padding-24"></div>')
 
 
+
             report_html.write('</body>')
 
             report_html.write('''
@@ -895,8 +906,6 @@ class Report:
             ''')
 
             report_html.write('</html>')
-
-
 
 
         return

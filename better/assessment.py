@@ -12,7 +12,8 @@ import pandas as pd
 import numpy as np
 import copy
 
-import constants
+
+from .constants import *
 
 
 # Modified by Han Li on 2018-7-31 for the open source tool
@@ -307,7 +308,8 @@ class LEAN_FIMs:
 
 if __name__ == "__main__":
     test_site_coeffs = [0, 2, 3, 0, 0]
-    df_assessment = constants.Constants.df_sample_benchmark_stats
+
+    df_assessment = Constants.df_sample_benchmark_stats
     df_assessment["site_coefficients"] = test_site_coeffs
 
     # print(df_assessment)

@@ -8,42 +8,59 @@ NOTICE.  This Software was developed under funding from the U.S. Department of E
 
 '''
 
-import utility
-import weather
-import building
-import portfolio
-import report
+
+from .utility import *
+from .weather import *
+from .building import *
+from .portfolio import *
+from .report import *
 
 import os
 
+__all__ = (
+    "run_single",
+    "run_batch",
+    "summary_html"
+)
+
+
 def run_single(
+    use_default_benchmark_data=True, 
     bldg_id = 1, 
     saving_target = 2, 
-    space_type='Office',
+    space_type='Hotel_酒店', 
+
     cached_weather=True, 
     write_fim=True, 
     write_model=True, 
     return_data=False,
+
     use_default_benchmark_data=True,
     df_user_bench_stats_e=None,
-    df_user_bench_stats_f=None
+    df_user_bench_stats_f=None,
+    portfolio_path=None,
+    report_path=None
     ):
+    print("--- Start ---")
     # Set paths
     s_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
     data_path = s_path + '/Data/'
-    report_path = s_path + '/outputs/'
+    portfolio_path = data_path + 'portfolio.xlsx' if portfolio_path == None else portfolio_path
+    report_path = s_path + '/outputs/' if report_path == None else report_path
 
-    # Create an outputs directoty if there isn't one.
+    # Create an outputs directoty is there isn't one.
     if not os.path.exists(report_path): os.makedirs(report_path)
 
     # Initialize a portfolio instance
-    p = portfolio.Portfolio('Test')
+    p = Portfolio('Test')
     # p.read_raw_data_from_xlsx(data_path + 'portfolio.xlsx')
-    p.read_raw_data_from_xlsx(data_path + 'portfolio.xlsx')
+    p.read_raw_data_from_xlsx(portfolio_path)
+
 
     # Get building data from the portfolio
     building_id = bldg_id
     building_info = p.get_building_info_by_id(building_id)
+
     if(building_info == None):
         return False, None
     else:
@@ -107,6 +124,7 @@ def run_single(
         else:
             print("No meaningful change-point model was found for the current building.")
             return False, None
+          print("--- End ---")
 
 
 def summary_html(report_path, start_id, end_id):
@@ -127,7 +145,9 @@ def run_batch(
     saving_target=2, 
     cached_weather=True, 
     batch_report=False,
-    use_default_benchmark_data=True
+    use_default_benchmark_data=True,
+    portfolio_path=None,
+    report_path=None
     ):
     
     # Conditionally generate the benchmark stats for the porfolio
@@ -151,6 +171,7 @@ def run_batch(
     for i in range(start_id, end_id+1):
         print('--------------------------------------------------')
         print('Analyzing building ' + str(i))
+
         single_building = run_single(
             bldg_id=i, 
             saving_target=saving_target, 
@@ -162,7 +183,7 @@ def run_batch(
         v_single_buildings.append(single_building)
 
     if batch_report:
-        report_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__))) + '/outputs/'
+        report_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__))) + '/outputs/' if report_path == None else report_path
         portfolio_out = portfolio.Portfolio('Sample Portfolio')
         portfolio_out.prepare_portfolio_report_data(v_single_buildings, report_path)
         report_portfolio = report.Report(portfolio = portfolio_out)
@@ -174,10 +195,12 @@ def main():
     # Change the building id and saving target for the building you want to analyze
     # run_single(bldg_id = 11, saving_target=2, cached_weather=True)
     # run_single(bldg_id=18, saving_target=3, cached_weather=True)
+
     # run_single(bldg_id=10, saving_target=2, cached_weather=False)
 
     # Uncomment the line below [delete the '#' before run_batch(...)] to run the analysis for buildings between start_id and end_id
     run_batch(start_id = 1, end_id = 3, saving_target=2, cached_weather=False, batch_report=True)
+
 
 if __name__ == "__main__":
     main()

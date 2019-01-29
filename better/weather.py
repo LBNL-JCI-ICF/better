@@ -1,5 +1,6 @@
 '''
 
+
 Building Efficiency Targeting Tool for Energy Retrofits (BETTER) Copyright (c) 2018, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy). All rights reserved.
 
 If you have questions about your rights to use or distribute this software, please contact Berkeley Lab's Intellectual Property Office at  IPO@lbl.gov.
@@ -9,7 +10,8 @@ under funding from the U.S. Department of Energy and the U.S. Government consequ
 
 '''
 
-from constants import Constants
+from .constants import Constants
+
 import pandas as pd
 import numpy as np
 import os
@@ -45,6 +47,7 @@ class Weather:
         return (distance)
 
     def find_closest_weather_station(self, df_weather_station_list=Constants.df_us_weather_station):
+
         self.v_coord = np.asarray(df_weather_station_list[['latitude', 'longitude']].values)
         # Find the closest and second closest weather station (backup if the closest doesn't work)
         v_distance = [Weather.haversine_distance(self.latitude, self.longitude, coord[0], coord[1])
