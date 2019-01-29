@@ -1,6 +1,8 @@
 '''
 
-Energy Efficiency Targeting Tool Copyright (c) 2018, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy). All rights reserved.
+
+Building Efficiency Targeting Tool for Energy Retrofits (BETTER) Copyright (c) 2018, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy). All rights reserved.
+
 
 If you have questions about your rights to use or distribute this software, please contact Berkeley Lab's Intellectual Property Office at  IPO@lbl.gov.
 
@@ -12,15 +14,14 @@ import datetime
 import numpy as np
 from .constants import *
 
+
 class Report:
 
     def __init__(self, building=None, portfolio=None):
         self.logo()
         if building != None:
             self.building = building
-            if (building.currency == 'Chinese Yuan 人民币'):
-                self.currency_str = '¥'
-            elif (building.currency == 'US Dollar 美元'):
+            if (building.currency == 'US Dollar'):
                 self.currency_str = '$'
             self.charts_js()
         if portfolio != None:
@@ -96,7 +97,8 @@ class Report:
         html_text += self.icf_logo
         html_text += self.jci_logo
         html_text += '        <br><br>'
-        html_text += '        <h4><b>Energy Efficiency Targeting Tool</b></h4>'
+        html_text += '        <h4><b>Building Efficiency Targeting Tool for Energy Retrofits (BETTER)</b></h4>'
+
         html_text += '        <p class="w3-text-grey">' + datetime.datetime.now().strftime("%Y-%m-%d  %H:%M") + '</p>'
         html_text += '    </div>'
         html_text += '    <div class="w3-bar-block">'
@@ -104,7 +106,7 @@ class Report:
         html_text += '        <a href="#benchmark" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-group fa-fw w3-margin-right"></i>Benchmark</a> '
         html_text += '        <a href="#EE" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-calculator fa-fw w3-margin-right"></i>Energy Efficiency Analysis</a>'
         html_text += '        <a href="#IMT" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-key fa-fw w3-margin-right"></i>Performance Key</a>'
-        html_text += '        <a href="#About" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-info fa-fw w3-margin-right"></i>About the Tool</a>'
+        html_text += '        <a href="#About" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-info fa-fw w3-margin-right"></i>About BETTER</a>'
         html_text += '    </div>'
         html_text += '</nav>'
 
@@ -121,7 +123,7 @@ class Report:
         with open(report_file, 'w', encoding="utf-8") as report_html:
             report_html.write('<!DOCTYPE html>')
             report_html.write('<html>')
-            report_html.write('<title>Energy Efficiency Targeting Tool Building Report</title>')
+            report_html.write('<title>Building Efficiency Targeting Tool for Energy Retrofits (BETTER) Report</title>')
 
             # Add basic stuff including css and scripts
             report_html.write(self.html_basic())
@@ -142,7 +144,7 @@ class Report:
             report_html.write('  <tr>')
             report_html.write('    <td class="td_border" colspan="3"><b>Building Type</b></td>')
             report_html.write('    <td class="td_border" colspan="3">' + self.building.bldg_type + '</td>')
-            report_html.write('    <td class="td_border" colspan="3"><b>Builidng Location</b></td>')
+            report_html.write('    <td class="td_border" colspan="3"><b>Building Location</b></td>')
             report_html.write('    <td class="td_border" colspan="3">' + self.building.bldg_address + '</td>')
             report_html.write('  </tr>')
             report_html.write('  <tr>')
@@ -282,7 +284,8 @@ class Report:
             report_html.write('    <h2 id="benchmark"><b>Weather Sensitivity and Benchmarks</b></h2>')
             report_html.write('    <hr class="w3-opacity">')
             report_html.write(
-                "Daily electricity and fossil fuel  use per floor area is plotted below against monthly average outdoor air temperature. When energy use goes up at low temperatures on the left side of the graph, it represents heating energy. When energy use goes up at high temperatures on the right side of the graph, it represents cooling energy. The flat part of the graph shows the buidling's base load.")
+                "Daily electricity and fossil fuel  use per floor area is plotted below against monthly average outdoor air temperature. When energy use goes up at low temperatures on the left side of the graph, it represents heating energy. When energy use goes up at high temperatures on the right side of the graph, it represents cooling energy. The flat part of the graph shows the building's base load.")
+
             report_html.write('    <hr>')
 
             # Electricity model and benchmarking
@@ -416,12 +419,12 @@ class Report:
 
             # Tool description
             report_html.write('  <div class="w3-container w3-padding-large w3-white">')
-            report_html.write('    <h2 id="About"><b>About the Tool</b></h2>')
-            report_html.write("  <p><b>What is the Energy Efficiency Targeting Tool?</b></p>")
+            report_html.write('    <h2 id="About"><b>What is BETTER?</b></h2>')
             report_html.write(
-                "  <p>The Energy Efficiency Targeting Tool helps building owners and managers quickly assess potential opportunities for energy savings, to inform decisions on where to target energy efficiency efforts. The tool can identify low and no-cost opportunities that can be implemented immediately, as well as retrofit opportunities that can be investigated further through more detailed audits or studies.</p>")
+                "  <p>The Building Efficiency Targeting Tool for Energy Retrofits (BETTER) helps building owners and managers quickly assess potential opportunities for energy savings, to inform decisions on where to target energy efficiency efforts. The tool can identify low and no-cost opportunities that can be implemented immediately, as well as retrofit opportunities that can be investigated further through more detailed audits or studies.</p>")
             report_html.write(
-                "  <p>The tool uses regresion techniques to analyze a building's monthly energy data and weather, in order to determine how much energy is used for heating, cooling, and baseload (lighting, plug loads, etc.). The performance of the building is then benchmarked against similar building. In addition to telling you whether a building's energy consumption is higher or lower than peers, it goes a step further to tell you why that is the case. If a building's energy use is high compared to peers, for example, it can tell you it is because the heating system is performing poorly, while the cooling system and baseload equipment are typical compared to peers. With this information, a building owner can adjust heating setpoints, add insulation, or perform an energy audit that focuses on heating equipment.</p>")
+                "  <p>The tool uses regression techniques to analyze a building's monthly energy data and weather, in order to determine how much energy is used for heating, cooling, and baseload (lighting, plug loads, etc.). The performance of the building is then benchmarked against similar building. In addition to telling you whether a building's energy consumption is higher or lower than peers, it goes a step further to tell you why that is the case. If a building's energy use is high compared to peers, for example, it can tell you it is because the heating system is performing poorly, while the cooling system and baseload equipment are typical compared to peers. With this information, a building owner can adjust heating setpoints, add insulation, or perform an energy audit that focuses on heating equipment.</p>")
+
 
             report_html.write('    <hr class="w3-opacity">')
             report_html.write('  </div>')
@@ -441,12 +444,13 @@ class Report:
             report_html.write('      <h3>Links</h3>')
             report_html.write('      <ul class="w3-ul w3-hoverable">')
             report_html.write('        <li class="w3-padding-16">')
-            report_html.write('          <span class="w3-large"><a href="https://github.com/LBNL-CERC-BEE/CERC-BEE-Virtual-Energy-Efficiency-Targeting-Tool">GitHub Repository</a></span><br>')
+            report_html.write('          <span class="w3-large"><a href="https://github.com/LBNL-JCI-ICF/better">GitHub Repository</a></span><br>')
             report_html.write('        </li>')
             report_html.write('      </ul>')
             report_html.write('    </div>')
             report_html.write('  </div>')
             report_html.write('  </footer>')
+
             report_html.write('  <div class="w3-black w3-center w3-padding-24"></div>')
             report_html.write('</div>')
             report_html.write('<script>')
@@ -704,7 +708,9 @@ class Report:
             window.PLOTLYENV = window.PLOTLYENV || {};
             window.PLOTLYENV.BASE_URL = "https://plot.ly";
             Plotly.newPlot("'''+div_id+'''", ['''
+
         v_rgb_str = np.random.choice(Constants.rgb_color_strs, replace=False)
+
         for i, location in enumerate(locations):
             df_temp = df_summary.loc[df_summary['Building Address']==location]
             v_x = df_temp['Building Annual Electricity EUI (kWh/m2)']
@@ -747,7 +753,8 @@ class Report:
         with open(report_file, 'w', encoding="utf-8") as report_html:
             report_html.write('<!DOCTYPE html>')
             report_html.write('<html>')
-            report_html.write('<title>Energy Efficiency Targeting Tool Building Report</title>')
+            report_html.write('<title>Building Efficiency Targeting Tool for Energy Retrofits (BETTER) Report</title>')
+
             report_html.write(self.html_basic())
 
             report_html.write('<body class="w3-light-grey w3-content" style="max-width:1500px">')
@@ -773,10 +780,7 @@ class Report:
                             <td width="50%" class="td_border" colspan="3"><b>Total Building Area (m<sup>2</sup>)</b></td>
                             <td width="50%" class="td_border" colspan="3">''' + '{:,}'.format(self.portfolio.total_area) + '''</td>
                         </tr>
-                        <tr>
-                            <td width="50%" class="td_border" colspan="3"><b>Total Building Area (m<sup>2</sup>)</b></td>
-                            <td width="50%" class="td_border" colspan="3">''' + '{:,}'.format(self.portfolio.total_area) + '''</td>
-                        </tr>
+
                     </table> <br>
                     <table class="w3-table w3-bordered w3-border" style="width:95% border: solid 1 px blue">
                         <tr>
@@ -866,6 +870,30 @@ class Report:
             </div><br>
             ''')
 
+            # Footer card
+            report_html.write('  <!-- Footer -->')
+            report_html.write('  <footer class="w3-container w3-padding-32 w3-white">')
+            report_html.write('  <div class="w3-row-padding">')
+            report_html.write('    <div class="w3-half">')
+            report_html.write('      <h3>Partners</h3>')
+            # report_html.write('      <p>Place holder.</p>')
+            report_html.write(self.lbl_logo)
+            report_html.write(self.icf_logo)
+            report_html.write(self.jci_logo)
+            report_html.write('    </div>')
+            report_html.write('    <div class="w3-half">')
+            report_html.write('      <h3>Links</h3>')
+            report_html.write('      <ul class="w3-ul w3-hoverable">')
+            report_html.write('        <li class="w3-padding-16">')
+            report_html.write('          <span class="w3-large"><a href="https://github.com/LBNL-CERC-BEE/CERC-BEE-Virtual-Energy-Efficiency-Targeting-Tool">GitHub Repository</a></span><br>')
+            report_html.write('        </li>')
+            report_html.write('      </ul>')
+            report_html.write('    </div>')
+            report_html.write('  </div>')
+            report_html.write('  </footer>')
+            report_html.write('  <div class="w3-black w3-center w3-padding-24"></div>')
+
+
 
             report_html.write('</body>')
 
@@ -878,8 +906,6 @@ class Report:
             ''')
 
             report_html.write('</html>')
-
-
 
 
         return

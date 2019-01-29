@@ -9,7 +9,6 @@ NOTICE.  This Software was developed under funding from the U.S. Department of E
 '''
 
 from .constants import *
-
 import numpy as np
 
 
@@ -23,6 +22,7 @@ class Utility:
         # Convert energy consumption unit to kWh
         if (self.df_raw_data.columns[2] == 'MWh 兆瓦时' and
                 self.utility_type == 'electricity'):
+
             self.df_raw_data.ix[:, 2] *= Constants.MWH_to_kWh
         elif (self.df_raw_data.columns[2] == 'Cubic Meters 立方米' and
               self.utility_type == 'natural gas'):
@@ -39,6 +39,7 @@ class Utility:
             self.df_raw_data.ix[:, 2] *= Constants.Therms_to_kWh
         elif (self.df_raw_data.columns[2] == 'Decatherms 十撒姆'):
             self.df_raw_data.ix[:, 2] *= Constants.Decatherms_to_kWh
+
         # Get date-related vectors
         self.df_raw_data.columns = ['start_dates', 'end_dates', 'kWh', 'Cost']
 

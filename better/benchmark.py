@@ -12,7 +12,9 @@ import numpy as np
 import scipy.stats as st
 import copy
 
+
 from .constants import *
+
 
 class Benchmark:
 
@@ -109,6 +111,7 @@ class Benchmark:
 
 # Test
 if __name__ == "__main__":
+
     df = Constants.df_sample_hotel_coeffs_e
     # print(df)
     df_sample_bench_stats_e = Constants.df_sample_benchmark_stats_e
