@@ -10,6 +10,7 @@ NOTICE.  This Software was developed under funding from the U.S. Department of E
 
 import pandas as pd
 import numpy as np
+from ftplib import FTP
 
 
 class Constants:
@@ -44,6 +45,26 @@ class Constants:
         "rgb(0, 0, 0)"
     ]
 
+    def download_station_list():
+        ftp = FTP('ftp.ncdc.noaa.gov')
+        ftp.login()
+        ftp_path = '/pub/data/noaa/'
+        ftp.cwd(ftp_path)
+        # Save gz files locally
+        file_name_noaa = 'RETR ' + 'isd-history.csv'
+        file_name_local = 'isd-history.csv'
+        ftp.retrbinary(file_name_noaa, open(file_name_local, 'wb').write)
+        all_stations = pd.read_csv(file_name_local, parse_dates=['BEGIN', 'END'])
+        all_stations.rename(columns={'STATION NAME': 'station_name',
+                                     'LAT': 'latitude',
+                                     'LON': 'longitude'},
+                            inplace=True)
+        all_stations['station_ID'] = all_stations['USAF'].map(str) + "-" + all_stations['WBAN'].map(str)
+        return all_stations
+
+        # Default NOAA weather station lists
+
+    # Weather station in the US
     # Default NOAA weather station lists
     # Weather station in the US
     d_us_weather_station = {

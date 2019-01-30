@@ -23,7 +23,7 @@ class Weather:
     def __init__(self, coord):
         self.coord = coord
         self.latitude, self.longitude = coord  # geo-coded address
-        self.find_closest_weather_station()
+
 
     def process(self, df_periods):
         df_periods['start_dates'] = pd.to_datetime(df_periods['start_dates'], utc=True)
@@ -33,6 +33,8 @@ class Weather:
         self.v_end_dates = self.df_periods.loc[:, 'end_dates']
         self.start_year = pd.DatetimeIndex(np.sort(self.v_start_dates)).year[0]
         self.end_year = pd.DatetimeIndex(np.sort(self.v_end_dates)).year[-1]
+        self.find_closest_weather_station()
+
 
     @staticmethod
     def haversine_distance(lat1, lon1, lat2, lon2):
@@ -44,7 +46,9 @@ class Weather:
         distance = 2 * Constants.earth_radius * np.arcsin(np.sqrt(temp))
         return (distance)
 
-    def find_closest_weather_station(self, df_weather_station_list=Constants.df_us_weather_station):
+    def find_closest_weather_station(self, df_weather_station_list=Constants.download_station_list()):
+        df_weather_station_list = df_weather_station_list[(df_weather_station_list.BEGIN <= min(self.v_start_dates)) &
+                                                          (df_weather_station_list.END >= max(self.v_end_dates))].reset_index()
         self.v_coord = np.asarray(df_weather_station_list[['latitude', 'longitude']].values)
         # Find the closest and second closest weather station (backup if the closest doesn't work)
         v_distance = [Weather.haversine_distance(self.latitude, self.longitude, coord[0], coord[1])
