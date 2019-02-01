@@ -6,11 +6,12 @@
 *.jpg
 *.egg
 *.gz
-
+*.csv
 *_report.html
 
 #Directories
-
+.idea/
 __pycache__/
 releases/
 better/__pycache__/
+outputs/*
