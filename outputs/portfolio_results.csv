@@ -1,0 +1,3 @@
+Building ID,Building Name,Building Address,Building Area,Building Annual Electricity Consumption (kWh),Building Annual Fossil Fuel Consumption (kWh),Building Annual Electricity Cost,Building Annual Fossil Fuel Cost,Building Annual Electricity EUI (kWh/m2),Building Annual Fossil Fuel EUI (kWh/m2),Building Annual Energy Cost Savings,Building Annual Energy Saving (%),Detail Report
+1,Office 1,"Miami, FL",4982,791630,6561,79163,164,158,1,13410,16,"1_Miami,_FL_Office_1_report.html"
+2,Office 2,"Houston, TX",4982,783413,11770,78341,294,157,2,12247,16,"2_Houston,_TX_Office_2_report.html"

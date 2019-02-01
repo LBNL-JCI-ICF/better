@@ -6,7 +6,7 @@
 *.jpg
 *.egg
 *.gz
-*.csv
+
 *_report.html
 
 #Directories
