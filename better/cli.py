@@ -17,8 +17,8 @@ import click
 @click.option('--to', 'to', type=int, help="range of building to include")
 @click.option('--savings-target', default = 2, required=True, type=int, show_default=True, help= "use 1 for conservative, 2 for nominal or 3 for aggressive")
 @click.option('--cached-weather/--no-cached-weather', default=True, help="Use cached weather files or not")
-@click.option('--portfolio-file', required=True, type=click.Path('rb'), help="file directory e.g.: c:\portfolio.xslx")
-@click.option('--output-path', envvar='PATHS', required=True, type=click.Path(), help="output directory e.g.:c:\output\\")
+@click.option('--portfolio-file', required=False, type=click.Path('rb'), help="file directory e.g.: c:\portfolio.xslx")
+@click.option('--output-path', envvar='PATHS', required=False, type=click.Path(), help="output directory e.g.:c:\output\\")
 
 def cli(type, building_id, to, savings_target, cached_weather, portfolio_file, output_path):
     """Run single building or portfolio analysis

@@ -43,9 +43,10 @@ Weather data is downloaded from the [NOAA website](https://governmentshutdown.no
 
 ### Installation
 1. Download and install [Python >=3.6](https://www.python.org/downloads/)
-2. Download the source code from the [latest release](https://github.com/LBNL-JCI-ICF/better/releases/)
+2. Download the source code from [here](https://github.com/LBNL-JCI-ICF/better/archive/packageready.zip)
 3. Extract and navigate to the downloaded release 
-3. Install dependencies by clicking on `install.bat` or run `python setup.py install` on your cmd
+3. Install by clicking on `install.bat` or run `pip install .` on your cmd. Make sure `pip` is added to your `PATH`
+4. Make sure `better` is installed by running `better --help`
 
 *Note: The current release is an alpha version. The tool will be packaged and setup files will be provided in future releases.* 
 
@@ -53,55 +54,35 @@ Weather data is downloaded from the [NOAA website](https://governmentshutdown.no
 The focus of the development is the building energy benchmarking and EE targeting analytical core but not the user interface. To demonstrate the data input/output and the use of the tool.
 
 ### Demo
-1. From your cmd or terminal, change your working directory to `./better`
-2. Run `python demo.py`. It will run the sample of 10 buildings provided in `./data/portfolio.xslx`
-3. Output is stored in `./outputs`
+1. From your cmd or terminal, run `better single --building-id 1 --savings-target 2 --no-cached-weather`. It will run analysis on the first building provided in `./data/portfolio.xslx`
+3. Output is stored in `PATH/TO/YOUR/PACKAGE/outputs`. Unless you specify `--output-path PATH/TO/output/`
 
 Once you have run the demo and familiarized yourself with the tool, you can use your own building data and follow the steps below to run analyses on either a single building or on a portfolio of buildings.
 
 ### Run Single Building
-1.	Change building information and utility data in the `./data/portfolio.xlsx` and save the file.
-2.	Open `./better/run.py` file using a text editor and ensure that line **11** (`run_single(...)`) is uncommented, and line **13** (`run_batch(...)`) is commented out (i.e., has a “#” at the beginning of the line).
-3.	Set the target building ID based on the ID in `portfolio.xlsx` (e.g., `bldg_id = 1` – change the **1** to match the ID of the building you wish to analyze).
-4.	Set the saving target level (1 = conservative, 2 = nominal, 3 = aggressive) 
-5.	Run the analysis by running python run.py from your cmd or terminal
+1.	Change building information and utility data in the `portfolio.xlsx` and save the file.
+2.	Open cmd or terminal and run ``` better single --building-id {BUILDING ID} --savings-target {SAVINGS TARGET} --no-cached-weather --portfolio-file {PATH/TO/portfolio.xlsx} --output-path {PATH/TO/output/} ```
+    - Example: ``` better single --building-id 1 --savings-target 2 --no-cached-weather --portfolio-file C:/portfolio.xlsx --output-path C:/output/ ```
+    - Replace the curly brackets and text inside them with the desired value (e.g. `better single --building-id 1 --savings-target 2`)
+    - Target building ID is based on the ID in `portfolio.xlsx` (e.g., `--building-id 1` – to match the ID of the building you wish to analyze).
+    - Set the saving target level (1 = conservative, 2 = nominal, 3 = aggressive) 
+3.  Output is stored in `PATH/TO/YOUR/PACKAGE/outputs`. Unless you specify `--output-path PATH/TO/output/`    
 
 ### Run Portfolio
-1.	Change building information and utility data in the `./data/portfolio.xlsx` and save the file.
-2.	Open ./better/run.py file using a text editor and ensure that line 11 (“run_single”) is commented out (i.e., has a “#” at the beginning of the line), and line 13 (“run_batch”) is uncommented.
-3.	Set the start and end building IDs based on the IDs in portfolio.xlsx (e.g., `start_id=1` and `end_id=20` – change the **1** and **20** to match the first and last IDs of the buildings you wish to analyze).
-4.	Set the saving target level (1 = conservative, 2 = nominal, 3 = aggressive)
-5.  Run the analysis by running the `python run.py` from your cmd or terminal
+1.	Change building information and utility data in the `portfolio.xlsx` and save the file.
+2.	Open cmd or terminal and run ``` better portfolio --building-id {START BUILDING ID} --to {END BUILDING ID} --savings-target {SAVINGS TARGET} --no-cached-weather --portfolio-file {PATH/TO/portfolio.xlsx} --output-path {PATH/TO/output/} ```
+    - Example  ```better portfolio --building-id 2 --to 10 --no-cached-weather --portfolio-file C:/portfolio.xlsx --output-path C:/output/```
+    - Replace the curly brackets and text inside them with the desired value (e.g. `better portfolio --building-id 1 --savings-target 2`)
+3.  Output is stored in `PATH/TO/YOUR/PACKAGE/outputs`. Unless you specify `--output-path PATH/TO/output/`    
+
 
 
 ## Interpreting Results
-The analysis results are in the `./outputs` folder. Comprehensive reports are provided in .html format for each individual building, and results are explained within those html files. For portfolio analyses, a separate Portfolio html output is also provided.
+The analysis results are in the `PATH/TO/YOUR/PACKAGE/outputs` folder. Comprehensive reports are provided in .html format for each individual building, and results are explained within those html files. For portfolio analyses, a separate Portfolio html output is also provided.
 ## Copyright
 
-Energy Efficiency Targeting Tool Copyright (c) 2018, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy). All rights reserved.
+Building Efficiency Targeting Tool for Energy Retrofits (BETTER) Copyright (c) 2018, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy). All rights reserved.
 
 If you have questions about your rights to use or distribute this software, please contact Berkeley Lab's Intellectual Property Office at  IPO@lbl.gov.
 
 NOTICE.  This Software was developed under funding from the U.S. Department of Energy and the U.S. Government consequently retains certain rights. As such, the U.S. Government has been granted for itself and others acting on its behalf a paid-up, nonexclusive, irrevocable, worldwide license in the Software to reproduce, distribute copies to the public, prepare derivative works, and perform publicly and display publicly, and to permit other to do so. 
-
-## How to Use
-The focus of the development is the building energy benchmarking and energy efficiency targeting analytical core but not the user interface. To demondatrate the data input/output and the use of the tool, a demo.py script is provided. Below is a brief guidance of the demo: 
-1. Install python and pip from [here](https://www.python.org/downloads/)
-2. Download the [latest release](https://github.com/LBNL-JCI-ICF/better/releases).
-3. Open a `cmd` or a `Terminal` window and run 
- ```pip install .```
- 4. Make sure `better` is installed by running `better --help`
- 5. Run example `better single ` # TODO: create an example
- 6. Run your analysis
- 
-    ## Examples
-    Single building:
-     
-     ``` better single --building-id 1 --savings-target 2 --no-cached-weather --portfolio-file PATH/TO/portfolio.xlsx --output-path PATH/TO/output/ ```
-    
-    Portfolio: 
-    
-    ```better portfolio --building-id 2 --to 10 --no-cached-weather --portfolio-file PATH/TO/portfolio.xlsx --output-path PATH/TO/output/```
-    
-    *you can use "=" or space e.g --building-id 1 or --building-id=1*
-
