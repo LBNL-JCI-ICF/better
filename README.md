@@ -33,10 +33,10 @@ The BETTER source code posted here can provide analysis on a building-by-buildin
 #### Input Data Format
 Please note that this tool was initially developed for an international market and therefore the current alpha version uses metric/SI units (such as square meters instead of square feet for building area) for some inputs and outputs. Later releases will focus on the US market and will use imperial units (e.g., square feet).
 
-Sample data for 10 buildings are included in `./data/portfolio.xlsx`. Metadata for each building to be analyzed should be entered in the “Metadata” tab, one row per building. Utility data for all fuel types should be entered on the “Utility” tab. Be sure to double check that the building ID, fuel type, and units are accurate for each utility bill entry, and be sure to save the file as `portfolio.xlsx`. Overwrite the file to suit your needs.
+Sample data for 10 buildings are included in `better/data/portfolio.xlsx`. Metadata for each building to be analyzed should be entered in the “Metadata” tab, one row per building. Utility data for all fuel types should be entered on the “Utility” tab. Be sure to double check that the building ID, fuel type, and units are accurate for each utility bill entry, and be sure to save the file as `portfolio.xlsx`. Overwrite the file to suit your needs.
 
 #### Benchmark Statistics
-A sample benchmark statistic is provided in `./better/constants.py`. The team is working to create a database of U.S. buildings to allow the benchmarking and analysis of individual buildings. If you have a portfolio of at least 30 buildings, you may choose to benchmark individual buildings against your own data set. For smaller portfolios, your benchmark will be based on buildings in the demo. See “[How to Use](#how-to-use)” for information on how to select your benchmark data set.
+A sample benchmark statistic is provided in `.better/constants.py`. The team is working to create a database of U.S. buildings to allow the benchmarking and analysis of individual buildings. If you have a portfolio of at least 30 buildings, you may choose to benchmark individual buildings against your own data set. For smaller portfolios, your benchmark will be based on buildings in the demo. See “[How to Use](#how-to-use)” for information on how to select your benchmark data set.
 
 #### Weather Data
 Weather data is downloaded from the [NOAA website](https://governmentshutdown.noaa.gov/?page=gsod.html) for the building location. To use previously downloaded weather data at later runs set `cached_weather` to `True` in `run.py`.
@@ -45,7 +45,7 @@ Weather data is downloaded from the [NOAA website](https://governmentshutdown.no
 1. Download and install [Python >=3.6](https://www.python.org/downloads/)
 2. Download the source code from [here](https://github.com/LBNL-JCI-ICF/better/archive/packageready.zip)
 3. Extract and navigate to the downloaded release 
-3. Install by clicking on `install.bat` or run `pip install .` on your cmd. Make sure `pip` is added to your `PATH`
+3. Install by clicking on `install.bat` or run `pip install .` on your cmd (make sure `pip` is added to your `PATH`)
 4. Make sure `better` is installed by running `better --help`
 
 *Note: The current release is an alpha version. The tool will be packaged and setup files will be provided in future releases.* 
