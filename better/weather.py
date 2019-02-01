@@ -47,7 +47,6 @@ class Weather:
         return (distance)
 
     def find_closest_weather_station(self, df_weather_station_list=Constants.df_us_weather_station):
-
         self.v_coord = np.asarray(df_weather_station_list[['latitude', 'longitude']].values)
         # Find the closest and second closest weather station (backup if the closest doesn't work)
         v_distance = [Weather.haversine_distance(self.latitude, self.longitude, coord[0], coord[1])
@@ -63,6 +62,9 @@ class Weather:
         self.third_closest_weather_station_ID = df_weather_station_list.loc[third_closest_index, 'station_ID']
         self.third_closest_weather_station_name = df_weather_station_list.loc[third_closest_index, 'station_name']
 
+        print(self.closest_weather_station_name)
+        print(self.second_closest_weather_station_name)
+
     def download_weather_NOAA(self):
         print("Downloading weather data...")
         try:
@@ -70,7 +72,7 @@ class Weather:
         except:
             try:
                 print("Weather from the closest weather station not available...")
-                print("Trying to download the third second data from the third closest weather station.")
+                print("Trying to download the third second data from the second closest weather station.")
                 self.v_T_F, self.v_T_C = self.process_downloaded_weather(self.second_closest_weather_station_ID)
             except:
                 print("Weather from the second closest weather station not available...")
@@ -90,14 +92,14 @@ class Weather:
                 print("Weather from the second closest weather station not available...")
                 print("Trying to process the third weather data from the third closest weather station.")
                 self.v_T_F, self.v_T_C = self.process_cached_weather(self.third_closest_weather_station_ID, s_path)
-    
+
     def process_cached_weather(self, weather_station_ID, s_path):
         for year in range(self.start_year, self.end_year + 1):
             print("Process weather data for year: " + str(year))
             # Read pre-processed weather files from weather file folders
             file_name = (s_path + "/Data/Weather/" + str(year) + "/" +
                          str(year) + "_" + weather_station_ID + '.csv')
-    
+
             if (year == self.start_year):
                 df_new = pd.read_csv(file_name)
             else:
@@ -105,7 +107,7 @@ class Weather:
         df_new['Datetime'] = df_new['Datetime'].astype('datetime64[ns]')
         df_new['Date'] = df_new['Datetime'].dt.date
         v_T_F, v_T_C = self.aggregate_weather(df_new)
-        return(v_T_F, v_T_C)
+        return (v_T_F, v_T_C)
 
     def process_downloaded_weather(self, weather_station_ID):
 
@@ -137,7 +139,7 @@ class Weather:
 
         def get_ish_report_temperature_helper(raw_rpt):
             return (raw_rpt.air_temperature.get_fahrenheit())
-        
+
         for year in range(self.start_year, self.end_year + 1):
             print("--->" + str(year))
             download_sub_hourly_weather(weather_station_ID, year)
@@ -160,7 +162,7 @@ class Weather:
         df_new = pd.DataFrame({'Datetime': v_noaa_datetime, 'Temperature': v_noaa_temperature_F})
         df_new['Date'] = df_new['Datetime'].dt.date
         v_T_F, v_T_C = self.aggregate_weather(df_new)
-        return(v_T_F, v_T_C)
+        return (v_T_F, v_T_C)
 
     def aggregate_weather(self, df_daily):
         # Get daily weather data
@@ -170,7 +172,7 @@ class Weather:
         self.v_end_dates = np.array(self.v_end_dates, dtype=np.datetime64)
         df_daily['Datetime'] = np.array(df_daily['Datetime'], dtype=np.datetime64)
 
-        df_daily = df_daily.loc[(df_daily['Datetime'] >=min(self.v_start_dates)) &
+        df_daily = df_daily.loc[(df_daily['Datetime'] >= min(self.v_start_dates)) &
                                 (df_daily['Datetime'] <= max(self.v_end_dates))]
 
         # Aggregate the weather data to the billing periods level.

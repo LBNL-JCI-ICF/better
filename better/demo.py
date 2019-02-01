@@ -41,9 +41,9 @@ def run_single(
     print("--- Start ---")
     # Set paths
     s_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-    data_path = s_path + '/Data/'
-    portfolio_path = data_path + 'portfolio.xlsx' if portfolio_path == None else portfolio_path
-    report_path = s_path + '/outputs/' if report_path == None else report_path
+    data_path = s_path + '/better/Data/'
+    portfolio_path = data_path + 'portfolio.xlsx' if portfolio_path is None else portfolio_path
+    report_path = s_path + '/better/outputs/' if report_path is None else report_path
 
     # Create an outputs directoty is there isn't one.
     if not os.path.exists(report_path): os.makedirs(report_path)
@@ -58,7 +58,7 @@ def run_single(
     building_id = bldg_id
     building_info = p.get_building_info_by_id(building_id)
 
-    if(building_info == None):
+    if(building_info is None):
         return False, None
     else:
         # Initialize a building instance
@@ -107,12 +107,13 @@ def run_single(
     
             # Output to files
             # Save FIM to csv
-            if (hasattr(building_test, 'FIM_table_e')):
-                if write_model: building_test.coeff_out_e.to_csv(report_path + 'bldg_' + str(building_test.bldg_id) + "_Electricity Coeffs_out.csv")
-                if write_fim: building_test.FIM_table_e.to_csv(report_path + 'bldg_' + str(building_test.bldg_id) + "_Electricity FIM_recommendations.csv")
-            if (hasattr(building_test, 'FIM_table_f')):
-                if write_model: building_test.coeff_out_f.to_csv(report_path + 'bldg_' + str(building_test.bldg_id) + "_Fossil Fuel Coeffs_out.csv")
-                if write_fim: building_test.FIM_table_f.to_csv(report_path + 'bldg_' + str(building_test.bldg_id) + "_Fossil Fuel FIM_recommendations.csv")
+            if return_data:
+                if (hasattr(building_test, 'FIM_table_e')):
+                    if write_model: building_test.coeff_out_e.to_csv(report_path + 'bldg_' + str(building_test.bldg_id) + "_Electricity Coeffs_out.csv")
+                    if write_fim: building_test.FIM_table_e.to_csv(report_path + 'bldg_' + str(building_test.bldg_id) + "_Electricity FIM_recommendations.csv")
+                if (hasattr(building_test, 'FIM_table_f')):
+                    if write_model: building_test.coeff_out_f.to_csv(report_path + 'bldg_' + str(building_test.bldg_id) + "_Fossil Fuel Coeffs_out.csv")
+                    if write_fim: building_test.FIM_table_f.to_csv(report_path + 'bldg_' + str(building_test.bldg_id) + "_Fossil Fuel FIM_recommendations.csv")
     
             # Generate static HTML report
             report_building = Report(building = building_test)
@@ -143,6 +144,7 @@ def run_batch(
     cached_weather=True, 
     batch_report=False,
     use_default_benchmark_data=True,
+    save_portfolio_results=True,
     portfolio_path=None,
     report_path=None
     ):
@@ -153,9 +155,12 @@ def run_batch(
     else:
         # Initialize a portfolio instance
         s_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
-        data_path = s_path + '/Data/'
-        p = portfolio.Portfolio('Test')
-        p.read_raw_data_from_xlsx(data_path + 'portfolio.xlsx')
+        data_path = s_path + '/better/Data/'
+        portfolio_path = data_path + 'portfolio.xlsx' if portfolio_path is None else portfolio_path
+        report_path = s_path + '/better/outputs/' if report_path is None else report_path
+        p = Portfolio('Test')
+        #p.read_raw_data_from_xlsx(data_path + 'portfolio.xlsx')
+        p.read_raw_data_from_xlsx(portfolio_path)
 
         # 1 ~ electricity; 2 ~ fossil fuel
         dict_raw_electricity = p.get_portfolio_raw_data_by_spaceType_and_utilityType(space_type, utility_type=1)
@@ -180,9 +185,9 @@ def run_batch(
         v_single_buildings.append(single_building)
 
     if batch_report:
-        report_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__))) + '/outputs/' if report_path == None else report_path
+        report_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__))) + '/better/outputs/' if report_path is None else report_path
         portfolio_out = Portfolio('Sample Portfolio')
-        portfolio_out.prepare_portfolio_report_data(v_single_buildings, report_path)
+        portfolio_out.prepare_portfolio_report_data(v_single_buildings, report_path, save_portfolio_results)
         report_portfolio = Report(portfolio = portfolio_out)
         report_portfolio.generate_portfolio_report(report_path)
 

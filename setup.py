@@ -9,6 +9,8 @@ setup(name='better',
       license='LBNL Modified BSD',
       packages=['better'],
       entry_points={"console_scripts": ["better=better.cli:cli"]},
+      include_package_data=True,
+      package_data={'':['data/*']},
       install_requires=[
           'geocoder>=1.38.1',
           'ish_parser>=0.0.22',

@@ -1,24 +1,19 @@
 '''
-
 Energy Efficiency Targeting Tool Copyright (c) 2018, The Regents of the University of California, through Lawrence Berkeley National Laboratory (subject to receipt of any required approvals from the U.S. Dept. of Energy). All rights reserved.
-
 If you have questions about your rights to use or distribute this software, please contact Berkeley Lab's Intellectual Property Office at  IPO@lbl.gov.
-
-NOTICE.  This Software was developed under funding from the U.S. Department of Energy and the U.S. Government consequently retains certain rights. As such, the U.S. Government has been granted for itself and others acting on its behalf a paid-up, nonexclusive, irrevocable, worldwide license in the Software to reproduce, distribute copies to the public, prepare derivative works, and perform publicly and display publicly, and to permit other to do so. 
-
+NOTICE.  This Software was developed under funding from the U.S. Department of Energy and the U.S. Government consequently retains certain rights. As such, the U.S. Government has been granted for itself and others acting on its behalf a paid-up, nonexclusive, irrevocable, worldwide license in the Software to reproduce, distribute copies to the public, prepare derivative works, and perform publicly and display publicly, and to permit other to do so.
 '''
 
+import os
 import pandas as pd
 import numpy as np
 from collections import OrderedDict
 
-
+from .benchmark import *
 from .constants import *
 from .building import *
 from .utility import *
 from .weather import *
-from .benchmark import *
-
 
 class Portfolio:
 
@@ -51,7 +46,6 @@ class Portfolio:
         df_temp = df_temp[['bill_start_dates', 'bill_end_dates', 'energy_type',
                            'energy_unit', 'energy_consumption', 'energy_cost']]
         if (energy_type == 1):
-
             df_temp = df_temp.loc[df_temp['energy_type'] == 'Electricity - Grid Purchased']
             if df_temp.empty: return None
         else:
@@ -63,14 +57,14 @@ class Portfolio:
             Current solution: proportionally allocate the by the number of days in each calendar month
             '''
         # Convert the energy unit to kwh
-        df_temp.loc[df_temp['energy_unit'] == 'MJ', 'energy_consumption'] *= constants.MJ_to_kWh
-        df_temp.loc[df_temp['energy_unit'] == 'GJ', 'energy_consumption'] *= constants.GJ_to_kWh
-        df_temp.loc[df_temp['energy_unit'] == 'MWh', 'energy_consumption'] *= constants.MWH_to_kWh
-        df_temp.loc[df_temp['energy_unit'] == 'Btu', 'energy_consumption'] *= constants.Btu_to_kWh
-        df_temp.loc[df_temp['energy_unit'] == 'MMBtu', 'energy_consumption'] *= constants.MMBtu_to_kWh
-        df_temp.loc[df_temp['energy_unit'] == 'Cubic Meters', 'energy_consumption'] *= constants.M3_to_kWh
-        df_temp.loc[df_temp['energy_unit'] == 'Therms', 'energy_consumption'] *= constants.Therms_to_kWh
-        df_temp.loc[df_temp['energy_unit'] == 'Decatherms', 'energy_consumption'] *= constants.Decatherms_to_kWh
+        df_temp.loc[df_temp['energy_unit'] == 'MJ', 'energy_consumption'] *= Constants.MJ_to_kWh
+        df_temp.loc[df_temp['energy_unit'] == 'GJ', 'energy_consumption'] *= Constants.GJ_to_kWh
+        df_temp.loc[df_temp['energy_unit'] == 'MWh', 'energy_consumption'] *= Constants.MWH_to_kWh
+        df_temp.loc[df_temp['energy_unit'] == 'Btu', 'energy_consumption'] *= Constants.Btu_to_kWh
+        df_temp.loc[df_temp['energy_unit'] == 'MMBtu', 'energy_consumption'] *= Constants.MMBtu_to_kWh
+        df_temp.loc[df_temp['energy_unit'] == 'Cubic Meters', 'energy_consumption'] *= Constants.M3_to_kWh
+        df_temp.loc[df_temp['energy_unit'] == 'Therms', 'energy_consumption'] *= Constants.Therms_to_kWh
+        df_temp.loc[df_temp['energy_unit'] == 'Decatherms', 'energy_consumption'] *= Constants.Decatherms_to_kWh
 
         # Format the dataframe to match he raw utility data frame
         df_temp = df_temp[['bill_start_dates', 'bill_end_dates', 'energy_consumption', 'energy_cost']]
@@ -90,7 +84,6 @@ class Portfolio:
         except:
             building_info = None
             print('Cannot find the building with ID: ' + str(building_ID))
-
         return building_info
 
     def fit_model_for_buildings(self):
@@ -121,7 +114,6 @@ class Portfolio:
         for i in df_temp_meta['building_ID']:
             if (utility_type == 1):
                 df_temp_detail_utility = (self.get_utility_by_building_id_and_energy_type(i, 1))
-
                 utility_temp = Utility('electricity', df_temp_detail_utility)
             else:
                 df_temp_detail_utility = (self.get_utility_by_building_id_and_energy_type(i, 2))
@@ -141,7 +133,6 @@ class Portfolio:
 
     @staticmethod
     def generate_building_models(dict_raw_utility, cached_weather):
-
         # This function may take several minutes, print the progress
         v_building_ID = list(dict_raw_utility.keys())
         v_EUI = np.empty(0)
@@ -171,7 +162,7 @@ class Portfolio:
                 building_temp = Building(bldg_id, bldg_name, bldg_address, bldg_type, bldg_area, currency)
                 weather_temp = Weather(building_temp.coord)
                 building_temp.add_utility(utility_temp)
-                building_temp.add_weather(True, weather_temp)
+                building_temp.add_weather(cached_weather, weather_temp)
                 has_fit = building_temp.fit_inverse_model()
                 if (has_fit):
                     v_EUI = np.append(v_EUI, np.nan)
@@ -181,9 +172,7 @@ class Portfolio:
                     v_beta_beth = np.append(v_beta_beth, building_temp.im_electricity.coeffs['hcp'])
                     v_beta_cdd = np.append(v_beta_cdd, building_temp.im_electricity.coeffs['csl'])
                     v_beta_hdd = np.append(v_beta_hdd, building_temp.im_electricity.coeffs['hsl'])
-                    
                 print(str(i) + '/' + str(len(v_building_ID)) + " completed.")
-
             else:
                 print("No " + utility_type + " utility data found for current building, ",
                       str(i) + '/' + str(len(v_building_ID)) + " completed.")
@@ -202,13 +191,11 @@ class Portfolio:
     def generate_benchmark_stats(df_building_models):
         df_bench_stats = pd.DataFrame(columns=['beta_median', 'beta_standard_deviation'])
         df_bench_stats.index.name = "coefficient"
-
         median_BASE, std_BASE = Benchmark.generate_benchmark_stats('BASE', df_building_models['beta_base'])
         median_CSL, std_CSL = Benchmark.generate_benchmark_stats('CSL', df_building_models['beta_cdd'])
         median_CCP, std_CCP = Benchmark.generate_benchmark_stats('CCP', df_building_models['beta_betc'])
         median_HSL, std_HSL = Benchmark.generate_benchmark_stats('HSL', df_building_models['beta_hdd'])
         median_HCP, std_HCP = Benchmark.generate_benchmark_stats('HCP', df_building_models['beta_beth'])
-
         df_bench_stats.at['beta_base', 'beta_median'], df_bench_stats.at['beta_base', 'beta_standard_deviation'] = median_BASE, std_BASE
         df_bench_stats.at['beta_cdd', 'beta_median'], df_bench_stats.at['beta_cdd', 'beta_standard_deviation'] = median_CSL, std_CSL
         df_bench_stats.at['beta_betc', 'beta_median'], df_bench_stats.at['beta_betc', 'beta_standard_deviation'] = median_CCP, std_CCP
@@ -219,12 +206,11 @@ class Portfolio:
     @staticmethod
     def generate_benchmark_stats_wrapper(dict_raw_utility, cached_weather):
         df_building_models = Portfolio.generate_building_models(dict_raw_utility, cached_weather)
-
         df_bench_stats = Portfolio.generate_benchmark_stats(df_building_models)
         return df_bench_stats
 
 
-    def prepare_portfolio_report_data(self, v_single_buildings, report_path):
+    def prepare_portfolio_report_data(self, v_single_buildings, report_path, save_portfolio_results):
         # This function prepares the data for portfolio report
         print(v_single_buildings)
         # Count of effective building in the porfolio
@@ -356,9 +342,12 @@ class Portfolio:
             index=False
             )
 
-        # self.df_bldg_summary.to_csv('tbtbt.csv', index=False)
+        if save_portfolio_results:
+            s_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+            report_path = s_path + '/better/outputs/' if report_path is None else report_path
+            self.df_bldg_summary.to_csv(report_path + 'portfolio_results.csv', index=False)
 
-
+        return
 
 
 if __name__ == "__main__":
@@ -379,10 +368,6 @@ if __name__ == "__main__":
     print(df_bench_coeffs_e)
     print(df_bench_coeffs_f)
 
-    # df_models_e.to_csv('C:/Users/Han/Dropbox (Energy Technologies)/Projects/CERC-BEE  Benchmarking Tool/Demonstration/2018-11-05/tool/data/models_e.csv')
-    # df_models_f.to_csv('C:/Users/Han/Dropbox (Energy Technologies)/Projects/CERC-BEE  Benchmarking Tool/Demonstration/2018-11-05/tool/data/models_f.csv')
-    # df_bench_coeffs_e.to_csv('C:/Users/Han/Dropbox (Energy Technologies)/Projects/CERC-BEE  Benchmarking Tool/Demonstration/2018-11-05/tool/data/bench_stats_e.csv')
-    # df_bench_coeffs_f.to_csv('C:/Users/Han/Dropbox (Energy Technologies)/Projects/CERC-BEE  Benchmarking Tool/Demonstration/2018-11-05/tool/data/bench_stats_f.csv')
     import datetime
     df_models_e.to_csv('C:/Users/Han/Documents/GitHub/CERC/CERC-BEE-Benchmarking-Tool/data/' + datetime.datetime.today().strftime('%Y-%m-%d') + 'models_e.csv')
     df_models_f.to_csv('C:/Users/Han/Documents/GitHub/CERC/CERC-BEE-Benchmarking-Tool/data/' + datetime.datetime.today().strftime('%Y-%m-%d') + 'models_f.csv')
