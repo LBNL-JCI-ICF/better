@@ -14,4 +14,4 @@
 __pycache__/
 releases/
 better/__pycache__/
-outputs/
+outputs/*
