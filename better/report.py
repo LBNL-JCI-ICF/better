@@ -4,7 +4,7 @@ Building Efficiency Targeting Tool for Energy Retrofits (BETTER) Copyright (c) 2
 
 If you have questions about your rights to use or distribute this software, please contact Berkeley Lab's Intellectual Property Office at  IPO@lbl.gov.
 
-NOTICE.  This Software was developed under funding from the U.S. Department of Energy and the U.S. Government consequently retains certain rights. As such, the U.S. Government has been granted for itself and others acting on its behalf a paid-up, nonexclusive, irrevocable, worldwide license in the Software to reproduce, distribute copies to the public, prepare derivative works, and perform publicly and display publicly, and to permit other to do so. 
+NOTICE.  This Software was developed under funding from the U.S. Department of Energy and the U.S. Government consequently retains certain rights. As such, the U.S. Government has been granted for itself and others acting on its behalf a paid-up, nonexclusive, irrevocable, worldwide license in the Software to reproduce, distribute copies to the public, prepare derivative works, and perform publicly and display publicly, and to permit other to do so.
 
 '''
 
@@ -615,36 +615,33 @@ class Report:
     @staticmethod
     def add_3d_scatter_trace(name, v_x, v_y, v_z, info, v_s, c_str):
         import math
-    
-        print(v_x)
-        print(v_y)
 
         # Sanitize data
         v_x = ['null' if isinstance(x, str) else x for x in v_x]
         v_y = ['null' if isinstance(x, str) else x for x in v_y]
         v_z = ['null' if isinstance(x, str) else x for x in v_z]
         v_s = ['null' if isinstance(x, str) else x for x in v_s]
-    
+
         trace_str = ''
         trace_str = '''
             {{
                 "name": "Building in {}",
-                "type": "scatter3d", 
-                "x": {}, 
-                "y": {}, 
-                "z": {}, 
-                "mode": "markers", 
+                "type": "scatter3d",
+                "x": {},
+                "y": {},
+                "z": {},
+                "mode": "markers",
                 "text": "{}",
                 "marker": {{
-                    "autocolorscale": true, 
-                    "sizeref": 0.8, 
-                    "size": {}, 
-                    "color": "{}", 
+                    "autocolorscale": true,
+                    "sizeref": 0.8,
+                    "size": {},
+                    "color": "{}",
                     "line": {{
-                        "color": "rgba(186, 63, 63, 0.9)", 
-                        "width": 0.5 
-                    }}, 
-                    "opacity": 0.9 
+                        "color": "rgba(186, 63, 63, 0.9)",
+                        "width": 0.5
+                    }},
+                    "opacity": 0.9
                 }}
             }}
         '''.format(name, list(v_x), list(v_y), list(v_z), info, list(v_s), c_str)
@@ -661,27 +658,25 @@ class Report:
         v_y = ['null' if isinstance(x, str) else x for x in v_y]
         v_s = ['null' if isinstance(x, str) else x for x in v_s]
 
-        # Scale the bubble size
-        v_s = [(x + 20)/1.5 for x in v_s]
-    
         trace_str = ''
         trace_str = '''
             {{
                 "type": "scatter",
-                "name": "Building in {}",
-                "x": {}, 
-                "y": {}, 
-                "mode": "markers", 
+                "name": "{}",
+                "x": {},
+                "y": {},
+                "mode": "markers",
                 "text": "{}",
+                "hoverinfo" : "text",
                 "marker": {{
-                    "autocolorscale": true, 
-                    "sizeref": 0.8, 
-                    "size": {}, 
-                    "color": "{}", 
+                    "autocolorscale": true,
+                    "sizeref": 0.8,
+                    "size": {},
+                    "color": "{}",
                     "line": {{
-                        "width": 2 
-                    }}, 
-                    "opacity": 0.9 
+                        "width": 2
+                    }},
+                    "opacity": 0.9
                 }}
             }}
         '''.format(name, list(v_x), list(v_y), v_info, list(v_s), c_str)
@@ -692,9 +687,7 @@ class Report:
     @staticmethod
     def add_2d_scatter_plot(df_summary):
         div_id = str(datetime.datetime.now())
-
-        print(div_id)
-        locations = df_summary['Building Address'].unique()
+        v_building_ids = df_summary['Building ID']
         scatter_html = ''
         scatter_html += '''
             <div id="'''+div_id+'''" style="height: 100%; width: 100%;" class="plotly-graph-div"></div>
@@ -703,17 +696,32 @@ class Report:
             window.PLOTLYENV.BASE_URL = "https://plot.ly";
             Plotly.newPlot("'''+div_id+'''", ['''
         v_rgb_str = np.random.choice(constants.Constants.rgb_color_strs, replace=False)
-        for i, location in enumerate(locations):
-            df_temp = df_summary.loc[df_summary['Building Address']==location]
+
+        # Re-scale the bubble sizes.
+        v_cost_savings = df_summary['Building Annual Energy Cost Savings'] # Bubble size by absolute cost savings ($)
+        delta = max(v_cost_savings) - min(v_cost_savings)
+        df_summary['Bubble Size'] = [round(((x - min(v_cost_savings)) + 0.5*delta)/delta*15, 1) * 1.5  for x in v_cost_savings]
+
+        for i, building_id in enumerate(v_building_ids):
+            df_temp = df_summary.loc[df_summary['Building ID']==building_id]
+            location = df_temp.iloc[0]['Building Address']
+
             v_x = df_temp['Building Annual Electricity EUI (kWh/m2)']
             v_y = df_temp['Building Annual Fossil Fuel EUI (kWh/m2)']
-            v_z = df_temp['Building Annual Energy Cost Savings']
-            v_s = df_temp['Building Annual Energy Saving (%)']
-            v_info = 'Description'
+            v_s = df_temp['Bubble Size']
 
-            c_str = v_rgb_str[i]
-            # scatter_html +=  '\n' + self.add_3d_scatter_trace(location, v_x, v_y, v_z, info, v_s, c_str)
+            v_info = 'Building ID: ' + str(df_temp['Building ID'][i]) + ' <br>'
+            v_info += 'Building Location: ' + str(df_temp['Building Address'][i]) + ' <br>'
+            v_info += 'Annual electricity EUI : ' + str(df_temp['Building Annual Electricity EUI (kWh/m2)'][i]) + ' (kWh/m<sup>2</sup>) <br>'
+            v_info += 'Annual fossil fuel EUI : ' + str(df_temp['Building Annual Fossil Fuel EUI (kWh/m2)'][i]) + ' (kWh/m<sup>2</sup>) <br>'
+            v_info += 'Potential cost savings: $' + '{:,}'.format(df_temp['Building Annual Energy Cost Savings'][i]) + ' <br>'
+            v_info += 'Potential energy savings: ' + str(df_temp['Building Annual Energy Saving (%)'][i]) + '%'
+
+            # c_str = v_rgb_str[i]
+            c_str = 'rgb(0, 51, 102)'
+
             scatter_html +=  '\n' + Report.add_2d_scatter_trace(location, v_x, v_y, v_info, v_s, c_str)
+
         scatter_html += '''
             ],
             {
@@ -723,20 +731,20 @@ class Report:
               "xaxis": { "title": "Building Annual Electricity EUI (kWh/m2)", "ticklen": 5, "gridwidth": 2 },
               "yaxis": { "title": "Building Annual Fossil Fuel EUI (kWh/m2)", "ticklen": 5, "gridwidth": 2 },
               "legend": { "x": 0, "y": 1, "orientation": "h" },
-              "showlegend": true
+              "showlegend": false
             },
             {
               "showLink": true,
               "linkText": "Export to plot.ly"
             }
             )
-    
+
             </script>
             <script type="text/javascript">
-            window.addEventListener("resize", function() { Plotly.Plots.resize(document.getElementById("'''+div_id+'''")); });
+            window.addEventListener("resize", function() { Plotly.Plots.resize(document.getElementById("''' + div_id + '''")); });
             </script>
         '''
-    
+
         return (scatter_html)
 
 
@@ -769,7 +777,7 @@ class Report:
                         </tr>
                         <tr>
                             <td width="50%" class="td_border" colspan="3"><b>Total Building Area (m<sup>2</sup>)</b></td>
-                            <td width="50%" class="td_border" colspan="3">''' + '{:,}'.format(self.portfolio.total_area) + '''</td>
+                            <td width="50%" class="td_border" colspan="3">''' + '{:,}'.format(int(self.portfolio.total_area)) + '''</td>
                         </tr>
                     </table> <br>
                     <table class="w3-table w3-bordered w3-border" style="width:95% border: solid 1 px blue">
@@ -811,7 +819,7 @@ class Report:
                 <div class="w3-container w3-margin-bottom w3-col m12 w3-padding-small">
                     <div class="w3-container ">
 
-                        ''' + 'Coming soon' + '''
+                        ''' + 'The bubble chart below shows the energy use intensities and saving potentials of each building in the portfolio. The X-axis represents the annual electricity use intensity, and the Y-axis represents the annual fossil fuel energy use intensity. The size of the bubbles indicate the utility bill cost (US Dollar) saving potentials. Bigger size means higher saving potentials. The bubbles are color-coded by their locations.' + '''
                         ''' + scatter_html + '''
                     </div>
                 </div>
@@ -826,7 +834,8 @@ class Report:
             tbstr += '    <thead>\n'
             tbstr += '      <tr style=" text-align: right;">\n'
             for col_name in self.portfolio.df_bldg_summary.columns:
-                if col_name != 'Detail Report': tbstr += '          <th>' + col_name + '</th>\n'
+                if col_name != 'Detail Report' and col_name != 'Bubble Size': 
+                    tbstr += '          <th>' + col_name + '</th>\n'
             tbstr += '      </tr>\n'
             tbstr += '    </thead>\n'
             tbstr += '    <tbody>\n'
@@ -852,7 +861,7 @@ class Report:
                 <hr class="w3-opacity">
                 <div class="w3-container w3-margin-bottom w3-col m12 w3-padding-small">
                     <div class="w3-container ">
-
+                        ''' + 'The table lists the building information, energy consumptions, cost, and saving potentials. Click on the table headers to sort the buildings. For detailed analysis results of a single building, use link on the associated building ID.' + '''
                         ''' + tbstr + '''
                     </div>
                 </div>
