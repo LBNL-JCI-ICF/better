@@ -698,7 +698,7 @@ class Report:
         v_rgb_str = np.random.choice(constants.Constants.rgb_color_strs, replace=False)
 
         # Re-scale the bubble sizes.
-        v_cost_savings = df_summary['Building Annual Energy Cost Savings'] # Bubble size by absolute cost savings ($)
+        v_cost_savings = df_summary['Building Annual Energy Cost Savings ($)'] # Bubble size by absolute cost savings ($)
         delta = max(v_cost_savings) - min(v_cost_savings)
         df_summary['Bubble Size'] = [round(((x - min(v_cost_savings)) + 0.5*delta)/delta*15, 1) * 1.5  for x in v_cost_savings]
 
@@ -714,7 +714,7 @@ class Report:
             v_info += 'Building Location: ' + str(df_temp['Building Address'][i]) + ' <br>'
             v_info += 'Annual electricity EUI : ' + str(df_temp['Building Annual Electricity EUI (kWh/m2)'][i]) + ' (kWh/m<sup>2</sup>) <br>'
             v_info += 'Annual fossil fuel EUI : ' + str(df_temp['Building Annual Fossil Fuel EUI (kWh/m2)'][i]) + ' (kWh/m<sup>2</sup>) <br>'
-            v_info += 'Potential cost savings: $' + '{:,}'.format(df_temp['Building Annual Energy Cost Savings'][i]) + ' <br>'
+            v_info += 'Potential cost savings: $' + '{:,}'.format(df_temp['Building Annual Energy Cost Savings ($)'][i]) + ' <br>'
             v_info += 'Potential energy savings: ' + str(df_temp['Building Annual Energy Saving (%)'][i]) + '%'
 
             # c_str = v_rgb_str[i]
@@ -844,14 +844,14 @@ class Report:
                 tbstr += '            <td><a href=' + report_path + str(self.portfolio.df_bldg_summary['Detail Report'][n]) + '>' + str(self.portfolio.df_bldg_summary['Building ID'][n]) + '</a></td>\n'
                 tbstr += '            <td>' + self.portfolio.df_bldg_summary['Building Name'][n] + '</td>\n'
                 tbstr += '            <td>' + self.portfolio.df_bldg_summary['Building Address'][n] + '</td>\n'
-                tbstr += '            <td>' + self.format_number(self.portfolio.df_bldg_summary['Building Area'][n]) + '</td>\n'
+                tbstr += '            <td>' + self.format_number(self.portfolio.df_bldg_summary['Building Area (m2)'][n]) + '</td>\n'
                 tbstr += '            <td>' + self.format_number(self.portfolio.df_bldg_summary['Building Annual Electricity Consumption (kWh)'][n]) + '</td>\n'
                 tbstr += '            <td>' + self.format_number(self.portfolio.df_bldg_summary['Building Annual Fossil Fuel Consumption (kWh)'][n]) + '</td>\n'
-                tbstr += '            <td>' + self.format_number(self.portfolio.df_bldg_summary['Building Annual Electricity Cost'][n]) + '</td>\n'
-                tbstr += '            <td>' + self.format_number(self.portfolio.df_bldg_summary['Building Annual Fossil Fuel Cost'][n]) + '</td>\n'
+                tbstr += '            <td>' + self.format_number(self.portfolio.df_bldg_summary['Building Annual Electricity Cost ($)'][n]) + '</td>\n'
+                tbstr += '            <td>' + self.format_number(self.portfolio.df_bldg_summary['Building Annual Fossil Fuel Cost ($)'][n]) + '</td>\n'
                 tbstr += '            <td>' + self.format_number(self.portfolio.df_bldg_summary['Building Annual Electricity EUI (kWh/m2)'][n]) + '</td>\n'
                 tbstr += '            <td>' + self.format_number(self.portfolio.df_bldg_summary['Building Annual Fossil Fuel EUI (kWh/m2)'][n]) + '</td>\n'
-                tbstr += '            <td>' + self.format_number(self.portfolio.df_bldg_summary['Building Annual Energy Cost Savings'][n]) + '</td>\n'
+                tbstr += '            <td>' + self.format_number(self.portfolio.df_bldg_summary['Building Annual Energy Cost Savings ($)'][n]) + '</td>\n'
                 tbstr += '            <td>' + self.format_number(self.portfolio.df_bldg_summary['Building Annual Energy Saving (%)'][n]) + '</td>\n'
                 tbstr += '        </tr>\n'
             tbstr += '    </tbody>\n'
