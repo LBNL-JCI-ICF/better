@@ -792,7 +792,7 @@ class Report:
                             <td width="25%" class="td_border" colspan="4">''' + '{:,}'.format(self.portfolio.total_annual_consumption_f) + '''</td>
                         </tr>
                         <tr>
-                            <td width="50%" class="td_border" colspan="4"><b>Portfolio Annual Cost (¥)</b></td>
+                            <td width="50%" class="td_border" colspan="4"><b>Portfolio Annual Cost ($)</b></td>
                             <td width="25%" class="td_border" colspan="4">''' + '{:,}'.format(self.portfolio.total_annual_cost_e) + '''</td>
                             <td width="25%" class="td_border" colspan="4">''' + '{:,}'.format(self.portfolio.total_annual_cost_f) + '''</td>
                         </tr>
