@@ -686,21 +686,36 @@ class Report:
 
     @staticmethod
     def add_2d_scatter_plot(df_summary):
-        div_id = str(datetime.datetime.now())
+        div_id_1 = 'cost_saving_bubble_plot'
+        div_id_2 = 'pct_saving_bubble_plot'
         v_building_ids = df_summary['Building ID']
-        scatter_html = ''
-        scatter_html += '''
-            <div id="'''+div_id+'''" style="height: 100%; width: 100%;" class="plotly-graph-div"></div>
+        cost_scatter_html = ''
+        cost_scatter_html += '''
+            <div id="'''+div_id_1+'''" style="height: 100%; width: 100%;" class="plotly-graph-div"></div>
             <script type="text/javascript">
             window.PLOTLYENV = window.PLOTLYENV || {};
             window.PLOTLYENV.BASE_URL = "https://plot.ly";
-            Plotly.newPlot("'''+div_id+'''", ['''
+            Plotly.newPlot("'''+div_id_1+'''", ['''
+
+        pct_scatter_html = ''
+        pct_scatter_html += '''
+            <div id="'''+div_id_2+'''" style="height: 100%; width: 100%;" class="plotly-graph-div"></div>
+            <script type="text/javascript">
+            window.PLOTLYENV = window.PLOTLYENV || {};
+            window.PLOTLYENV.BASE_URL = "https://plot.ly";
+            Plotly.newPlot("'''+div_id_2+'''", ['''
+
         v_rgb_str = np.random.choice(constants.Constants.rgb_color_strs, replace=False)
 
         # Re-scale the bubble sizes.
         v_cost_savings = df_summary['Building Annual Energy Cost Savings ($)'] # Bubble size by absolute cost savings ($)
-        delta = max(v_cost_savings) - min(v_cost_savings)
-        df_summary['Bubble Size'] = [round(((x - min(v_cost_savings)) + 0.5*delta)/delta*15, 1) * 1.5  for x in v_cost_savings]
+        v_pct_savings = df_summary['Building Annual Energy Saving (%)'] # Bubble size by energy saving percentages (%)
+
+        delta_1 = max(v_cost_savings) - min(v_cost_savings)
+        delta_2 = max(v_pct_savings) - min(v_pct_savings)
+
+        df_summary['Bubble Size 1'] = [round(((x - min(v_cost_savings)) + 0.5*delta_1)/delta_1*15, 1) * 1.5  for x in v_cost_savings]
+        df_summary['Bubble Size 2'] = [round(((x - min(v_pct_savings)) + 0.5*delta_2)/delta_2*15, 1) * 1.5  for x in v_pct_savings]
 
         for i, building_id in enumerate(v_building_ids):
             df_temp = df_summary.loc[df_summary['Building ID']==building_id]
@@ -708,7 +723,8 @@ class Report:
 
             v_x = df_temp['Building Annual Electricity EUI (kWh/m2)']
             v_y = df_temp['Building Annual Fossil Fuel EUI (kWh/m2)']
-            v_s = df_temp['Bubble Size']
+            v_s_1 = df_temp['Bubble Size 1']
+            v_s_2 = df_temp['Bubble Size 2']
 
             v_info = 'Building ID: ' + str(df_temp['Building ID'][i]) + ' <br>'
             v_info += 'Building Location: ' + str(df_temp['Building Address'][i]) + ' <br>'
@@ -717,12 +733,13 @@ class Report:
             v_info += 'Potential cost savings: $' + '{:,}'.format(df_temp['Building Annual Energy Cost Savings ($)'][i]) + ' <br>'
             v_info += 'Potential energy savings: ' + str(df_temp['Building Annual Energy Saving (%)'][i]) + '%'
 
-            # c_str = v_rgb_str[i]
-            c_str = 'rgb(0, 51, 102)'
+            c_str_1 = 'rgb(0, 51, 102)'
+            c_str_2 = 'rgb(0, 51, 102)'
 
-            scatter_html +=  '\n' + Report.add_2d_scatter_trace(location, v_x, v_y, v_info, v_s, c_str)
+            cost_scatter_html +=  '\n' + Report.add_2d_scatter_trace(location, v_x, v_y, v_info, v_s_1, c_str_1)
+            pct_scatter_html +=  '\n' + Report.add_2d_scatter_trace(location, v_x, v_y, v_info, v_s_2, c_str_2)
 
-        scatter_html += '''
+        cost_scatter_html += '''
             ],
             {
               "title": "Building Saving Opportunities",
@@ -741,11 +758,34 @@ class Report:
 
             </script>
             <script type="text/javascript">
-            window.addEventListener("resize", function() { Plotly.Plots.resize(document.getElementById("''' + div_id + '''")); });
+            window.addEventListener("resize", function() { Plotly.Plots.resize(document.getElementById("''' + div_id_1 + '''")); });
             </script>
         '''
 
-        return (scatter_html)
+        pct_scatter_html += '''
+            ],
+            {
+              "title": "Building Saving Opportunities",
+              "hovermode": "closest",
+              "height": 1000,
+              "xaxis": { "title": "Building Annual Electricity EUI (kWh/m2)", "ticklen": 5, "gridwidth": 2 },
+              "yaxis": { "title": "Building Annual Fossil Fuel EUI (kWh/m2)", "ticklen": 5, "gridwidth": 2 },
+              "legend": { "x": 0, "y": 1, "orientation": "h" },
+              "showlegend": false
+            },
+            {
+              "showLink": true,
+              "linkText": "Export to plot.ly"
+            }
+            )
+
+            </script>
+            <script type="text/javascript">
+            window.addEventListener("resize", function() { Plotly.Plots.resize(document.getElementById("''' + div_id_2 + '''")); });
+            </script>
+        '''
+
+        return (cost_scatter_html, pct_scatter_html)
 
 
     def generate_portfolio_report(self, report_path):
@@ -809,10 +849,7 @@ class Report:
 
 
             # Portfolio summary charts card
-
-
-            scatter_html = self.add_2d_scatter_plot(self.portfolio.df_bldg_summary)
-
+            scatter_html = self.add_2d_scatter_plot(self.portfolio.df_bldg_summary)[0]
             report_html.write('''
             <div class="w3-container w3-padding-large w3-white"> <h2 id="about"><b>Benchmarking</b></h2>
                 <hr class="w3-opacity">
@@ -836,6 +873,36 @@ class Report:
             </div><br>
             ''')
 
+            # # Bubble chart size-by-pct, hidden by default
+            # report_html.write('<div class="w3-cell-row" id="bubble_plot" style = "display:none">')
+            # #report_html.write('<div class="w3-container w3-cell w3-mobile">')
+            # report_html.write('''
+            #     <div id="bubble_plot" class = "w3-row-padding">
+            #         <canvas id="pct_saving_bubble_plot"></canvas>
+            #     </div>''')
+            # scatter_html = self.add_2d_scatter_plot(self.portfolio.df_bldg_summary)[1]
+            # report_html.write('''
+            # <div class="w3-container w3-padding-large w3-white"> <h2 id="about"><b>Benchmarking</b></h2>
+            #     <hr class="w3-opacity">
+            #     <div class="w3-container w3-margin-bottom w3-col m12 w3-padding-small">
+            #         <div class="w3-container ">
+
+            #             ''' + 
+            #                 ''' The chart below shows the energy use intensities and savings potentials of each building in your portfolio. 
+            #                 The X-axis represents annual electricity use intensity, and the Y-axis represents annual fossil fuel energy use intensity. 
+            #                 If your building is all-electric, it will sit somewhere at the bottom of the chart, since fossil fuel EUI will be zero. 
+            #                 Bubble size indicates the potential utility cost savings in US dollars – the bigger the bubble, the higher that building’s savings potential.
+                            
+            #                 Hover your cursor over each bubble to display key stats about each building, including its ID from the Portfolio input spreadsheet, its location, 
+            #                 its annual electricity and fossil fuel EUI, its potential cost savings, and its potential energy savings percentage. '''
+            #             + '''<br>
+
+            #             ''' + scatter_html + '''
+            #         </div>
+            #     </div>
+            #     <div class="w3-container w3-margin-bottom w3-padding-small"></div>
+            # </div><br>
+            # ''')
 
             # Building details table card
             tbstr = ''
@@ -843,7 +910,7 @@ class Report:
             tbstr += '    <thead>\n'
             tbstr += '      <tr style=" text-align: right;">\n'
             for col_name in self.portfolio.df_bldg_summary.columns:
-                if col_name != 'Detail Report' and col_name != 'Bubble Size': 
+                if col_name != 'Detail Report' and not col_name.startswith('Bubble Size'): 
                     tbstr += '          <th>' + col_name + '</th>\n'
             tbstr += '      </tr>\n'
             tbstr += '    </thead>\n'
@@ -908,6 +975,18 @@ class Report:
             report_html.write('  </footer>')
             report_html.write('  <div class="w3-black w3-center w3-padding-24"></div>')
 
+
+            report_html.write('<script>')
+            # Show/hide trends
+            report_html.write('function showTrends() {')
+            report_html.write('    var x = document.getElementById("bubble_plot");')
+            report_html.write('    if (x.style.display === "none") {')
+            report_html.write('        x.style.display = "block";')
+            report_html.write('    } else {')
+            report_html.write('        x.style.display = "none";')
+            report_html.write('    }')
+            report_html.write('}')
+            report_html.write('</script>')
 
             report_html.write('</body>')
 
