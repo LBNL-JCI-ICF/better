@@ -870,7 +870,14 @@ class Report:
                 <hr class="w3-opacity">
                 <div class="w3-container w3-margin-bottom w3-col m12 w3-padding-small">
                     <div class="w3-container ">
-                        ''' + 'The table lists the building information, energy consumptions, cost, and saving potentials. Click on the table headers to sort the buildings. For detailed analysis results of a single building, use link on the associated building ID.' + '''
+                        
+                        ''' + 
+                            ''' The table below lists key building information for all buildings in your portfolio, including energy consumption, 
+                            energy cost, and saving potentials. Click on the table headers to sort the buildings according to that metric (for example, 
+                            clicking on “Building Annual Energy Cost Savings” will sort the buildings from lowest to highest cost savings potential, 
+                            and clicking again will sort from highest to lowest).
+                            For detailed analysis results of a single building, click on the link in the “Building ID” column for that building. '''
+                        + ''' <br>
                         ''' + tbstr + '''
                     </div>
                 </div>
