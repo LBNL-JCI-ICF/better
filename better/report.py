@@ -819,7 +819,16 @@ class Report:
                 <div class="w3-container w3-margin-bottom w3-col m12 w3-padding-small">
                     <div class="w3-container ">
 
-                        ''' + 'The bubble chart below shows the energy use intensities and saving potentials of each building in the portfolio. The X-axis represents the annual electricity use intensity, and the Y-axis represents the annual fossil fuel energy use intensity. The size of the bubbles indicate the utility bill cost (US Dollar) saving potentials. Bigger size means higher saving potentials. The bubbles are color-coded by their locations.' + '''
+                        ''' + 
+                            ''' The chart below shows the energy use intensities and savings potentials of each building in your portfolio. 
+                            The X-axis represents annual electricity use intensity, and the Y-axis represents annual fossil fuel energy use intensity. 
+                            If your building is all-electric, it will sit somewhere at the bottom of the chart, since fossil fuel EUI will be zero. 
+                            Bubble size indicates the potential utility cost savings in US dollars – the bigger the bubble, the higher that building’s savings potential.
+                            
+                            Hover your cursor over each bubble to display key stats about each building, including its ID from the Portfolio input spreadsheet, its location, 
+                            its annual electricity and fossil fuel EUI, its potential cost savings, and its potential energy savings percentage. '''
+                        + '''<br>
+
                         ''' + scatter_html + '''
                     </div>
                 </div>
