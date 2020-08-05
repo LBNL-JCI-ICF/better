@@ -463,16 +463,16 @@ class Constants:
     ## Electricity
     # From simulation
     d_sample_benchmark_stats_e = {
+        # Order: "baseload", "cooling sensitivity", "cooling change-point", "heating sensitivity", "heating change-point"
         'beta_median': [0.352, 0.008635, 11.8, 0.00609, 13.3],
-        'beta_standard_deviation':
-        [0.042105175, 0.003189988, 5.128711432, 0.00546208, 5.159961489],
+        'beta_standard_deviation': [0.042105175, 0.003189988, 5.128711432, 0.00546208, 5.159961489],
     }
     ## Fossil fuel
     # From simulation
     d_sample_benchmark_stats_f = {
+        # Order: "baseload", "cooling sensitivity", "cooling change-point", "heating sensitivity", "heating change-point"
         'beta_median': [0.005805, 0, 0, 0.00698, 13.5],
-        'beta_standard_deviation':
-        [0.008327917, 0, 0, 0.00901039, 5.965051821],
+        'beta_standard_deviation': [0.008327917, 0, 0, 0.00901039, 5.965051821],
     }
 
     df_sample_benchmark_stats_e = pd.DataFrame(
