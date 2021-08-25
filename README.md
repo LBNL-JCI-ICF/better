@@ -4,16 +4,19 @@
 Download the [latest release](https://github.com/LBNL-JCI-ICF/better/releases/), see [Installation](#installation) for how to install the tool or download [Introduction to BETTER Presentation](https://github.com/LBNL-JCI-ICF/better/releases/download/v0.4-alpha/BETTER.Training.Slides.pptx) to start.
 
 ## Background
-The lack of public-access, data-driven tools requiring minimal inputs and short run time to benchmark against peers, quantify energy/cost savings, and recommend energy efficiency (EE) improvements is one of the main barriers to capturing untapped EE opportunities in the United States and globally. To fill the gap, and simultaneously address the need for automated, cost-effective, and standardized EE assessment of large volumes of buildings in U.S. state and municipal benchmarking and disclosure programs, an automated, open-source, virtual building EE targeting tool is being developed by Lawrence Berkeley National Laboratory (LBNL), Johnson Controls (JCI), and ICF.
+The lack of public-access, data-driven tools requiring minimal inputs and short run time to benchmark against peers, quantify energy/cost savings, and recommend energy efficiency (EE) improvements is one of the main barriers to capturing untapped EE opportunities in the United States and globally. To fill the gap, and simultaneously address the need for automated, cost-effective, and standardized EE assessment of large volumes of buildings in U.S. state and municipal benchmarking and transparency programs, an automated, open-source, virtual building EE retrofit targeting tool has been developed with support from the U.S. Department of Energy (DOE) Office of Energy Efficiency and Renewable Energy (EERE) Building Technologies Office (BTO) by Lawrence Berkeley National Laboratory (LBNL) and Johnson Controls, with assistance from ICF. 
 
-The tool requires very simple building data inputs; minimum manual work; and provides fast, “no-cost/no-touch” building EE upgrade targeting (equipment and operations) with an acceptable accuracy. It implements the ASHRAE Inverse Modeling Toolkit (IMT) to find piece-wise linear regression models between building energy consumption (electricity and fossil fuel) and outdoor air temperature. The model coefficients of each individual building are then benchmarked against the coefficients of buildings in the same space type category. Johnson Controls’ LEAN Energy Analysis is used to identify the EE measures for the building. Finally, the potential energy and cost savings are estimated with the EE measures.
+BETTER requires very simple building data inputs; minimum manual work; and provides fast, “no-cost/no-touch” building EE upgrade targeting (equipment and operations) with an acceptable accuracy. It implements the ASHRAE Inverse Modeling Toolkit (IMT) to find piece-wise linear regression models between building energy consumption (electricity and fossil fuel) and outdoor air temperature. The model coefficients of each individual building are then benchmarked against the coefficients of buildings in the same space type category. Johnson Controls’ LEAN Energy Analysis is used to identify the EE measures for the building. Finally, the potential energy, cost, and greenhouse gas (GHG) emissions reductions are estimated with the EE measures.
 
-The tool is being developed under Cooperative Research and Development Agreement (CRADA) No. FP00007338 between the Regents of the University of California Ernest Orlando Lawrence Berkeley National Laboratory under its U.S. Department of Energy (DOE) Contract No. DE-AC02-05CH11231 and Johnson Controls, Inc., with support from ICF.
+BETTER is made possible by support from the U.S. DOE EERE BTO.
+
+BETTER is being developed under Cooperative Research and Development Agreement (CRADA) No. FP00007338 between the Regents of the University of California Ernest Orlando Lawrence Berkeley National Laboratory, under its U.S. DOE Contract No. DE-AC02-05CH11231, and Johnson Controls, with assistance from ICF.
+
 
 ## Getting Started
 
 ### Software Prerequisites
-BETTER is developed using Python 3.6. We recommend using Anaconda to manage Python environments. If you'd rather not install Anaconda, you can download Python 3.6 from [here](https://www.python.org/downloads/).
+BETTER is developed using Python 3.6. We recommend using Anaconda to manage Python environments. If you'd rather not install Anaconda, you can download Python 3.6 [here](https://www.python.org/downloads/).
 
 ### Data Requirements
 
@@ -30,7 +33,7 @@ The BETTER source code posted here can provide analysis on a building-by-buildin
 <br/>
 
 #### Input Data Format
-Please note that this tool was initially developed for an international market and therefore the current alpha version uses metric/SI units (such as square meters instead of square feet for building area) for some inputs and outputs. Later releases will focus on the US market and will use imperial units (e.g., square feet).
+Please note that the BETTER source code was initially developed for a global market and therefore the current version uses metric/SI units (such as square meters instead of square feet for building area) for some inputs and outputs. 
 
 Sample data for 10 buildings are included in `./data/portfolio.xlsx`. Metadata for each building to be analyzed should be entered in the “Metadata” tab, one row per building. Utility data for all fuel types should be entered on the “Utility” tab. Be sure to double check that the building ID, fuel type, and units are accurate for each utility bill entry, and be sure to save the file as `portfolio.xlsx`. Overwrite the file to suit your needs.
 
