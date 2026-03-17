@@ -54,7 +54,7 @@ class InverseModel:
         if np.isnan(hcp) and np.isnan(hsl):
             hcp = ccp
             hsl = 0
-        if np.isnan(csl) and np.isnan(csl):
+        if np.isnan(ccp) and np.isnan(csl):
             ccp = hcp
             csl = 0
 
